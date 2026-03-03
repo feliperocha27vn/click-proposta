@@ -1,13 +1,19 @@
 import { ResourceNotFoundError } from '@/errors/resource-not-found-error'
 import type { UsersRepository } from '@/repositories/users-respository'
-import type { User } from '@prisma/client'
 
-interface GetUserByIdUseCaseRequest {
+interface GetUserByPhoneUseCaseRequest {
   phone: string
 }
 
-interface GetUserByIdUseCaseReply {
-  user: Partial<User>
+interface GetUserByPhoneUseCaseReply {
+  user: {
+    id: string
+    phone: string
+    email: string
+    avatarUrl: string | null
+    cnpj: string | null
+    address: string | null
+  }
 }
 
 export class GetUserByPhoneUseCase {
@@ -15,13 +21,22 @@ export class GetUserByPhoneUseCase {
 
   async execute({
     phone,
-  }: GetUserByIdUseCaseRequest): Promise<GetUserByIdUseCaseReply> {
+  }: GetUserByPhoneUseCaseRequest): Promise<GetUserByPhoneUseCaseReply> {
     const user = await this.usersRepository.getUserByPhone(phone)
 
     if (!user) {
       throw new ResourceNotFoundError()
     }
 
-    return { user }
+    return {
+      user: {
+        id: user.id ?? '',
+        phone: user.phone ?? '',
+        email: user.email ?? '',
+        avatarUrl: user.avatarUrl ?? '',
+        cnpj: user.cnpj ?? '',
+        address: user.address ?? '',
+      },
+    }
   }
 }

@@ -6,6 +6,7 @@ import { getCompleteRegister } from './get-complet-resgister'
 import { getDataForPayment } from './get-data-for-payment'
 import { getMe } from './me'
 import { searchByNameEmail } from './search-by-name-email'
+import { getUserByPhone } from './get-user-by-phone'
 
 export function usersRoutes(app: FastifyInstance) {
   app.register(createNewCostumer)
@@ -15,4 +16,5 @@ export function usersRoutes(app: FastifyInstance) {
   app.register(getCompleteRegister)
   app.register(getDataForPayment)
   app.register(getMe)
+  app.register(getUserByPhone)
 }
