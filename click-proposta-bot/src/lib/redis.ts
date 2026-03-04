@@ -1,5 +1,8 @@
 import { Redis } from 'ioredis'
+import { env } from '../env'
 
-export const redis = new Redis({
-  port: 6380,
-})
+export const redis = env.REDIS_URL
+  ? new Redis(env.REDIS_URL)
+  : new Redis({
+      port: 6380,
+    })

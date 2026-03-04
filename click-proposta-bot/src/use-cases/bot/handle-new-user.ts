@@ -18,6 +18,10 @@ export class HandleNewUserUseCase {
       }
 
       // Bate na API v2 para ver se o telefone existe
+      console.log(
+        `[UseCase: HandleNewUser] Verificando telefone no backend: ${apiPhone} (URL: ${env.API_URL}/verify-phone)`
+      )
+
       const response = await api.get('/verify-phone', {
         headers: { Authorization: `Bearer ${env.BOT_SERVICE_TOKEN}` },
         params: { phone: apiPhone },
