@@ -52,7 +52,7 @@ describe('StateMachineService', () => {
 
   // =========================================================================
   describe('processIncomingMessage — usuário novo (sem sessão)', () => {
-    it('deve saudar o usuário quando o telefone existe na API', async () => {
+    it('deve saudar o usuário pelo nome quando o telefone existe na API', async () => {
       const sessionRepo = makeSessionRepo()
       const service = new StateMachineService(sessionRepo)
 
@@ -60,13 +60,36 @@ describe('StateMachineService', () => {
         data: { user: { id: 'user-123', name: 'Felipe' } },
       })
 
-      const response = await service.processIncomingMessage(PHONE, PHONE, 'Oi')
+      const response = await service.processIncomingMessage(
+        INSTANCE,
+        PHONE,
+        'Oi'
+      )
 
       expect(response).toContain('Felipe')
+      expect(response).toContain('1')
+      expect(response).toContain('2')
       expect(sessionRepo.saveSession).toHaveBeenCalledWith(
         PHONE,
         expect.objectContaining({ state: 'AWAITING_TYPE', userId: 'user-123' })
       )
+    })
+
+    it('deve usar "cliente" no nome quando o usuário não tem nome cadastrado', async () => {
+      const sessionRepo = makeSessionRepo()
+      const service = new StateMachineService(sessionRepo)
+
+      mockApiGet.mockResolvedValueOnce({
+        data: { user: { id: 'user-123', name: null } },
+      })
+
+      const response = await service.processIncomingMessage(
+        INSTANCE,
+        PHONE,
+        'Oi'
+      )
+
+      expect(response).toContain('cliente')
     })
 
     it('deve remover o código 55 ao consultar a API para número brasileiro de 13 dígitos', async () => {
@@ -79,7 +102,6 @@ describe('StateMachineService', () => {
 
       await service.processIncomingMessage(INSTANCE, '5511999999999', 'Oi')
 
-      // O número passado para a API deve ter o 55 removido
       expect(mockApiGet).toHaveBeenCalledWith(
         '/verify-phone',
         expect.objectContaining({
@@ -88,7 +110,7 @@ describe('StateMachineService', () => {
       )
     })
 
-    it('deve informar sobre cadastro quando o telefone não existe (404)', async () => {
+    it('deve informar sobre cadastro com link quando o telefone não existe (404)', async () => {
       const sessionRepo = makeSessionRepo()
       const service = new StateMachineService(sessionRepo)
 
@@ -103,11 +125,12 @@ describe('StateMachineService', () => {
         'Oi'
       )
 
-      expect(response).toContain('cadastro')
+      expect(response).toContain('Click Proposta')
+      expect(response).toContain('https://click-proposta.umdoce.dev.br/login')
       expect(sessionRepo.saveSession).not.toHaveBeenCalled()
     })
 
-    it('deve retornar mensagem de erro genérico para falhas de API diferentes de 404', async () => {
+    it('deve retornar mensagem de erro empática para falhas de API diferentes de 404', async () => {
       const sessionRepo = makeSessionRepo()
       const service = new StateMachineService(sessionRepo)
 
@@ -122,7 +145,7 @@ describe('StateMachineService', () => {
         'Oi'
       )
 
-      expect(response).toContain('problema técnico')
+      expect(response).toContain('deu errado')
     })
   })
 
@@ -138,14 +161,14 @@ describe('StateMachineService', () => {
       })
     }
 
-    it('deve aceitar "produto" e avançar para COLLECTING_ITEMS', async () => {
+    it('deve aceitar "1" como seleção de produto', async () => {
       const sessionRepo = makeRepoWithState('AWAITING_TYPE')
       const service = new StateMachineService(sessionRepo)
 
       const response = await service.processIncomingMessage(
         INSTANCE,
         PHONE,
-        'quero fazer um orçamento de produto'
+        '1'
       )
 
       expect(response).toContain('itens')
@@ -158,14 +181,31 @@ describe('StateMachineService', () => {
       )
     })
 
-    it('deve aceitar "serviço civil" e avançar para COLLECTING_ITEMS', async () => {
+    it('deve aceitar "produto" por extenso', async () => {
       const sessionRepo = makeRepoWithState('AWAITING_TYPE')
       const service = new StateMachineService(sessionRepo)
 
       const response = await service.processIncomingMessage(
         INSTANCE,
         PHONE,
-        'serviço civil'
+        'quero orçamento de produto'
+      )
+
+      expect(response).toContain('itens')
+      expect(sessionRepo.saveSession).toHaveBeenCalledWith(
+        PHONE,
+        expect.objectContaining({ budgetType: 'product' })
+      )
+    })
+
+    it('deve aceitar "2" como seleção de serviço civil', async () => {
+      const sessionRepo = makeRepoWithState('AWAITING_TYPE')
+      const service = new StateMachineService(sessionRepo)
+
+      const response = await service.processIncomingMessage(
+        INSTANCE,
+        PHONE,
+        '2'
       )
 
       expect(response).toContain('itens')
@@ -178,17 +218,36 @@ describe('StateMachineService', () => {
       )
     })
 
-    it('deve pedir para repetir se a resposta não for reconhecida', async () => {
+    it('deve aceitar "serviço civil" por extenso', async () => {
       const sessionRepo = makeRepoWithState('AWAITING_TYPE')
       const service = new StateMachineService(sessionRepo)
 
       const response = await service.processIncomingMessage(
         INSTANCE,
         PHONE,
-        'não sei o que quero'
+        'serviço civil'
       )
 
-      expect(response).toContain('não entendi')
+      expect(response).toContain('itens')
+      expect(sessionRepo.saveSession).toHaveBeenCalledWith(
+        PHONE,
+        expect.objectContaining({ budgetType: 'civil' })
+      )
+    })
+
+    it('deve mostrar as opções novamente se a resposta não for reconhecida', async () => {
+      const sessionRepo = makeRepoWithState('AWAITING_TYPE')
+      const service = new StateMachineService(sessionRepo)
+
+      const response = await service.processIncomingMessage(
+        INSTANCE,
+        PHONE,
+        'não sei'
+      )
+
+      expect(response).toContain('Não entendi')
+      expect(response).toContain('*1*')
+      expect(response).toContain('*2*')
       expect(sessionRepo.saveSession).not.toHaveBeenCalled()
     })
   })
@@ -207,7 +266,7 @@ describe('StateMachineService', () => {
       })
     }
 
-    it('deve acumular texto enviado pelo usuário', async () => {
+    it('deve acumular texto enviado pelo usuário e confirmar com "Anotado"', async () => {
       const sessionRepo = makeRepoCollecting('item anterior')
       const service = new StateMachineService(sessionRepo)
 
@@ -217,7 +276,7 @@ describe('StateMachineService', () => {
         '2 caixas de parafuso'
       )
 
-      expect(response).toContain('adicionado')
+      expect(response).toContain('Anotado')
       expect(sessionRepo.saveSession).toHaveBeenCalledWith(
         PHONE,
         expect.objectContaining({
@@ -226,21 +285,22 @@ describe('StateMachineService', () => {
       )
     })
 
-    it('deve reclamar se o usuário digitar CONCLUÍDO sem ter enviado itens', async () => {
-      const sessionRepo = makeRepoCollecting('') // sem itens
+    it('deve reclamar se o usuário enviar 1 sem ter adicionado nenhum item', async () => {
+      const sessionRepo = makeRepoCollecting('')
       const service = new StateMachineService(sessionRepo)
 
       const response = await service.processIncomingMessage(
         INSTANCE,
         PHONE,
-        'CONCLUÍDO'
+        '1'
       )
 
-      expect(response).toContain('não enviou nenhum item')
+      expect(response).toContain('nenhum item')
+      expect(response).toContain('Exemplo')
       expect(mockExtractBudgetItems).not.toHaveBeenCalled()
     })
 
-    it('deve chamar o Gemini e avançar para CONFIRMING quando CONCLUÍDO com itens', async () => {
+    it('deve chamar o Gemini e avançar para CONFIRMING quando digitar 1 com itens', async () => {
       const sessionRepo = makeRepoCollecting('2x parafuso R$5\n1x cimento R$30')
       const service = new StateMachineService(sessionRepo)
 
@@ -252,18 +312,20 @@ describe('StateMachineService', () => {
       const response = await service.processIncomingMessage(
         INSTANCE,
         PHONE,
-        'concluido'
+        '1'
       )
 
       expect(mockExtractBudgetItems).toHaveBeenCalledOnce()
-      expect(response).toContain('resumo')
+      expect(response).toContain('Resumo')
+      expect(response).toContain('Sim')
+      expect(response).toContain('Não')
       expect(sessionRepo.saveSession).toHaveBeenCalledWith(
         PHONE,
         expect.objectContaining({ state: 'CONFIRMING' })
       )
     })
 
-    it('deve retornar mensagem de erro se o Gemini não extrair nenhum item', async () => {
+    it('deve mostrar exemplo de formato se o Gemini não extrair nenhum item', async () => {
       const sessionRepo = makeRepoCollecting('texto incompreensível ###')
       const service = new StateMachineService(sessionRepo)
 
@@ -272,10 +334,11 @@ describe('StateMachineService', () => {
       const response = await service.processIncomingMessage(
         INSTANCE,
         PHONE,
-        'CONCLUÍDO'
+        '1'
       )
 
-      expect(response).toContain('não consegui entender')
+      expect(response).toContain('Não consegui identificar')
+      expect(response).toContain('Exemplo')
     })
   })
 
@@ -296,11 +359,10 @@ describe('StateMachineService', () => {
       })
     }
 
-    it('"Sim" — deve gerar o PDF e enviar pelo WhatsApp com sucesso', async () => {
+    it('"Sim" — deve enviar msg de progresso, gerar PDF e enviar pelo WhatsApp', async () => {
       const sessionRepo = makeRepoConfirming()
       const service = new StateMachineService(sessionRepo)
 
-      // Simula resposta da API com um buffer de PDF
       const fakePdfBuffer = Buffer.from('fake-pdf-content')
       mockApiPost.mockResolvedValueOnce({ data: fakePdfBuffer })
 
@@ -313,7 +375,7 @@ describe('StateMachineService', () => {
       expect(mockSendText).toHaveBeenCalledWith(
         INSTANCE,
         PHONE,
-        expect.stringContaining('aguarde')
+        expect.stringContaining('Aguarde')
       )
       expect(mockApiPost).toHaveBeenCalledWith(
         '/pdf/generate-product',
@@ -325,7 +387,7 @@ describe('StateMachineService', () => {
       expect(response).toBeNull()
     })
 
-    it('"Sim" — deve usar o endpoint civil para budgetType = civil', async () => {
+    it('"Sim" — deve usar o endpoint /pdf/generate para budgetType = civil', async () => {
       const sessionRepo = makeRepoConfirming({ budgetType: 'civil' })
       const service = new StateMachineService(sessionRepo)
 
@@ -340,13 +402,13 @@ describe('StateMachineService', () => {
       )
     })
 
-    it('"Sim" — deve retornar erro interno se dados da sessão foram perdidos', async () => {
+    it('"Sim" — deve retornar "Ops!" se dados da sessão foram perdidos', async () => {
       const sessionRepo = makeSessionRepo({
         getSession: vi.fn().mockResolvedValue({
           phone: PHONE,
           state: 'CONFIRMING',
-          userId: null, // userId ausente!
-          extractedItems: null, // itens ausentes!
+          userId: null,
+          extractedItems: null,
         }),
       })
       const service = new StateMachineService(sessionRepo)
@@ -357,11 +419,11 @@ describe('StateMachineService', () => {
         'Sim'
       )
 
-      expect(response).toContain('Erro interno')
+      expect(response).toContain('Ops!')
       expect(sessionRepo.clearSession).toHaveBeenCalledWith(PHONE)
     })
 
-    it('"Sim" — deve retornar erro e limpar sessão se a API de PDF falhar', async () => {
+    it('"Sim" — deve limpar sessão e orientar nova tentativa se a API de PDF falhar', async () => {
       const sessionRepo = makeRepoConfirming()
       const service = new StateMachineService(sessionRepo)
 
@@ -373,7 +435,7 @@ describe('StateMachineService', () => {
         'Sim'
       )
 
-      expect(response).toContain('erro técnico')
+      expect(response).toContain('Não conseguimos gerar')
       expect(sessionRepo.clearSession).toHaveBeenCalledWith(PHONE)
     })
 
@@ -388,6 +450,7 @@ describe('StateMachineService', () => {
       )
 
       expect(response).toContain('cancelado')
+      expect(response).toContain('Oi')
       expect(sessionRepo.clearSession).toHaveBeenCalledWith(PHONE)
       expect(mockApiPost).not.toHaveBeenCalled()
     })
@@ -411,7 +474,7 @@ describe('StateMachineService', () => {
       )
 
       expect(sessionRepo.clearSession).toHaveBeenCalledWith(PHONE)
-      expect(response).toContain('reinicie')
+      expect(response).toContain('Reiniciamos')
     })
   })
 })

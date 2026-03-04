@@ -6,37 +6,54 @@ export interface ExtractedItem {
   price?: number | null
 }
 
-// Em vez de deixar no meio do serviço, separamos a estrutura (schema) que a IA precisa nos devolver
-export const budgetItemSchema: Schema = {
-  type: Type.ARRAY,
-  description:
-    'Lista de itens de orçamento detalhados extraídos da mensagem bruta.',
-  items: {
-    type: Type.OBJECT,
-    properties: {
-      title: {
-        type: Type.STRING,
-        description:
-          'Nome claro e formatado do produto ou serviço (ex: "Porta de Madeira Reforçada", "Instalação de Pia"). Remova erros de digitação e deixe o texto profissional.',
-      },
-      amount: {
-        type: Type.NUMBER,
-        description:
-          'Quantidade numérica solicitada. Se o usuário referenciar pares ou dúzias, calcule o valor total numérico. Se nenhuma quantidade for explícita, presuma 1.',
-      },
-      price: {
-        type: Type.NUMBER,
-        description:
-          'Preço unitário numérico (ex: 150.50) se mencionado explicitamente pelo usuário na mensagem. Caso o valor mencionado seja total, tente descobrir o unitário dividindo pela quantidade, ou se não for possível ter certeza, deixe null. Não invente preços.',
-        nullable: true,
-      },
-    },
-    required: ['title', 'amount'],
-  },
+// Resposta completa do Gemini com Chain-of-Thought
+export interface GeminiExtractionResponse {
+  _raciocinio: string
+  items: ExtractedItem[]
 }
 
-// Separamos também a lógica de gerar o texto que vai para a IA (o "Prompt")
-// Dessa forma, se no futuro quisermos injetar mais regras (ex: proibir certos itens), mexemos só aqui.
+// Schema do objeto raiz que o Gemini deve retornar
+export const budgetExtractionSchema: Schema = {
+  type: Type.OBJECT,
+  properties: {
+    _raciocinio: {
+      type: Type.STRING,
+      description:
+        'Camada de processamento lógico (Chain-of-Thought). Narrar analiticamente: identificação e descarte de gírias, cálculo matemático das quantidades e deliberação conservadora sobre preços ANTES de preencher os items.',
+    },
+    items: {
+      type: Type.ARRAY,
+      description: 'Lista de itens de orçamento extraídos da mensagem bruta.',
+      items: {
+        type: Type.OBJECT,
+        properties: {
+          title: {
+            type: Type.STRING,
+            description:
+              'Nome do produto ou serviço em Title Case com erros ortográficos corrigidos. Ex: "Pneu Aro 15", "Óleo Para Motor".',
+          },
+          amount: {
+            type: Type.NUMBER,
+            description:
+              'Quantidade absoluta inteira. "um par" = 2, "meia dúzia" = 6, "duas dúzias" = 24. Singular sem quantidade explícita = 1.',
+          },
+          price: {
+            type: Type.NUMBER,
+            description:
+              'Preço unitário SOMENTE se declarado de forma explícita e inegável pelo usuário. Gírias monetárias ("conto", "pila", "reais") são convertidas para valor numérico. SE NÃO HOUVER PREÇO EXPLÍCITO, retornar null obrigatoriamente.',
+            nullable: true,
+          },
+        },
+        required: ['title', 'amount'],
+      },
+    },
+  },
+  required: ['_raciocinio', 'items'],
+}
+
+// Mantemos o alias para compatibilidade com código existente
+export const budgetItemSchema = budgetExtractionSchema
+
 export function buildExtractionPrompt(
   text: string,
   budgetType: 'product' | 'civil'
@@ -46,24 +63,25 @@ export function buildExtractionPrompt(
       ? 'Orçamento de Produtos'
       : 'Orçamento de Serviço Civil'
 
-  return `
-Você é um assistente especialista do sistema de orçamentos "Click Proposta". 
-O seu papel é atuar como o cérebro por trás da extração inteligente de itens que chegam por WhatsApp.
+  return `Você é o processador cognitivo e o motor de extração estruturada de entidades primário do sistema corporativo "Click Proposta".
+Sua interface de atuação é exclusivamente backend, e sua diretriz operacional singular é atuar como o aparato de inteligência analítica que processa solicitações de usuários finais provenientes de mensagens textuais no WhatsApp.
 
-**CONTEXTO:**
-O usuário enviou uma mensagem em linguagem natural listando itens para um ${typeLabel}.
-Sua tarefa é analisar essa mensagem, limpar sujeiras (ex: gírias, erros gramaticais nas descrições) e extrair EXATAMENTE o que a pessoa pediu.
+O usuário final enviará mensagens em linguagem natural bruta, listando um ou múltiplos itens para compor um(a) ${typeLabel}. Devido à natureza inerente da mensageria via internet (o ecossistema WhatsApp no Brasil), a entrada de texto será tipicamente saturada de interferências comunicativas: gírias ("blz", "fds", "truta", "zap"), abreviações, interjeições informais, total desrespeito a regras de pontuação e erros ortográficos severos. A sua incumbência é agir como um filtro de estado, ignorar sumariamente o ruído linguístico e social, realizar a normalização sintática profunda e extrair EXATAMENTE as entidades de negócio solicitadas.
 
-**REGRAS CRÍTICAS DE EXTRAÇÃO:**
-1. **Padronização:** Formate a primeira letra de cada palavra no campo \`title\` em maiúscula (Title Case). Corrija erros crassos de português no nome do produto.
-2. **Quantidades Implícitas:** Se o usuário disser "quero um par de pneus", isso significa \`amount: 2\`. Se disser "duas dúzias de ovos", significa \`amount: 24\`.
-3. **Múltiplos Itens:** Sempre procure identificar se há mais de um item distinto sendo pedido na mesma frase.
-4. **Preços:** Só preencha o campo \`price\` se o usuário **explicitamente** indicar o valor que pagou ou deseja pagar por **cada unidade**. Não faça estimativas. Se não houver preço, retorne nulo.
-5. **Apenas os Dados:** Restrinja sua resposta APENAS E ESTRITAMENTE ao JSON esperado.
+REGRAS DE EXTRAÇÃO:
 
-**MENSAGEM DO USUÁRIO:**
+1. Higienização e Padronização de Títulos (title): Isole e extraia estritamente os nomes dos produtos ou serviços desejados. Exclua qualquer comentário acessório, saudação ou tentativa de diálogo. Corrija imediatamente falhas de grafia. O campo extraído deve OBRIGATORIAMENTE obedecer ao formato "Title Case".
+
+2. Avaliação e Transformação Matemática de Quantidades (amount): Mapeie termos coloquiais ou de grupo para algarismos absolutos inteiros. Singular ou sem métrica = 1. "um par" = 2. "dois pares" = 4. "meia dúzia" = 6. "duas dúzias" = 24.
+
+3. Isolamento de Entidades Múltiplas: Escaneie exaustivamente a solicitação para delimitar itens heterogêneos mencionados em cascata. Cada tipo distinto de item = novo objeto independente no array items.
+
+4. Alocação Restritiva e Explícita de Preços Unitários (price): SOMENTE popular este campo se o usuário declarar de forma totalmente explícita o valor financeiro por unidade. Interprete gírias monetárias ("conto", "pila", "reais"). É TERMINANTEMENTE PROIBIDO inferir, adivinhar ou estimar o preço. Se não constar do texto, retornar null.
+
+5. Chain-of-Thought obrigatória: Preencha PRIMEIRO o campo _raciocinio narrando analiticamente: identificação e descarte das gírias, equacionamento das quantidades, deliberação sobre preços. DEPOIS preencha o array items.
+
+MENSAGEM DO USUÁRIO:
 """
 ${text}
-"""
-  `.trim()
+"""`
 }

@@ -43,7 +43,7 @@ export class StateMachineService {
       default:
         // Se o estado for inválido ou deu erro, reseta a sessão por segurança
         await this.sessionRepository.clearSession(phone)
-        return '🔄 Tivemos um problema técnico. Por favor, reinicie a conversa mandando um "Oi".'
+        return '⚠️ Algo deu errado. Reiniciamos sua sessão.\n\nPara começar, envie *Oi*.'
     }
   }
 
@@ -69,30 +69,37 @@ export class StateMachineService {
       await this.sessionRepository.saveSession(phone, {
         phone,
         state: 'AWAITING_TYPE',
-        userId: user.id, // Vamos precisar disso para gerar o PDF depois
+        userId: user.id,
       })
 
-      return `👋 Olá, ${
-        user.name || 'cliente'
-      }! Voltamos a falar. Por favor, me diga: O orçamento que você quer enviar agora é de *Produtos* ou de *Serviço Civil*?`
-    } catch (error: any) {
-      if (error.response?.status === 404) {
-        return '😞 Poxa, não encontrei seu número cadastrado no Click Proposta. Por favor, acesse nosso site e faça o seu cadastro primeiro https://click-proposta.umdoce.dev.br/login!'
+      return `👋 Olá, *${user.name || 'cliente'}*! Que bom ter você aqui.\n\nPara começar, qual o tipo do seu orçamento?\n\n*1* — Produtos\n*2* — Serviço Civil\n\nResponda com *1* ou *2*.`
+    } catch (error: unknown) {
+      const axiosError = error as {
+        response?: { status: number }
+        message: string
+      }
+      if (axiosError.response?.status === 404) {
+        return '😕 Hmm, não encontrei seu número no *Click Proposta*.\n\nPara usar o bot, você precisa ter uma conta ativa. Crie a sua em:\n👉 https://click-proposta.umdoce.dev.br/login'
       }
 
-      console.error('[StateMachine] Erro ao verificar usuário:', error.message)
-      return '🔄 Tivemos um problema técnico ao verificar seu cadastro. Por favor, tente novamente mais tarde dizendo "Oi".'
+      console.error(
+        '[StateMachine] Erro ao verificar usuário:',
+        axiosError.message
+      )
+      return '⚠️ Algo deu errado no nosso lado, desculpe o transtorno.\n\nTente novamente em instantes enviando um *Oi*.'
     }
   }
 
   private async handleAwaitingType(phone: string, text: string) {
-    const isProduct = text.toLowerCase().includes('produto')
+    const isProduct =
+      text.trim() === '1' || text.toLowerCase().includes('produto')
     const isCivil =
+      text.trim() === '2' ||
       text.toLowerCase().includes('serviço') ||
       text.toLowerCase().includes('civil')
 
     if (!isProduct && !isCivil) {
-      return '🤔 Desculpe, não entendi. Por favor responda com "Produto" ou "Serviço Civil".'
+      return '🤔 Não entendi sua resposta. Por favor, escolha uma das opções:\n\n*1* — Produtos\n*2* — Serviço Civil'
     }
 
     const budgetType = isProduct ? 'product' : 'civil'
@@ -102,7 +109,7 @@ export class StateMachineService {
       budgetType,
     })
 
-    return '✅ Entendido! Agora me mande os itens do orçamento (pode digitar tudo ou mandar um áudio).\n\nQuando terminar, digite *CONCLUÍDO*.'
+    return '✅ Ótimo! Agora me mande os itens do orçamento.\n\nPode digitar assim:\n_2x Parafuso phillips 5cm — R$ 0,50_\n_1x Cimento 50kg — R$ 35,00_\n\nQuando terminar, envie *1*.'
   }
 
   private async handleCollectingItems(
@@ -110,14 +117,11 @@ export class StateMachineService {
     phone: string,
     text: string
   ) {
-    if (
-      text.toLowerCase() === 'concluído' ||
-      text.toLowerCase() === 'concluido'
-    ) {
+    if (text.trim() === '1') {
       const currentData = session.collectedData || ''
 
       if (!currentData.trim()) {
-        return '🤔 Você ainda não enviou nenhum item. Por favor, me mande os itens do seu orçamento antes de digitar CONCLUÍDO.'
+        return '⚠️ Você ainda não enviou nenhum item.\n\nMe mande os itens antes de finalizar:\n_Exemplo: 3x tinta acrílica branca — R$ 45,00_'
       }
 
       // 1. Chamar o Gemini pra extrair a lista estruturada de itens
@@ -127,7 +131,7 @@ export class StateMachineService {
       )
 
       if (extractedItems.length === 0) {
-        return '😟 Desculpe, não consegui entender nenhum item na sua mensagem. Pode tentar enviar novamente com mais clareza?'
+        return '🤖 Não consegui identificar os itens da sua mensagem.\n\nTente enviar no formato:\n_Quantidade x Descrição — Valor_\n\nExemplo: _2x parafuso 5cm — R$ 0,50_'
       }
 
       // 2. Formatar o resumo para o usuário
@@ -135,20 +139,17 @@ export class StateMachineService {
       let totalAmount = 0
 
       for (const item of extractedItems) {
-        summaryText += `- ${item.amount}x ${item.title} ${
-          item.price ? '(R$ ' + item.price + ')' : ''
-        }\n`
+        summaryText += `• ${item.amount}x ${item.title}${item.price ? ` — R$ ${item.price}` : ''}\n`
         totalAmount += item.amount
       }
 
       // 3. Salvar os itens extraídos na sessão para o próximo passo usar
       await this.sessionRepository.saveSession(phone, {
         state: 'CONFIRMING',
-        // Podemos salvar como JSON string no Redis
         extractedItems: JSON.stringify(extractedItems),
       })
 
-      return `⏳ Perfeito! Analisei seus itens e este é o resumo do orçamento:\n\n${summaryText}\nTotal de itens: ${totalAmount}\n\nPosso gerar o PDF agora? (Sim/Não)`
+      return `📋 *Resumo do seu orçamento:*\n\n${summaryText}\nTotal de itens: *${totalAmount}*\n\nConfirmo a geração do PDF?\n\n*Sim* — Gerar PDF\n*Não* — Cancelar`
     }
 
     // Acumula o que a pessoa está dizendo
@@ -157,7 +158,7 @@ export class StateMachineService {
       collectedData: currentData + '\n' + text,
     })
 
-    return '👉 Item adicionado. Mande mais itens ou digite *CONCLUÍDO* para gerar o orçamento.'
+    return '✍️ Anotado! Pode continuar enviando os itens.\n\nQuando terminar, envie *1*.'
   }
 
   private async handleConfirming(
@@ -168,41 +169,44 @@ export class StateMachineService {
   ) {
     if (text.toLowerCase() === 'sim') {
       try {
-        // Envia mensagem avisando que está gerando, não dependura essa em return (não block o webhook loop da Evolution)
         await this.evolutionService.sendText(
           instanceName,
           phone,
-          '📄 Gerando seu PDF, aguarde um instante...'
+          '⏳ Gerando seu orçamento em PDF... Aguarde só um instante!'
         )
 
         if (!session.extractedItems || !session.userId) {
           await this.sessionRepository.clearSession(phone)
-          return '❌ Erro interno: Dados do orçamento foram perdidos. Por favor, reinicie dizendo "Oi".'
+          return '❌ Ops! Os dados do seu orçamento foram perdidos.\n\nPor favor, envie *Oi* para começar novamente.'
         }
 
         const items = JSON.parse(session.extractedItems)
         const budgetType = session.budgetType || 'product'
 
+        interface BudgetItem {
+          title: string
+          amount: number
+          price: number
+        }
+
         // Calcula o valor total do orçamento informando 0 se a Gemini não achou preço
         const totalValue = items.reduce(
-          (acc: number, item: any) =>
+          (acc: number, item: BudgetItem) =>
             acc + (item.price || 0) * (item.amount || 1),
           0
         )
 
         // Mapeia os itens da Gemini para o formato exato que a API espera (services)
-        const mappedServices = items.map((item: any) => ({
+        const mappedServices = items.map((item: BudgetItem) => ({
           title: item.title,
           description: '',
           quantity: item.amount || 1,
           price: item.price || 0,
         }))
 
-        // Define qual rota na API principal será chamada baseada no budgetType
         const endpoint =
           budgetType === 'product' ? '/pdf/generate-product' : '/pdf/generate'
 
-        // AQUI ENTRA: Chamada para a API v2
         const response = await api.post(
           endpoint,
           {
@@ -212,19 +216,17 @@ export class StateMachineService {
           },
           {
             headers: {
-              Authorization: `Bearer ${env.BOT_SERVICE_TOKEN}`, // Nossa autenticação interna
+              Authorization: `Bearer ${env.BOT_SERVICE_TOKEN}`,
             },
-            responseType: 'arraybuffer', // Precisamos do arquivo para converter em base64
+            responseType: 'arraybuffer',
           }
         )
 
-        // Converter buffer PDF para base64 para a Evolution API
         const base64Pdf = Buffer.from(response.data, 'binary').toString(
           'base64'
         )
         const fileName = `orcamento-${budgetType}-${Date.now()}.pdf`
 
-        // Envia o PDF pronto de volta usando o web hook da Evolution Api
         await this.evolutionService.sendPdf(
           instanceName,
           phone,
@@ -232,19 +234,18 @@ export class StateMachineService {
           fileName
         )
 
-        // Limpa a sessão
         await this.sessionRepository.clearSession(phone)
 
-        // Opcional devolver um texto vazio ou nulo já que o service de send já mandou a resposta
         return null
-      } catch (error: any) {
-        console.error('[StateMachine] Erro ao gerar PDF:', error.message)
+      } catch (error: unknown) {
+        const err = error as { message: string }
+        console.error('[StateMachine] Erro ao gerar PDF:', err.message)
         await this.sessionRepository.clearSession(phone)
-        return '❌ Infelizmente ocorreu um erro técnico na geração do seu PDF no nosso sistema. O Orçamento foi cancelado, tente mandar um "Oi" para recomeçar.'
+        return '❌ Não conseguimos gerar o PDF desta vez.\n\nPor favor, tente novamente enviando *Oi*. Se o erro persistir, entre em contato com o suporte.'
       }
     } else {
       await this.sessionRepository.clearSession(phone)
-      return '❌ Orçamento cancelado. Você pode começar um novo a qualquer momento dizendo "Oi".'
+      return '👍 Orçamento cancelado.\n\nQuando quiser criar um novo, é só enviar *Oi*.'
     }
   }
 }

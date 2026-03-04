@@ -16,8 +16,12 @@ import {
   vi,
 } from 'vitest'
 import { mockApi, mockApiGet } from '../mocks/axios.mock'
-import { MockEvolutionService, mockSendText } from '../mocks/evolution.mock'
-import { MockGeminiService } from '../mocks/gemini.mock'
+import {
+  MockEvolutionService,
+  mockGetBase64Media,
+  mockSendText,
+} from '../mocks/evolution.mock'
+import { MockGeminiService, mockTranscribeAudio } from '../mocks/gemini.mock'
 import { mockRedis } from '../mocks/redis.mock'
 
 vi.mock('../../lib/redis', () => ({ redis: mockRedis }))
@@ -142,6 +146,53 @@ describe('POST /webhook', () => {
       // A API foi chamada, provando que o texto foi extraído corretamente
       expect(mockApiGet).toHaveBeenCalledOnce()
     })
+
+    it('deve processar áudio via audioMessage', async () => {
+      // Configura os mocks para a conversão do áudio
+      mockGetBase64Media.mockResolvedValueOnce({
+        base64: 'fake-base64',
+        mimetype: 'audio/ogg',
+      })
+      mockTranscribeAudio.mockResolvedValueOnce('texto extraido do audio')
+
+      // Mock da API para a StateMachine (bot respondeu porque recebeu texto)
+      mockApiGet.mockResolvedValueOnce({
+        data: { user: { id: 'user-audio', name: 'User Audio' } },
+      })
+
+      const response = await request(app.server)
+        .post('/webhook')
+        .send(
+          buildWebhookPayload({
+            data: {
+              key: {
+                id: 'msg-123',
+                remoteJid: '5511999999999@s.whatsapp.net',
+                fromMe: false,
+              },
+              message: {
+                audioMessage: { url: 'https://whatsapp.net/audio/123' },
+              },
+            },
+          })
+        )
+
+      expect(response.status).toBe(200)
+      // O EvolutionService foi chamado para baixar a mídia
+      expect(mockGetBase64Media).toHaveBeenCalledWith(
+        'minha-instancia',
+        'msg-123',
+        '5511999999999@s.whatsapp.net',
+        false
+      )
+      // O GeminiService foi chamado para transcrever
+      expect(mockTranscribeAudio).toHaveBeenCalledWith(
+        'fake-base64',
+        'audio/ogg'
+      )
+      // A API simulada foi chamada, indicando que a Sate Machine continuou o fluxo
+      expect(mockApiGet).toHaveBeenCalledOnce()
+    })
   })
 
   // =========================================================================
@@ -193,7 +244,7 @@ describe('POST /webhook', () => {
       expect(mockSendText).toHaveBeenCalledWith(
         'minha-instancia',
         '5511999999999',
-        expect.stringContaining('cadastro')
+        expect.stringContaining('Click Proposta')
       )
     })
 
@@ -208,7 +259,7 @@ describe('POST /webhook', () => {
       expect(mockSendText).toHaveBeenCalledWith(
         'minha-instancia',
         '5511999999999',
-        expect.stringContaining('problema técnico')
+        expect.stringContaining('deu errado')
       )
     })
   })

@@ -1,31 +1,30 @@
 import { gemini } from '../lib/gemini'
 import {
-  budgetItemSchema,
+  budgetExtractionSchema,
   buildExtractionPrompt,
   type ExtractedItem,
+  type GeminiExtractionResponse,
 } from './gemini-schemas'
 
 export class GeminiService {
   /**
-   * Extrai de forma inteligente os itens de um orçamento usando o Gemini 1.5 Flash.
+   * Extrai de forma inteligente os itens de um orçamento usando o Gemini.
+   * Utiliza Chain-of-Thought via campo _raciocinio para maior precisão.
    */
   async extractBudgetItems(
     text: string,
     budgetType: 'product' | 'civil'
   ): Promise<ExtractedItem[]> {
-    // 1. Gera o prompt detalhado a partir do nosso arquivo de Schemas
     const prompt = buildExtractionPrompt(text, budgetType)
 
     try {
-      // 2. Chama a inteligência artificial da Google (gemini-2.5-flash é super rápido para esse tipo de tarefa)
       const response = await gemini.models.generateContent({
         model: 'gemini-2.5-flash',
         contents: prompt,
         config: {
-          // Aqui forçamos a IA a nos devolver EXATAMENTE um array JSON baseado no nosso Schema Rigoroso
           responseMimeType: 'application/json',
-          responseSchema: budgetItemSchema,
-          // Temperatura 0 forçamos o modelo a não "alucinar" ou ser criativo com as palavras/nomes se não as encontrar no texto principal
+          responseSchema: budgetExtractionSchema,
+          // Temperatura 0: sem criatividade, extração determinística
           temperature: 0,
         },
       })
@@ -36,16 +35,63 @@ export class GeminiService {
         return []
       }
 
-      // 3. O Gemini garante que o formato JSON retornado é convertível para a nossa interface ExtractedItem
-      const items = JSON.parse(jsonText) as ExtractedItem[]
+      // O retorno agora é { _raciocinio, items } — extraímos apenas os items
+      const parsed = JSON.parse(jsonText) as GeminiExtractionResponse
 
       console.log(
-        `[Gemini] Extração Sucedida: Encontrados ${items.length} itens reais de '${text}'`
+        `[Gemini] Raciocínio: ${parsed._raciocinio?.substring(0, 120)}...`
       )
-      return items
+      console.log(
+        `[Gemini] Extração Sucedida: ${parsed.items.length} itens encontrados em "${text.substring(0, 60)}"`
+      )
+
+      return parsed.items ?? []
     } catch (error) {
       console.error('[Gemini] Erro crítico ao extrair itens:', error)
       return []
+    }
+  }
+  /**
+   * Transcreve um áudio em base64 recebido pelo WhatsApp.
+   */
+  async transcribeAudio(
+    base64Audio: string,
+    mimeType: string
+  ): Promise<string> {
+    try {
+      const response = await gemini.models.generateContent({
+        model: 'gemini-2.5-flash',
+        contents: [
+          {
+            role: 'user',
+            parts: [
+              {
+                text: 'Transcreva este áudio exatamente como foi falado. Não adicione explicações, comentários ou formatações extras. Apenas o texto transcrito.',
+              },
+              {
+                inlineData: {
+                  data: base64Audio,
+                  mimeType: mimeType,
+                },
+              },
+            ],
+          },
+        ],
+        config: {
+          temperature: 0, // Transcrição determinística
+        },
+      })
+
+      const transcribedText = response.text || ''
+
+      console.log(
+        `[Gemini] Áudio transcrito com sucesso: "${transcribedText.substring(0, 60)}..."`
+      )
+
+      return transcribedText
+    } catch (error) {
+      console.error('[Gemini] Erro crítico ao transcrever áudio:', error)
+      return ''
     }
   }
 }

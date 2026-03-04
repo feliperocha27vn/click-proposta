@@ -2,11 +2,13 @@ import type { FastifyInstance } from 'fastify'
 import { z } from 'zod'
 import { SessionRepository } from '../../../repositories/session-repository'
 import { EvolutionService } from '../../../services/evolution-service'
+import { GeminiService } from '../../../services/gemini-service'
 import { StateMachineService } from '../../../services/state-machine-service'
 
 const sessionRepository = new SessionRepository()
 const stateMachineService = new StateMachineService(sessionRepository)
 const evolutionService = new EvolutionService()
+const geminiService = new GeminiService()
 
 export async function webhookRoutes(app: FastifyInstance) {
   app.post('/webhook', async (request, reply) => {
@@ -18,6 +20,7 @@ export async function webhookRoutes(app: FastifyInstance) {
         instance: z.string(), // O none da instância vem no webhook!
         data: z.object({
           key: z.object({
+            id: z.string().optional(), // ID da mensagem, necessário para baixar mídia
             remoteJid: z.string(), // O número de telefone de quem enviou
             fromMe: z.boolean(), // Se foi o próprio bot quem enviou
           }),
@@ -47,6 +50,26 @@ export async function webhookRoutes(app: FastifyInstance) {
           text = messageData.conversation
         } else if (messageData.extendedTextMessage?.text) {
           text = messageData.extendedTextMessage.text
+        } else if (messageData.audioMessage) {
+          // Extrai áudio
+          const messageId = body.data.key.id
+          if (messageId) {
+            console.log(`[Webhook] Baixando áudio da mensagem ${messageId}...`)
+            const media = await evolutionService.getBase64Media(
+              instanceName,
+              messageId,
+              body.data.key.remoteJid,
+              body.data.key.fromMe
+            )
+
+            if (media) {
+              console.log('[Webhook] Áudio baixado, iniciando transcrição...')
+              text = await geminiService.transcribeAudio(
+                media.base64,
+                media.mimetype
+              )
+            }
+          }
         }
       }
 

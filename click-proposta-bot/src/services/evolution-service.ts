@@ -19,10 +19,11 @@ export class EvolutionService {
         number: phone,
         text: text,
       })
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const err = error as { response?: { data: unknown }; message: string }
       console.error(
         `[Evolution] Erro ao enviar mensagem para ${phone}:`,
-        error?.response?.data || error.message
+        err?.response?.data || err.message
       )
     }
   }
@@ -45,11 +46,47 @@ export class EvolutionService {
         media: base64Pdf,
         fileName: fileName,
       })
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const err = error as { response?: { data: unknown }; message: string }
       console.error(
         `[Evolution] Erro ao enviar PDF para ${phone}:`,
-        error?.response?.data || error.message
+        err?.response?.data || err.message
       )
+    }
+  }
+  /**
+   * Baixa a mídia de uma mensagem da Evolution API em formato Base64
+   */
+  async getBase64Media(
+    instanceName: string,
+    messageId: string,
+    remoteJid: string,
+    fromMe: boolean
+  ): Promise<{ base64: string; mimetype: string } | null> {
+    try {
+      const response = await evolutionApi.post(
+        `/chat/getBase64FromMediaMessage/${instanceName}`,
+        {
+          message: {
+            key: {
+              id: messageId,
+              remoteJid: remoteJid,
+              fromMe: fromMe,
+            },
+          },
+        }
+      )
+      return {
+        base64: response.data.base64,
+        mimetype: response.data.mimetype,
+      }
+    } catch (error: unknown) {
+      const err = error as { response?: { data: unknown }; message: string }
+      console.error(
+        `[Evolution] Erro ao baixar mídia da mensagem ${messageId}:`,
+        err?.response?.data || err.message
+      )
+      return null
     }
   }
 }
