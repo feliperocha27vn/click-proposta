@@ -109,7 +109,7 @@ export class StateMachineService {
       budgetType,
     })
 
-    return '✅ Ótimo! Agora me mande os itens do orçamento.\n\nPode digitar assim:\n_2x Parafuso phillips 5cm — R$ 0,50_\n_1x Cimento 50kg — R$ 35,00_\n\nQuando terminar, envie *1*.'
+    return '✅ Ótimo! Agora me mande os itens do orçamento.\n\nPode digitar assim:\n_2x Parafuso phillips 5cm — R$ 0,50_\n_1x Cimento 50kg — R$ 35,00_\n\nOu envie um áudio com os itens.\n\nQuando terminar, envie *1*.'
   }
 
   private async handleCollectingItems(
