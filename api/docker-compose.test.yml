@@ -1,0 +1,10 @@
+name: click-proposal-api-test
+services:
+  api-click-proposal-test:
+    image: bitnami/postgresql
+    ports:
+      - "5433:5432" # Porta diferente da dev para evitar conflitos
+    environment:
+      - POSTGRESQL_USERNAME=docker
+      - POSTGRESQL_PASSWORD=docker
+      - POSTGRESQL_DATABASE=click-proposal-test

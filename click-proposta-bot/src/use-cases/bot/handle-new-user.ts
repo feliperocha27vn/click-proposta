@@ -28,6 +28,26 @@ export class HandleNewUserUseCase {
       })
 
       const user = response.data.user
+      const paymentLink = 'https://click-proposta.umdoce.dev.br/plans'
+
+      if (user.planType === 'FREE' && user.countProposalsInMonth >= 2) {
+        return `Chefe, seus orçamentos gratuitos deste mês acabaram! 🚧\n\nPara continuar gerando orçamentos ilimitados, ative o *Plano Pro* por apenas *R$ 14,90/mês*.\n\nPague no PIX aqui:\n👉 ${paymentLink}`
+      }
+
+      if (user.planType === 'PRO') {
+        const now = new Date()
+        const planExpiresAt = user.planExpiresAt
+          ? new Date(user.planExpiresAt)
+          : null
+
+        if (planExpiresAt && now > planExpiresAt) {
+          return `Seu *Plano Pro* expirou! 😱\n\nRenove agora por apenas *R$ 14,90* para continuar com orçamentos ilimitados:\n👉 ${paymentLink}`
+        }
+
+        if (user.countProposalsInMonth >= 100) {
+          return 'Você atingiu o limite de Fair Use (100 orçamentos) do seu Plano Pro este mês. 🛑\n\nCaso precise de mais, entre em contato com nosso suporte.'
+        }
+      }
 
       // Se existir, salva novo estado, pedindo o tipo de orçamento e guarda o ID do usuário
       await this.sessionRepository.saveSession(phone, {

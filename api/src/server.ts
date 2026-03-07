@@ -2,6 +2,9 @@ import { writeFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
 import { app } from './app'
 import { env } from './env'
+import { setupExpiredPlansJob } from './jobs/check-expired-plans'
+
+setupExpiredPlansJob()
 
 app
   .listen({

@@ -13,6 +13,8 @@ export interface GetUserById {
   name: string | null
   avatarUrl: string | null
   plan: 'FREE' | 'PRO'
+  planType: string
+  planExpiresAt: Date | null
   isRegisterComplete: boolean
   cnpj: string | null
   address: string | null
@@ -29,6 +31,7 @@ export interface UsersRepository {
     userId: string
   ): Promise<Customers[] | null>
   countProposals(userId: string): Promise<number>
+  countProposalsInMonth(userId: string): Promise<number>
   completeRegister(userId: string, data: Prisma.UserUpdateInput): Promise<User>
   getCompleteRegister(userId: string): Promise<Partial<User> | null>
   getDataForPayment(userId: string): Promise<UserForPaymentData | null>

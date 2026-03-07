@@ -3,6 +3,7 @@ import fastifyJwt from '@fastify/jwt'
 import fastifySwagger from '@fastify/swagger'
 import ScalarApiReference from '@scalar/fastify-api-reference'
 import fastify from 'fastify'
+import fastifyRawBody from 'fastify-raw-body'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import {
   jsonSchemaTransform,
@@ -25,6 +26,13 @@ export const app = fastify().withTypeProvider<ZodTypeProvider>()
 
 app.setSerializerCompiler(serializerCompiler)
 app.setValidatorCompiler(validatorCompiler)
+
+app.register(fastifyRawBody, {
+  field: 'rawBody',
+  global: false, // Só queremos em rotas específicas para evitar overhead
+  encoding: 'utf8',
+  runFirst: true,
+})
 
 app.register(fastifyCors, {
   origin: ['http://localhost:5173', 'https://click-proposta.umdoce.dev.br'],

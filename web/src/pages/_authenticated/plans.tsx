@@ -1,3 +1,6 @@
+import { createFileRoute } from '@tanstack/react-router'
+import { Check } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -8,14 +11,14 @@ import {
 } from '@/components/ui/card'
 import { useAuth } from '@/contexts/auth-context'
 import {
+  createNewPayment,
   type GetCompleteRegister200,
+  type GetMeResult,
   getCompleteRegister,
+  getDataForPayment,
   getMe,
 } from '@/http/api'
-import { useQuery } from '@tanstack/react-query'
-import { createFileRoute } from '@tanstack/react-router'
-import { Check } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { AlertErrorModal } from './-components/alert-error-modal'
 import FormCompleteCustomer from './-components/form-complete-customer'
 import { LoadingValidationModal } from './-components/loading-validation-modal'
 
@@ -26,11 +29,11 @@ export const Route = createFileRoute('/_authenticated/plans')({
 function RouteComponent() {
   const { session } = useAuth()
   const [completeModal, setCompleteModal] = useState(false)
+  const [errorModal, setErrorModal] = useState(false)
   const [loadingValidation, setLoadingValidation] = useState(false)
   const [isRegisterComplete, setIsRegisterComplete] =
     useState<GetCompleteRegister200>()
-
-  // console.log(session?.user.user_metadata);
+  const [userData, setUserData] = useState<GetMeResult['user']>()
 
   useEffect(() => {
     getCompleteRegister()
@@ -40,34 +43,63 @@ function RouteComponent() {
       .catch(error => {
         console.error('Erro no useEffect inicial:', error)
       })
+
+    getMe()
+      .then((reply: GetMeResult) => {
+        setUserData(reply.user)
+      })
+      .catch((error: unknown) => {
+        console.error('Erro ao buscar dados do usuário:', error)
+      })
   }, [])
 
   async function handleOpenProModal() {
+    if (userData?.plan === 'PRO') return
+
     // Sempre mostra loading primeiro
     setLoadingValidation(true)
 
     try {
-      // Sempre faz uma nova chamada para garantir dados atualizados
-      const reply = await getCompleteRegister()
-      setIsRegisterComplete(reply)
+      // 1. Tenta buscar os dados para pagamento
+      const userDataPayment = await getDataForPayment()
+
+      // 2. Se chegou aqui, os dados estão completos (API retornou 200)
+      // Gera o link de pagamento direto
+      const checkoutUrl = await createNewPayment({
+        customer: {
+          name: userDataPayment.name,
+          email: userDataPayment.email,
+          cellphone: userDataPayment.phone.replace(/\D/g, ''),
+          cpf: userDataPayment.cpf.replace(/\D/g, ''),
+        },
+      })
+
+      // Redireciona para o Abacate Pay
+      window.location.href = checkoutUrl
+    } catch (error: unknown) {
       setLoadingValidation(false)
 
-      // Abre o modal com os dados atualizados
-      setCompleteModal(true)
-    } catch (error) {
-      setLoadingValidation(false)
-      console.error('Erro ao verificar registro:', error)
+      const apiError = error as {
+        response?: { status: number }
+        status?: number
+      }
+
+      const status = apiError.response?.status || apiError.status
+
+      // Se o erro for 422, significa que faltam dados cadastrais
+      if (status === 422) {
+        setCompleteModal(true)
+      } else {
+        setErrorModal(true)
+      }
+
+      console.error('Erro ao verificar registro ou gerar pagamento:', apiError)
     }
   }
 
   function handleCloseCompleteModal() {
     setCompleteModal(false)
   }
-
-  const { data: userData } = useQuery({
-    queryKey: ['user'],
-    queryFn: getMe,
-  })
 
   return (
     <section className="py-16 md:py-32">
@@ -97,14 +129,16 @@ function RouteComponent() {
                 <hr className="border-dashed" />
 
                 <ul className="list-outside space-y-3 text-sm">
-                  {['2 Propostas / Orçamentos', 'Painel de gestão', 'Suporte por Email'].map(
-                    item => (
-                      <li key={item} className="flex items-center gap-2">
-                        <Check className="size-3" />
-                        {item}
-                      </li>
-                    )
-                  )}
+                  {[
+                    '2 Propostas / Orçamentos',
+                    'Painel de gestão',
+                    'Suporte por Email',
+                  ].map(item => (
+                    <li key={item} className="flex items-center gap-2">
+                      <Check className="size-3" />
+                      {item}
+                    </li>
+                  ))}
                 </ul>
               </CardContent>
 
@@ -116,15 +150,15 @@ function RouteComponent() {
             </Card>
 
             <Card className="relative">
-              <span className="bg-linear-to-br/increasing absolute inset-x-0 -top-3 mx-auto flex h-6 w-fit items-center rounded-full from-purple-400 to-amber-300 px-3 py-1 text-xs font-medium text-amber-950 ring-1 ring-inset ring-white/20 ring-offset-1 ring-offset-gray-950/5">
-                Popular
+              <span className="bg-linear-to-br/increasing absolute inset-x-0 -top-3 mx-auto flex h-6 w-fit items-center rounded-full from-blue-400 to-blue-600 px-3 py-1 text-xs font-medium text-white ring-1 ring-inset ring-white/20 ring-offset-1 ring-offset-gray-950/5">
+                Recomendado
               </span>
 
               <div className="flex flex-col">
                 <CardHeader>
-                  <CardTitle className="font-medium">Recarregue seus créditos</CardTitle>
+                  <CardTitle className="font-medium">Plano Pro</CardTitle>
                   <span className="my-3 block text-2xl font-semibold">
-                    R$ 9,99
+                    R$ 14,90 / mês
                   </span>
                 </CardHeader>
 
@@ -132,29 +166,37 @@ function RouteComponent() {
                   <hr className="border-dashed" />
                   <ul className="list-outside space-y-3 text-sm">
                     {[
-                      '10 Propostas / Orçamentos',
-                      'Painel de gestão',
-                      'Suporte por Email',
-                      'Atualizações Mensais de Produtos',
+                      'Orçamentos Ilimitados',
+                      'Geração via IA no WhatsApp',
+                      "PDF sem marca d'água",
+                      'Painel de gestão completo',
+                      'Suporte prioritário',
                     ].map(item => (
                       <li key={item} className="flex items-center gap-2">
-                        <Check className="size-3" />
+                        <Check className="size-3 text-blue-500" />
                         {item}
                       </li>
                     ))}
                   </ul>
                 </CardContent>
 
-                <CardFooter>
+                <CardFooter className="flex flex-col gap-2">
                   <Button
-                    className="w-full mt-5 cursor-pointer"
+                    className={`w-full mt-5 cursor-pointer bg-blue-600 hover:bg-blue-700 transition-all ${
+                      userData?.plan === 'PRO'
+                        ? 'opacity-40 cursor-not-allowed grayscale'
+                        : ''
+                    }`}
                     onClick={handleOpenProModal}
-                    disabled={userData?.user.plan === 'PRO'}
+                    disabled={userData?.plan === 'PRO'}
                   >
-                    {userData?.user.plan === 'PRO'
-                      ? 'Você já é um assinante'
-                      : 'Comprar créditos'}
+                    {userData?.plan === 'PRO'
+                      ? 'Plano Ativo'
+                      : 'Ativar Plano Pro'}
                   </Button>
+                  <p className="text-center text-[10px] text-zinc-400">
+                    Sua assinatura não renova sozinha.
+                  </p>
                 </CardFooter>
               </div>
             </Card>
@@ -171,6 +213,11 @@ function RouteComponent() {
       />
 
       <LoadingValidationModal isOpen={loadingValidation} />
+
+      <AlertErrorModal
+        isOpen={errorModal}
+        onClose={() => setErrorModal(false)}
+      />
     </section>
   )
 }

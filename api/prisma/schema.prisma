@@ -16,18 +16,20 @@ model User {
   updatedAt          DateTime        @default(now()) @updatedAt @map("updated_at")
   id                 String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   plan               planType        @default(FREE)
+  planType           String          @default("FREE")
+  planExpiresAt      DateTime?       @map("plan_expires_at")
   cpf                String?         @unique
   isRegisterComplete Boolean         @default(false) @map("is_register_complete")
   phone              String?
   cnpj               String?
   credits            Int?            @default(2)
   address            String?
+  budgets            Budgets[]
   Customers          Customers[]
   Payments           Payments[]
   ProposalDraft      ProposalDraft[]
   Proposal           Proposal[]
   Services           Services[]
-  budgets            Budgets[]
 
   @@map("users")
 }
@@ -40,10 +42,10 @@ model Customers {
   createdAt     DateTime        @default(now()) @map("created_at")
   updatedAt     DateTime        @updatedAt @map("updated_at")
   userId        String          @map("user_id") @db.Uuid
+  budgets       Budgets[]
   user          User            @relation(fields: [userId], references: [id])
   ProposalDraft ProposalDraft[]
   Proposal      Proposal[]
-  budgets       Budgets[]
 
   @@map("customers")
 }
@@ -75,6 +77,7 @@ model Proposal {
   totalPrice         Decimal            @map("total_price") @db.Decimal(10, 2)
   userId             String             @map("user_id") @db.Uuid
   status             status             @default(DRAFT)
+  createdAt          DateTime           @default(now()) @map("created_at")
   ProposalServices   ProposalServices[]
   customer           Customers          @relation(fields: [customersId], references: [id])
   user               User               @relation(fields: [userId], references: [id])
@@ -94,11 +97,11 @@ model ProposalServices {
 }
 
 model Payments {
-  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId       String   @map("user_id") @db.Uuid
-  abacatePayId String   @unique @map("abacate_pay_id")
-  createdAt    DateTime @default(now()) @map("created_at")
-  user         User     @relation(fields: [userId], references: [id])
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId    String   @map("user_id") @db.Uuid
+  stripeId  String   @unique @map("stripe_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  user      User     @relation(fields: [userId], references: [id])
 
   @@map("payments")
 }
@@ -123,17 +126,15 @@ model ProposalDraft {
 }
 
 model Budgets {
-  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  total       Decimal  @default(0.0) @db.Decimal(10, 2)
-  status      status   @default(DRAFT)
-  customersId String   @map("customers_id") @db.Uuid
-  usersId     String   @map("users_id") @db.Uuid
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
-
-  customer Customers @relation(fields: [customersId], references: [id])
-  users    User      @relation(fields: [usersId], references: [id])
-
+  id              String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  total           Decimal           @default(0.0) @db.Decimal(10, 2)
+  status          status            @default(DRAFT)
+  customersId     String            @map("customers_id") @db.Uuid
+  usersId         String            @map("users_id") @db.Uuid
+  createdAt       DateTime          @default(now()) @map("created_at")
+  updatedAt       DateTime          @updatedAt @map("updated_at")
+  customer        Customers         @relation(fields: [customersId], references: [id])
+  users           User              @relation(fields: [usersId], references: [id])
   budgetsServices BudgetsServices[]
 
   @@map("budgets")
@@ -142,12 +143,11 @@ model Budgets {
 model BudgetsServices {
   id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   title       String
-  description String   @db.Text
+  description String
   quantity    Int?
   price       Decimal? @db.Decimal(10, 2)
-
-  budgets   Budgets @relation(fields: [budgetsId], references: [id])
-  budgetsId String  @map("budgets_id") @db.Uuid
+  budgetsId   String   @map("budgets_id") @db.Uuid
+  budgets     Budgets  @relation(fields: [budgetsId], references: [id])
 
   @@map("budgets_services")
 }

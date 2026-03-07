@@ -11,10 +11,10 @@ export class PrismaPaymentsRepository implements PaymentsRepository {
     return payment
   }
 
-  async getByIdBilling(billingId: string) {
+  async getByStripeId(stripeId: string) {
     const payment = await prisma.payments.findUnique({
       where: {
-        abacatePayId: billingId,
+        stripeId: stripeId,
       },
     })
 

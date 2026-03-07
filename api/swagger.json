@@ -793,6 +793,25 @@
                               ]
                             }
                           ]
+                        },
+                        "planType": {
+                          "type": "string"
+                        },
+                        "planExpiresAt": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "nullable": true,
+                              "enum": [
+                                null
+                              ]
+                            }
+                          ]
+                        },
+                        "countProposalsInMonth": {
+                          "type": "number"
                         }
                       },
                       "required": [
@@ -801,7 +820,10 @@
                         "email",
                         "avatarUrl",
                         "cnpj",
-                        "address"
+                        "address",
+                        "planType",
+                        "planExpiresAt",
+                        "countProposalsInMonth"
                       ],
                       "additionalProperties": false
                     }
@@ -2024,14 +2046,6 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "price": {
-                    "default": 2499,
-                    "type": "number"
-                  },
-                  "quantity": {
-                    "default": 1,
-                    "type": "number"
-                  },
                   "customer": {
                     "type": "object",
                     "properties": {
@@ -2077,8 +2091,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "string",
-                  "format": "uri"
+                  "type": "string"
                 }
               }
             }
@@ -2101,178 +2114,6 @@
                 }
               }
             }
-          }
-        }
-      }
-    },
-    "/confirm-payment": {
-      "post": {
-        "operationId": "confirmPayment",
-        "tags": [
-          "Payments"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "data": {
-                    "type": "object",
-                    "properties": {
-                      "billing": {
-                        "type": "object",
-                        "properties": {
-                          "amount": {
-                            "type": "number"
-                          },
-                          "couponsUsed": {
-                            "type": "array",
-                            "items": {}
-                          },
-                          "customer": {
-                            "type": "object",
-                            "properties": {
-                              "id": {
-                                "type": "string"
-                              },
-                              "metadata": {
-                                "type": "object",
-                                "properties": {
-                                  "cellphone": {
-                                    "type": "string"
-                                  },
-                                  "email": {
-                                    "type": "string"
-                                  },
-                                  "name": {
-                                    "type": "string"
-                                  },
-                                  "taxId": {
-                                    "type": "string"
-                                  }
-                                },
-                                "required": [
-                                  "cellphone",
-                                  "email",
-                                  "name",
-                                  "taxId"
-                                ]
-                              }
-                            },
-                            "required": [
-                              "id",
-                              "metadata"
-                            ]
-                          },
-                          "frequency": {
-                            "type": "string"
-                          },
-                          "id": {
-                            "type": "string"
-                          },
-                          "kind": {
-                            "type": "array",
-                            "items": {
-                              "type": "string"
-                            }
-                          },
-                          "paidAmount": {
-                            "type": "number"
-                          },
-                          "products": {
-                            "type": "array",
-                            "items": {
-                              "type": "object",
-                              "properties": {
-                                "externalId": {
-                                  "type": "string"
-                                },
-                                "publicId": {
-                                  "type": "string"
-                                },
-                                "quantity": {
-                                  "type": "number"
-                                }
-                              },
-                              "required": [
-                                "externalId",
-                                "publicId",
-                                "quantity"
-                              ]
-                            }
-                          },
-                          "status": {
-                            "type": "string"
-                          }
-                        },
-                        "required": [
-                          "amount",
-                          "couponsUsed",
-                          "customer",
-                          "frequency",
-                          "id",
-                          "kind",
-                          "paidAmount",
-                          "products",
-                          "status"
-                        ]
-                      },
-                      "payment": {
-                        "type": "object",
-                        "properties": {
-                          "amount": {
-                            "type": "number"
-                          },
-                          "fee": {
-                            "type": "number"
-                          },
-                          "method": {
-                            "type": "string"
-                          }
-                        },
-                        "required": [
-                          "amount",
-                          "fee",
-                          "method"
-                        ]
-                      }
-                    },
-                    "required": [
-                      "billing",
-                      "payment"
-                    ]
-                  },
-                  "devMode": {
-                    "type": "boolean"
-                  },
-                  "event": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "data",
-                  "devMode",
-                  "event"
-                ]
-              }
-            }
-          },
-          "required": true
-        },
-        "parameters": [
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "query",
-            "name": "webhookSecret",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Default Response"
           }
         }
       }

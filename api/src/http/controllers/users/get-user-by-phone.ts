@@ -20,10 +20,13 @@ export const getUserByPhone: FastifyPluginAsyncZod = async app => {
             user: z.object({
               id: z.string(),
               phone: z.string(),
-              email: z.email(),
+              email: z.string().email(),
               avatarUrl: z.string().nullable(),
               cnpj: z.string().nullable(),
               address: z.string().nullable(),
+              planType: z.string(),
+              planExpiresAt: z.string().nullable(),
+              countProposalsInMonth: z.number(),
             }),
           }),
           404: z.object({ message: z.string() }),
@@ -45,7 +48,14 @@ export const getUserByPhone: FastifyPluginAsyncZod = async app => {
           phone,
         })
 
-        return reply.status(200).send({ user })
+        return reply.status(200).send({
+          user: {
+            ...user,
+            planExpiresAt: user.planExpiresAt
+              ? user.planExpiresAt.toISOString()
+              : null,
+          },
+        })
       } catch (error) {
         if (error instanceof ResourceNotFoundError) {
           return reply.status(404).send({ message: error.message })

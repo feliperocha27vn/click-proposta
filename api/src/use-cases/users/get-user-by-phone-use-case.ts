@@ -13,6 +13,9 @@ interface GetUserByPhoneUseCaseReply {
     avatarUrl: string | null
     cnpj: string | null
     address: string | null
+    planType: string
+    planExpiresAt: Date | null
+    countProposalsInMonth: number
   }
 }
 
@@ -24,18 +27,24 @@ export class GetUserByPhoneUseCase {
   }: GetUserByPhoneUseCaseRequest): Promise<GetUserByPhoneUseCaseReply> {
     const user = await this.usersRepository.getUserByPhone(phone)
 
-    if (!user) {
+    if (!user || !user.id) {
       throw new ResourceNotFoundError()
     }
 
+    const countProposalsInMonth =
+      await this.usersRepository.countProposalsInMonth(user.id)
+
     return {
       user: {
-        id: user.id ?? '',
+        id: user.id,
         phone: user.phone ?? '',
         email: user.email ?? '',
         avatarUrl: user.avatarUrl ?? '',
         cnpj: user.cnpj ?? '',
         address: user.address ?? '',
+        planType: user.planType ?? 'FREE',
+        planExpiresAt: user.planExpiresAt ?? null,
+        countProposalsInMonth,
       },
     }
   }

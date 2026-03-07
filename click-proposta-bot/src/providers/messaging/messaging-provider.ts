@@ -26,6 +26,7 @@ export interface Base64MediaResponse {
 }
 
 export interface MessagingProvider {
+  sendMessage(phone: string, text: string): Promise<void>
   sendText(params: SendTextParams): Promise<void>
   sendPdf(params: SendPdfParams): Promise<void>
   getBase64Media(
@@ -41,6 +42,16 @@ const evolutionApi = axios.create({
 })
 
 export class EvolutionMessagingProvider implements MessagingProvider {
+  private defaultInstance = 'main'
+
+  async sendMessage(phone: string, text: string): Promise<void> {
+    await this.sendText({
+      instanceName: this.defaultInstance,
+      phone,
+      text,
+    })
+  }
+
   async sendText({ instanceName, phone, text }: SendTextParams): Promise<void> {
     try {
       await evolutionApi.post(`/message/sendText/${instanceName}`, {

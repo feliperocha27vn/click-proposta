@@ -159,12 +159,9 @@ function AuthenticatedLayout() {
                   <Skeleton className="size-8 not-first:rounded-full" />
                 </AvatarFallback>
               </Avatar>
-              <div>
-                <p>{userData?.user.name}</p>
-                <span className="text-sm font-medium">
-                  10 Créditos restantes
-                </span>
-              </div>
+
+              <p>{userData?.user.name}</p>
+
               <Button
                 variant="outline"
                 onClick={() => signOut()}

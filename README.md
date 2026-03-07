@@ -15,7 +15,7 @@ Click Proposta v2 é uma plataforma fullstack que permite criar propostas comerc
 - **Catálogo de Serviços** - Organize seus serviços e precificação
 - **Orçamentos e Propostas** - Crie orçamentos e transforme em propostas profissionais
 - **Exportação em PDF** - Geração de documentos PDF profissionais com React PDF
-- **Sistema de Pagamentos** - Integração com AbacatePay para planos PRO
+- **Sistema de Pagamentos** - Integração com Stripe para planos PRO
 - **Autenticação Segura** - Sistema completo com Supabase Auth
 - **Planos FREE e PRO** - Modelo de negócio com diferentes níveis de acesso
 
@@ -39,7 +39,7 @@ click-proposta-v2/
 - **Database:** PostgreSQL (Supabase)
 - **IA:** Google Gemini AI
 - **PDF:** React PDF Renderer
-- **Pagamentos:** AbacatePay SDK
+- **Pagamentos:** Stripe SDK
 - **Autenticação:** Fastify JWT
 - **Documentação:** Swagger/OpenAPI
 
@@ -89,7 +89,7 @@ api/src/
 - **Proposals** - Propostas comerciais finalizadas
 - **ProposalDraft** - Rascunhos de propostas gerados por IA
 - **Budgets** - Orçamentos e precificação
-- **Payments** - Controle de pagamentos (AbacatePay)
+- **Payments** - Controle de pagamentos (Stripe)
 
 ### Status de Propostas/Orçamentos
 
@@ -136,8 +136,13 @@ DATABASE_URL="postgresql://..."
 DIRECT_URL="postgresql://..."
 JWT_SECRET="seu-secret-aqui"
 GOOGLE_API_KEY="sua-chave-gemini"
-ABACATE_PAY_API_KEY="sua-chave-abacatepay"
+STRIPE_SECRET_KEY="sua-chave-stripe"
+STRIPE_WEBHOOK_SECRET="seu-webhook-secret-stripe"
 ```
+
+> **Para testar pagamentos localmente:**
+> Utilize o Stripe CLI e execute o comando:
+> `stripe listen --forward-to localhost:3333/payments/webhook`
 
 **Frontend (`web/.env`):**
 ```env

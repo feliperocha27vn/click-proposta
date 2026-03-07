@@ -1,91 +1,87 @@
 import { env } from '@/env'
-import { makeGetByIdBillingPaymentUseCase } from '@/factories/payments/make-get-by-id-billing-payment-use-case'
 import { makeChangePlanUserUseCase } from '@/factories/users/make-change-plan-user-use-case'
+import { stripe } from '@/lib/stripe'
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
-import z from 'zod'
+import type Stripe from 'stripe'
 
 export const confirmPayment: FastifyPluginAsyncZod = async app => {
   app.post(
-    '/confirm-payment',
+    '/payments/webhook',
     {
+      config: {
+        rawBody: true,
+      },
       schema: {
         tags: ['Payments'],
         operationId: 'confirmPayment',
-        querystring: z.object({
-          webhookSecret: z.string(),
-        }),
-        body: z.object({
-          data: z.object({
-            billing: z.object({
-              amount: z.number(),
-              couponsUsed: z.array(z.unknown()),
-              customer: z.object({
-                id: z.string(),
-                metadata: z.object({
-                  cellphone: z.string(),
-                  email: z.string(),
-                  name: z.string(),
-                  taxId: z.string(),
-                }),
-              }),
-              frequency: z.string(),
-              id: z.string(),
-              kind: z.array(z.string()),
-              paidAmount: z.number(),
-              products: z.array(
-                z.object({
-                  externalId: z.string(),
-                  publicId: z.string(),
-                  quantity: z.number(),
-                })
-              ),
-              status: z.string(),
-            }),
-            payment: z.object({
-              amount: z.number(),
-              fee: z.number(),
-              method: z.string(),
-            }),
-          }),
-          devMode: z.boolean(),
-          event: z.string(),
-        }),
+        // Hide from Swagger/Scalar because it's a binary/raw body endpoint
+        hide: true,
       },
     },
     async (request, reply) => {
-      const { webhookSecret } = request.query
+      const signature = request.headers['stripe-signature'] as string
 
-      if (webhookSecret !== env.ABACATE_WEBHOOK_KEY) {
-        console.log('Invalid webhook secret')
-        return reply.status(401).send({ message: 'Unauthorized' })
+      if (!signature) {
+        return reply
+          .status(400)
+          .send({ message: 'Missing stripe-signature header' })
       }
 
-      const { data } = request.body
+      let event: Stripe.Event
 
-      if (data.billing.status !== 'PAID') {
-        console.log('Billing not paid:', data.billing.status)
-        return reply.status(400).send({ message: 'Billing not paid' })
+      try {
+        event = stripe.webhooks.constructEvent(
+          request.rawBody as string,
+          signature,
+          env.STRIPE_WEBHOOK_SECRET
+        )
+      } catch (err: any) {
+        console.error(`Webhook signature verification failed: ${err.message}`)
+        return reply
+          .status(400)
+          .send({ message: `Webhook Error: ${err.message}` })
       }
 
-      console.log('Payment confirmed for billing ID:', data.billing.id)
+      // Handle the event
+      switch (event.type) {
+        case 'checkout.session.completed': {
+          const session = event.data.object as Stripe.Checkout.Session
 
-      const getByIdBillingPaymentUseCase = makeGetByIdBillingPaymentUseCase()
+          const userId = session.client_reference_id
+          const stripeId = session.id
 
-      const { payment } = await getByIdBillingPaymentUseCase.execute({
-        billingId: data.billing.id,
-      })
+          if (!userId) {
+            console.error(
+              'Session completed without client_reference_id (userId)'
+            )
+            return reply
+              .status(400)
+              .send({ message: 'Missing userId in session' })
+          }
 
-      const changePlanUseCase = makeChangePlanUserUseCase()
+          console.log('Payment confirmed via Stripe for session:', stripeId)
 
-      console.log('About to change plan for user:', payment.userId)
+          const changePlanUseCase = makeChangePlanUserUseCase()
 
-      await changePlanUseCase.execute({
-        userId: payment.userId,
-      })
+          console.log('Activating PRO plan for user:', userId)
 
-      console.log('Plan change completed for user:', payment.userId)
+          try {
+            await changePlanUseCase.execute({
+              userId,
+            })
+            console.log('Plan activated successfully for user:', userId)
+          } catch (error) {
+            console.error('Error activating plan:', error)
+            return reply.status(500).send({ message: 'Error activating plan' })
+          }
+          break
+        }
 
-      return reply.status(200).send({ message: 'Payment confirmed' })
+        default:
+          console.log(`Unhandled event type ${event.type}`)
+      }
+
+      return reply.status(200).send({ received: true })
     }
   )
 }

@@ -1,3 +1,7 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { ArrowLeft, ArrowRight, CheckCircle2 } from 'lucide-react'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -8,11 +12,12 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { type CompleteRegisterBody, completeRegister } from '@/http/api'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { ArrowLeft, ArrowRight, CheckCircle2 } from 'lucide-react'
-import { useState } from 'react'
-import { useForm } from 'react-hook-form'
+import {
+  type CompleteRegisterBody,
+  completeRegister,
+  createNewPayment,
+} from '@/http/api'
+import { AlertErrorModal } from './alert-error-modal'
 
 interface FormCompleteCustomerProps {
   isOpen: boolean
@@ -30,6 +35,7 @@ export default function FormCompleteCustomer({
   selectedPlan: _selectedPlan,
 }: FormCompleteCustomerProps) {
   const [step, setStep] = useState<1 | 2>(1)
+  const [errorModal, setErrorModal] = useState(false)
   const { register, handleSubmit, reset, trigger } =
     useForm<CompleteRegisterBody>()
   const queryClient = useQueryClient()
@@ -41,10 +47,31 @@ export default function FormCompleteCustomer({
         cpf: data.cpf.replace(/\D/g, ''),
         cnpj: data.cnpj ? data.cnpj.replace(/\D/g, '') : undefined,
       }),
-    onSuccess: () => {
+    onSuccess: async (_, variables) => {
       queryClient.setQueryData(['complete-register'], {
         isRegisterComplete: true,
       })
+
+      // Se o plano selecionado for PRO, dispara o pagamento imediatamente
+      if (_selectedPlan === 'pro') {
+        try {
+          const checkoutUrl = await createNewPayment({
+            customer: {
+              name: _customerName || '', // Fallback se necessário, mas geralmente vem via props
+              email: '', // O backend já pega do usuário autenticado se omitirmos ou podemos passar do session
+              cellphone: variables.phone.replace(/\D/g, ''),
+              cpf: variables.cpf.replace(/\D/g, ''),
+            },
+          })
+          window.location.href = checkoutUrl
+          // Como há redirecionamento, o código abaixo não será executado em caso de sucesso
+        } catch (error) {
+          console.error('Erro ao gerar pagamento após cadastro:', error)
+          setErrorModal(true)
+        }
+      }
+
+      // Fecha o modal e reseta o formulário, pois o cadastro em si foi bem-sucedido
       reset()
       setStep(1)
       onClose()
@@ -231,6 +258,13 @@ export default function FormCompleteCustomer({
           </div>
         </form>
       </DialogContent>
+
+      <AlertErrorModal
+        isOpen={errorModal}
+        onClose={() => setErrorModal(false)}
+        title="Cadastro finalizado!"
+        description="Seus dados foram salvos com sucesso, mas houve um erro ao gerar o pagamento. Você pode tentar ativar seu plano novamente na tela de planos."
+      />
     </Dialog>
   )
 }

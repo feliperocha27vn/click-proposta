@@ -19,6 +19,8 @@ export class PrismaUsersRepository implements UsersRepository {
       select: {
         id: true,
         plan: true,
+        planType: true,
+        planExpiresAt: true,
         name: true,
         email: true,
         avatarUrl: true,
@@ -79,6 +81,23 @@ export class PrismaUsersRepository implements UsersRepository {
     return countProposalsByUser
   }
 
+  async countProposalsInMonth(userId: string) {
+    const startOfMonth = new Date()
+    startOfMonth.setDate(1)
+    startOfMonth.setHours(0, 0, 0, 0)
+
+    const count = await prisma.proposal.count({
+      where: {
+        userId,
+        createdAt: {
+          gte: startOfMonth,
+        },
+      },
+    })
+
+    return count
+  }
+
   async completeRegister(
     userId: string,
     data: Prisma.UserUpdateInput
@@ -130,14 +149,24 @@ export class PrismaUsersRepository implements UsersRepository {
   async changePlan(userId: string) {
     console.log('PrismaUsersRepository: Changing plan for user:', userId)
 
+    const now = new Date()
+    const expiresAt = new Date(now)
+    expiresAt.setDate(now.getDate() + 30)
+
     const updatedUser = await prisma.user.update({
       where: { id: userId },
-      data: { plan: 'PRO' },
+      data: {
+        plan: 'PRO',
+        planType: 'PRO',
+        planExpiresAt: expiresAt,
+      },
     })
 
     console.log(
       'PrismaUsersRepository: Plan updated. New plan:',
-      updatedUser.plan
+      updatedUser.plan,
+      'Expires at:',
+      updatedUser.planExpiresAt
     )
   }
 

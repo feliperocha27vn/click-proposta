@@ -44,16 +44,29 @@ export class CreateProposalUseCase {
     discount,
     userId,
   }: CreateProposalUseCaseRequest): Promise<CreateProposalUseCaseReply> {
-    const countProposalsByUser =
-      await this.usersRepository.countProposals(userId)
+    const countProposalsInMonth =
+      await this.usersRepository.countProposalsInMonth(userId)
     const user = await this.usersRepository.getById(userId)
 
     if (!user) {
       throw new ResourceNotFoundError()
     }
 
-    if (countProposalsByUser >= 2 && user.plan === 'FREE') {
+    // Regra para Plano FREE: Máximo 2 propostas por mês
+    if (user.planType === 'FREE' && countProposalsInMonth >= 2) {
       throw new ExceededPlanProposal()
+    }
+
+    // Regra para Plano PRO: Máximo 100 propostas por mês (Fair Use) e verificação de expiração
+    if (user.planType === 'PRO') {
+      if (countProposalsInMonth >= 100) {
+        throw new ExceededPlanProposal()
+      }
+
+      const now = new Date()
+      if (user.planExpiresAt && now > user.planExpiresAt) {
+        throw new ExceededPlanProposal() // Ou um erro específico de assinatura expirada
+      }
     }
 
     const subtotal = services.reduce((acc, service) => acc + service.price, 0)
