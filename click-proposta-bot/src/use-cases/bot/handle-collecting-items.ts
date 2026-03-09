@@ -64,12 +64,21 @@ export class HandleCollectingItemsUseCase {
       return `📋 *Resumo do seu orçamento:*\n\n${summaryText}\nTotal de itens: *${totalAmountItems}*\n\nConfirmo a geração do PDF?\n\n*Sim* — Gerar PDF\n*Não* — Cancelar`
     }
 
-    // Acumula o que a pessoa está dizendo
-    const currentData = session.collectedData || ''
-    await this.sessionRepository.saveSession(phone, {
-      collectedData: currentData + '\n' + text,
-    })
+    // Acumula o que a pessoa está dizendo, mas valida se há itens
+    const items = await this.aiProvider.extractBudgetItems(
+      text,
+      session.budgetType || 'product'
+    )
 
-    return '✍️ Anotado! Pode continuar enviando os itens.\n\nQuando terminar, envie *1*.'
+    if (items.length > 0) {
+      const currentData = session.collectedData || ''
+      await this.sessionRepository.saveSession(phone, {
+        collectedData: `${currentData}\n${text}`,
+      })
+
+      return '✍️ Anotado! Pode continuar enviando os itens.\n\nQuando terminar, envie *1*.'
+    }
+
+    return '🤔 Não entendi se isso é um item do orçamento. Tente enviar neste formato:\n\n_Quantidade x Descrição — Valor_\n\nExemplo: _5x lâmpadas LED — R$ 15,00_'
   }
 }

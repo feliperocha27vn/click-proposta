@@ -35,20 +35,38 @@ vi.mock('../../providers/ai/gemini-ai-provider', () => ({
 
 import { app } from '../../app'
 
+interface WebhookOverrides {
+  event?: string
+  instance?: string
+  data?: {
+    key?: {
+      remoteJid?: string
+      fromMe?: boolean
+      id?: string
+    }
+    message?: Record<string, unknown>
+    [key: string]: unknown
+  }
+  [key: string]: unknown
+}
+
 // Payload base que a Evolution API envia
-function buildWebhookPayload(overrides: any = {}) {
+function buildWebhookPayload(overrides: WebhookOverrides = {}) {
   const baseData = {
     key: {
       remoteJid: '5511999999999@s.whatsapp.net',
       fromMe: false,
-      id: 'msg-' + Math.random().toString(36).substring(7),
+      id: `msg-${Math.random().toString(36).substring(7)}`,
     },
     pushName: 'Felipe',
   }
 
+  const overridesData = (overrides.data || {}) as Record<string, unknown>
+
   // Se não for passado nenhum tipo de mensagem nos overrides, usa o default 'Oi'
   const defaultMessage =
-    !overrides.data?.message || Object.keys(overrides.data.message).length === 0
+    !overridesData.message ||
+    Object.keys(overridesData.message as object).length === 0
       ? { conversation: 'Oi' }
       : {}
 
@@ -58,14 +76,14 @@ function buildWebhookPayload(overrides: any = {}) {
     ...overrides,
     data: {
       ...baseData,
-      ...overrides.data,
+      ...overridesData,
       key: {
         ...baseData.key,
-        ...overrides.data?.key,
+        ...((overridesData.key as object) || {}),
       },
       message: {
         ...defaultMessage,
-        ...overrides.data?.message,
+        ...((overridesData.message as object) || {}),
       },
     },
   }

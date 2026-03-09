@@ -65,9 +65,7 @@ describe('Handle New User Use Case (Bot)', () => {
           name: 'Felipe',
           phone: '123456789',
           planType: 'PRO',
-          planExpiresAt: new Date(
-            new Date().getTime() - 1000 * 60
-          ).toISOString(), // expired
+          planExpiresAt: new Date(Date.now() - 1000 * 60).toISOString(), // expired
           countProposalsInMonth: 10,
         },
       },
@@ -86,9 +84,7 @@ describe('Handle New User Use Case (Bot)', () => {
           name: 'Felipe',
           phone: '123456789',
           planType: 'PRO',
-          planExpiresAt: new Date(
-            new Date().getTime() + 1000 * 60 * 60
-          ).toISOString(),
+          planExpiresAt: new Date(Date.now() + 1000 * 60 * 60).toISOString(),
           countProposalsInMonth: 100,
         },
       },

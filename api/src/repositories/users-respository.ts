@@ -36,6 +36,10 @@ export interface UsersRepository {
   getCompleteRegister(userId: string): Promise<Partial<User> | null>
   getDataForPayment(userId: string): Promise<UserForPaymentData | null>
   changePlan(userId: string): Promise<void>
-  getDataForCreatePdfProduct(userId: string): Promise<Partial<User> | null>
+  createProposalLog(
+    userId: string,
+    origin: 'BOT' | 'SITE',
+    type: 'PROPOSAL' | 'BUDGET'
+  ): Promise<void>
   getUserByPhone(phone: string): Promise<Partial<User> | null>
 }

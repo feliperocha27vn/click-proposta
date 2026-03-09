@@ -36,6 +36,17 @@ export class ProcessIncomingMessageUseCase {
       return this.handleNewUser.execute({ phone })
     }
 
+    // 2.1 Detecção de saudação global - Se o usuário disser "Oi", "Menu", etc, resetamos
+    const isGreeting =
+      /^(oi|olá|ola|bom dia|boa tarde|boa noite|menu|ajuda|iniciar)$/i.test(
+        text.trim().toLowerCase()
+      )
+
+    if (isGreeting) {
+      await this.sessionRepository.clearSession(phone)
+      return this.handleNewUser.execute({ phone })
+    }
+
     // 3. O switch/case é o coração da máquina de estados
     switch (session.state) {
       case 'AWAITING_TYPE':

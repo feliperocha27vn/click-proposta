@@ -1,6 +1,8 @@
 import { makeGetDataForCreatePdfProductUseCase } from '@/factories/users/make-get-data-for-create-pdf-product-use-case'
+import { prisma } from '@/lib/prisma'
 import { verifyJwt } from '@/middlewares/verifyJwt'
 import { BudgetPdfDocument } from '@/pdf/templates/budget-pdf-document'
+import { PrismaUsersRepository } from '@/repositories/prisma/users-repository'
 import { renderToStream } from '@react-pdf/renderer'
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import React from 'react'
@@ -94,6 +96,52 @@ export const generatePdfDocument: FastifyPluginAsyncZod = async app => {
           description: s.description ?? '',
           budgetsId: s.budgetsId ?? null,
         }))
+
+        // Grava o orçamento no banco para contar no limite do plano
+        const authHeader = request.headers.authorization
+        const botToken = authHeader?.split(' ')[1]
+        if (botToken === process.env.BOT_SERVICE_TOKEN) {
+          // Busca ou cria um cliente default para o bot para este usuário
+          let customer = await prisma.customers.findFirst({
+            where: {
+              userId: targetUserId,
+              email: `whatsapp-${targetUserId}@clickproposta.com.br`,
+            },
+          })
+
+          if (!customer) {
+            customer = await prisma.customers.create({
+              data: {
+                name: nameCustomer || 'Cliente WhatsApp',
+                email: `whatsapp-${targetUserId}@clickproposta.com.br`,
+                phone: phoneCustomer || '',
+                userId: targetUserId,
+              },
+            })
+          }
+
+          const budget = await prisma.budgets.create({
+            data: {
+              customersId: customer.id,
+              usersId: targetUserId,
+              total: Number.parseFloat(total),
+              status: 'SENT',
+            },
+          })
+
+          await prisma.budgetsServices.createMany({
+            data: normalizedServices.map(s => ({
+              budgetsId: budget.id,
+              title: s.title,
+              description: s.description || '',
+              quantity: s.quantity || 1,
+              price: s.price || 0,
+            })),
+          })
+
+          const usersRepository = new PrismaUsersRepository()
+          await usersRepository.createProposalLog(targetUserId, 'BOT', 'BUDGET')
+        }
 
         const pdfDocument = React.createElement(BudgetPdfDocument, {
           imgUrl: finalImgUrl || '',

@@ -1,0 +1,88 @@
+
+> click-proposta-bot@1.0.0 test
+> vitest run src/tests/unit/process-incoming-message.test.ts
+
+
+[1m[46m RUN [49m[22m [36mv4.0.18 [39m[90mC:/Users/felip/Documents/eu_memo/www/click-proposta-v2/click-proposta-bot[39m
+
+[90mstdout[2m | src/tests/unit/process-incoming-message.test.ts
+[22m[39m[dotenv@17.3.1] injecting env (1) from .env.test -- tip: ­ƒöÉ prevent committing .env to code: https://dotenvx.com/precommit
+
+[90mstdout[2m | src/tests/unit/process-incoming-message.test.ts[2m > [22m[2mProcessIncomingMessageUseCase[2m > [22m[2mprocessIncomingMessage ÔÇö usu├írio novo (sem sess├úo)[2m > [22m[2mdeve saudar o usu├írio pelo nome quando o telefone existe na API
+[22m[39m[UseCase: HandleNewUser] Verificando telefone no backend: 11999999999 (URL: http://localhost:3333/verify-phone)
+
+[90mstdout[2m | src/tests/unit/process-incoming-message.test.ts[2m > [22m[2mProcessIncomingMessageUseCase[2m > [22m[2mprocessIncomingMessage ÔÇö usu├írio novo (sem sess├úo)[2m > [22m[2mdeve usar "cliente" no nome quando o usu├írio n├úo tem nome cadastrado
+[22m[39m[UseCase: HandleNewUser] Verificando telefone no backend: 11999999999 (URL: http://localhost:3333/verify-phone)
+
+[90mstdout[2m | src/tests/unit/process-incoming-message.test.ts[2m > [22m[2mProcessIncomingMessageUseCase[2m > [22m[2mprocessIncomingMessage ÔÇö usu├írio novo (sem sess├úo)[2m > [22m[2mdeve remover o c├│digo 55 ao consultar a API para n├║mero brasileiro de 13 d├¡gitos
+[22m[39m[UseCase: HandleNewUser] Verificando telefone no backend: 11999999999 (URL: http://localhost:3333/verify-phone)
+
+[90mstdout[2m | src/tests/unit/process-incoming-message.test.ts[2m > [22m[2mProcessIncomingMessageUseCase[2m > [22m[2mprocessIncomingMessage ÔÇö usu├írio novo (sem sess├úo)[2m > [22m[2mdeve informar sobre cadastro com link quando o telefone n├úo existe (404)
+[22m[39m[UseCase: HandleNewUser] Verificando telefone no backend: 11999999999 (URL: http://localhost:3333/verify-phone)
+
+[90mstdout[2m | src/tests/unit/process-incoming-message.test.ts[2m > [22m[2mProcessIncomingMessageUseCase[2m > [22m[2mprocessIncomingMessage ÔÇö usu├írio novo (sem sess├úo)[2m > [22m[2mdeve retornar mensagem de erro emp├ítica para falhas de API diferentes de 404
+[22m[39m[UseCase: HandleNewUser] Verificando telefone no backend: 11999999999 (URL: http://localhost:3333/verify-phone)
+
+stderr | src/tests/unit/process-incoming-message.test.ts > ProcessIncomingMessageUseCase > processIncomingMessage ÔÇö usu├írio novo (sem sess├úo) > deve retornar mensagem de erro emp├ítica para falhas de API diferentes de 404
+[UseCase: HandleNewUser] Erro ao verificar usu├írio: Internal Server Error
+
+stderr | src/tests/unit/process-incoming-message.test.ts > ProcessIncomingMessageUseCase > processIncomingMessage ÔÇö estado CONFIRMING > "Sim" ÔÇö deve limpar sess├úo e orientar nova tentativa se a API de PDF falhar
+[UseCase: HandleConfirming] Erro ao gerar PDF: API indispon├¡vel
+
+ [31mÔØ»[39m src/tests/unit/process-incoming-message.test.ts [2m([22m[2m26 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 38[2mms[22m[39m
+       [32mÔ£ô[39m deve saudar o usu├írio pelo nome quando o telefone existe na API[32m 4[2mms[22m[39m
+       [32mÔ£ô[39m deve usar "cliente" no nome quando o usu├írio n├úo tem nome cadastrado[32m 0[2mms[22m[39m
+       [32mÔ£ô[39m deve remover o c├│digo 55 ao consultar a API para n├║mero brasileiro de 13 d├¡gitos[32m 1[2mms[22m[39m
+       [32mÔ£ô[39m deve informar sobre cadastro com link quando o telefone n├úo existe (404)[32m 1[2mms[22m[39m
+       [32mÔ£ô[39m deve retornar mensagem de erro emp├ítica para falhas de API diferentes de 404[32m 1[2mms[22m[39m
+       [32mÔ£ô[39m deve aceitar "1" como sele├º├úo de produto[32m 1[2mms[22m[39m
+       [32mÔ£ô[39m deve aceitar "produto" por extenso[32m 0[2mms[22m[39m
+       [32mÔ£ô[39m deve aceitar "2" como sele├º├úo de servi├ºo civil[32m 0[2mms[22m[39m
+       [32mÔ£ô[39m deve aceitar "servi├ºo civil" por extenso[32m 1[2mms[22m[39m
+       [32mÔ£ô[39m deve mostrar as op├º├Áes novamente se a resposta n├úo for reconhecida[32m 0[2mms[22m[39m
+       [32mÔ£ô[39m deve salvar o nome do cliente e avan├ºar para COLLECTING_ITEMS[32m 0[2mms[22m[39m
+       [32mÔ£ô[39m deve acumular texto enviado pelo usu├írio e confirmar com "Anotado"[32m 1[2mms[22m[39m
+       [32mÔ£ô[39m deve responder com sauda├º├úo se o usu├írio enviar "oi" em vez de um item[32m 1[2mms[22m[39m
+[31m       [31m├ù[31m deve pedir formato correto se a mensagem n├úo for item nem sauda├º├úo[39m[32m 6[2mms[22m[39m
+       [32mÔ£ô[39m deve reclamar se o usu├írio enviar 1 sem ter adicionado nenhum item[32m 0[2mms[22m[39m
+       [32mÔ£ô[39m deve chamar o Gemini e avan├ºar para CONFIRMING quando digitar 1 com itens[32m 0[2mms[22m[39m
+       [32mÔ£ô[39m deve mostrar exemplo de formato se o Gemini n├úo extrair nenhum item[32m 0[2mms[22m[39m
+       [32mÔ£ô[39m deve avan├ºar para AWAITING_TOTAL_VALUE para budgetType = civil[32m 1[2mms[22m[39m
+       [32mÔ£ô[39m deve aceitar valor num├®rico, salvar e avan├ºar para CONFIRMING[32m 14[2mms[22m[39m
+       [32mÔ£ô[39m deve reclamar se o valor for inv├ílido[32m 0[2mms[22m[39m
+       [32mÔ£ô[39m "Sim" ÔÇö deve enviar msg de progresso, gerar PDF e enviar pelo WhatsApp[32m 1[2mms[22m[39m
+       [32mÔ£ô[39m "Sim" ÔÇö deve usar o endpoint /pdf/generate para budgetType = civil[32m 0[2mms[22m[39m
+       [32mÔ£ô[39m "Sim" ÔÇö deve retornar "Ops!" se dados da sess├úo foram perdidos[32m 0[2mms[22m[39m
+       [32mÔ£ô[39m "Sim" ÔÇö deve limpar sess├úo e orientar nova tentativa se a API de PDF falhar[32m 0[2mms[22m[39m
+       [32mÔ£ô[39m "N├úo" ÔÇö deve cancelar o or├ºamento e limpar a sess├úo[32m 0[2mms[22m[39m
+       [32mÔ£ô[39m deve limpar a sess├úo e pedir para reiniciar se o estado for desconhecido[32m 1[2mms[22m[39m
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ» Failed Tests 1 ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»
+
+ FAIL  src/tests/unit/process-incoming-message.test.ts > ProcessIncomingMessageUseCase > processIncomingMessage ÔÇö estado COLLECTING_ITEMS > deve pedir formato correto se a mensagem n├úo for item nem sauda├º├úo
+AssertionError: expected '­ƒÿè Ol├í! Pode me enviar os itens que vÔÇª' to contain 'N├úo entendi'
+
+- Expected
++ Received
+
+- N├úo entendi
++ ­ƒÿè Ol├í! Pode me enviar os itens que voc├¬ gostaria de incluir no or├ºamento.
++
++ _Exemplo: 2x pacotes de prego ÔÇö R$ 10,00_
+
+ ÔØ» src/tests/unit/process-incoming-message.test.ts:387:24
+    385|       })
+    386| 
+    387|       expect(response).toContain('N├úo entendi')
+       |                        ^
+    388|       expect(sessionRepo.saveSession).not.toHaveBeenCalled()
+    389|     })
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[1/1]ÔÄ»
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m25 passed[39m[22m[90m (26)[39m
+[2m   Start at [22m 14:44:25
+[2m   Duration [22m 496ms[2m (transform 186ms, setup 50ms, import 239ms, tests 38ms, environment 0ms)[22m
+

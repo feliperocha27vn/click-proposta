@@ -333,6 +333,10 @@ describe('ProcessIncomingMessageUseCase', () => {
       const sessionRepo = makeRepoCollecting('item anterior')
       const service = makeService(sessionRepo)
 
+      mockExtractBudgetItems.mockResolvedValueOnce([
+        { title: 'parafuso', amount: 2 },
+      ])
+
       const response = await service.execute({
         instanceName: INSTANCE,
         phone: PHONE,
@@ -346,6 +350,41 @@ describe('ProcessIncomingMessageUseCase', () => {
           collectedData: expect.stringContaining('2 caixas de parafuso'),
         })
       )
+    })
+
+    it('deve resetar a sessão se o usuário enviar "oi" durante a coleta de itens', async () => {
+      const sessionRepo = makeRepoCollecting('item anterior')
+      const service = makeService(sessionRepo)
+
+      mockApiGet.mockResolvedValueOnce({
+        data: { user: { id: 'user-123', name: 'Felipe' } },
+      })
+
+      const response = await service.execute({
+        instanceName: INSTANCE,
+        phone: PHONE,
+        text: 'Oi',
+      })
+
+      expect(sessionRepo.clearSession).toHaveBeenCalledWith(PHONE)
+      expect(response).toContain('Felipe')
+      expect(response).toContain('1') // Menu inicial
+    })
+
+    it('deve pedir formato correto se a mensagem não for item nem saudação', async () => {
+      const sessionRepo = makeRepoCollecting('')
+      const service = makeService(sessionRepo)
+
+      mockExtractBudgetItems.mockResolvedValueOnce([])
+
+      const response = await service.execute({
+        instanceName: INSTANCE,
+        phone: PHONE,
+        text: 'qualquer coisa aleatória',
+      })
+
+      expect(response).toContain('Não entendi')
+      expect(sessionRepo.saveSession).not.toHaveBeenCalled()
     })
 
     it('deve reclamar se o usuário enviar 1 sem ter adicionado nenhum item', async () => {
@@ -513,6 +552,11 @@ describe('ProcessIncomingMessageUseCase', () => {
 
       const fakePdfBuffer = Buffer.from('fake-pdf-content')
       mockApiPost.mockResolvedValueOnce({ data: fakePdfBuffer })
+      mockApiGet.mockResolvedValueOnce({
+        data: {
+          user: { id: 'user-123', planType: 'PRO', countProposalsInMonth: 0 },
+        },
+      })
 
       const response = await service.execute({
         instanceName: INSTANCE,
@@ -542,6 +586,11 @@ describe('ProcessIncomingMessageUseCase', () => {
       const service = makeService(sessionRepo)
 
       mockApiPost.mockResolvedValueOnce({ data: Buffer.from('pdf') })
+      mockApiGet.mockResolvedValueOnce({
+        data: {
+          user: { id: 'user-123', planType: 'PRO', countProposalsInMonth: 0 },
+        },
+      })
 
       await service.execute({
         instanceName: INSTANCE,

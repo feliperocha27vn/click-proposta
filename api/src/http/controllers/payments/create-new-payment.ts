@@ -1,9 +1,9 @@
-import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
-import z from 'zod'
 import { env } from '@/env'
 import { makeCreatePaymentUseCase } from '@/factories/payments/make-create-payment-use-case'
 import { stripe } from '@/lib/stripe'
 import { verifyJwt } from '@/middlewares/verifyJwt'
+import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
+import z from 'zod'
 
 export const createNewPayment: FastifyPluginAsyncZod = async app => {
   app.post(
@@ -66,11 +66,12 @@ export const createNewPayment: FastifyPluginAsyncZod = async app => {
         })
 
         return reply.status(201).send(session.url)
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error('Error creating Stripe session:', error)
         return reply.status(500).send({
           message:
-            error.message || 'Internal server error during payment creation',
+            (error as Error).message ||
+            'Internal server error during payment creation',
         })
       }
     }

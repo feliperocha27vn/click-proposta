@@ -86,7 +86,7 @@ export class PrismaUsersRepository implements UsersRepository {
     startOfMonth.setDate(1)
     startOfMonth.setHours(0, 0, 0, 0)
 
-    const count = await prisma.proposal.count({
+    const count = await prisma.proposalLog.count({
       where: {
         userId,
         createdAt: {
@@ -96,6 +96,20 @@ export class PrismaUsersRepository implements UsersRepository {
     })
 
     return count
+  }
+
+  async createProposalLog(
+    userId: string,
+    origin: 'BOT' | 'SITE',
+    type: 'PROPOSAL' | 'BUDGET'
+  ) {
+    await prisma.proposalLog.create({
+      data: {
+        userId,
+        origin,
+        type,
+      },
+    })
   }
 
   async completeRegister(

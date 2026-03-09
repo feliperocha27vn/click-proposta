@@ -73,25 +73,29 @@ export function buildExtractionPrompt(
   return `Você é o processador cognitivo e o motor de extração estruturada de entidades primário do sistema corporativo "Click Proposta".
 Sua interface de atuação é exclusivamente backend, e sua diretriz operacional singular é atuar como o aparato de inteligência analítica que processa solicitações de usuários finais provenientes de mensagens textuais no WhatsApp.
 
-O usuário final enviará mensagens em linguagem natural bruta, listando um ou múltiplos itens para compor um(a) ${typeLabel}. Devido à natureza inerente da mensageria via internet (o ecossistema WhatsApp no Brasil), a entrada de texto será tipicamente saturada de interferências comunicativas: gírias ("blz", "fds", "truta", "zap"), abreviações, interjeições informais, total desrespeito a regras de pontuação e erros ortográficos severos. A sua incumbência é agir como um filtro de estado, ignorar sumariamente o ruído linguístico e social, realizar a normalização sintática profunda e extrair EXATAMENTE as entidades de negócio solicitadas.
-
-8. Confirmação do Estado: Extraia EXATAMENTE as entidades de negócio solicitadas.
+O usuário final enviará mensagens em linguagem natural bruta, listando um ou múltiplos itens para compor um(a) ${typeLabel}. A entrada de texto será tipicamente informal. Sua incumbência é agir como um filtro de estado, ignorar ruídos e focar na extração das entidades de negócio.
 
 REGRAS DE EXTRAÇÃO:
 
-1. Higienização e Padronização de Títulos (title): Isole e extraia estritamente os nomes dos produtos ou serviços desejados. Exclua qualquer comentário acessório, saudação ou tentativa de diálogo. Corrija imediatamente falhas de grafia. O campo extraído deve OBRIGATORIAMENTE obedecer ao formato "Title Case". O título deve ser curto.
+1. Higienização e Padronização de Títulos (title): Extraia o nome do produto ou serviço. Corrija grafia e use "Title Case". O título deve ser curto e focado no objeto.
 
-2. Avaliação e Transformação Matemática de Quantidades (amount): Mapeie termos coloquiais ou de grupo para algarismos absolutos inteiros. Singular ou sem métrica = 1. "um par" = 2. "dois pares" = 4. "meia dúzia" = 6. "duas dúzias" = 24.
+2. Filtro de Irrelevância: Se a mensagem NÃO contiver nenhum item de orçamento claro, retorne "items" vazio []. NUNCA transforme saudações isoladas em itens.
 
-3. Isolamento de Entidades Múltiplas: Escaneie exaustivamente a solicitação para delimitar itens heterogêneos mencionados em cascata. Cada tipo distinto de item = novo objeto independente no array items.
+3. Quantidades (amount): Transforme termos coloquiais em números inteiros. Singular ou sem métrica = 1. "um par" = 2.
 
-4. Alocação Restritiva e Explícita de Preços Unitários (price): SOMENTE popular este campo se o usuário declarar de forma totalmente explícita o valor financeiro por unidade. Interprete gírias monetárias ("conto", "pila", "reais"). É TERMINANTEMENTE PROIBIDO inferir, adivinhar ou estimar o preço. Se não constar do texto, retornar null.
+4. Preços Unitários (price): Popular SOMENTE se declarado de forma explícita. Interprete "conto", "pila", "reais". Se não houver preço, retorne null.
 
-5. Chain-of-Thought obrigatória: Preencha PRIMEIRO o campo _raciocinio narrando analiticamente: identificação e descarte das gírias, equacionamento das quantidades, deliberação sobre preços. DEPOIS preencha o array items.${
-    budgetType === 'civil'
-      ? '\n\n6. Preservação de Descrição (description): Para orçamentos civis, NUNCA resuma ou abrevie o texto do usuário. Extraia toda a descrição complementar, especificações técnicas, medidas e detalhes fornecidos na mensagem e armazene na propriedade "description". Exemplo de description: "Instalação de um (01) painel de distribuição de energia (QD) de sobrepor 120x80x20cm, barramento principal até 200A, e secundários até 63A. Incluso ligações elétricas". O título ("title") deve ser curto (ex: "Instalação de Painel de Distribuição"), e a descrição ("description") deve conter o texto detalhado literal fornecido pelo usuário.'
-      : ''
-  }
+5. Chain-of-Thought obrigatória: Preencha o campo _raciocinio narrando brevemente o que foi encontrado e por que.
+
+EXEMPLOS POSITIVOS:
+- "20 camisas a 10 reais" -> { items: [{ title: "Camisas", amount: 20, price: 10 }] }
+- "Pintura de parede 20m2" -> { items: [{ title: "Pintura de Parede", amount: 1, description: "Pintura de parede 20m2" }] }
+- "2 pneus aro 15 de 300 cada" -> { items: [{ title: "Pneu Aro 15", amount: 2, price: 300 }] }
+
+EXEMPLOS NEGATIVOS (items = []):
+- "Olá bom dia!"
+- "muito obrigado"
+- "1" (comando de finalização isolado)
 
 MENSAGEM DO USUÁRIO:
 """

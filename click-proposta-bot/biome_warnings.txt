@@ -1,0 +1,118 @@
+src\providers\ai\gemini-ai-provider.ts:21:20 lint/suspicious/noExplicitAny ÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöü
+
+  ! Unexpected any. Specify a different type.
+  
+    19 Ôöé     maxRetries = 3
+    20 Ôöé   ): Promise<T> {
+  > 21 Ôöé     let lastError: any
+       Ôöé                    ^^^
+    22 Ôöé 
+    23 Ôöé     for (let attempt = 1; attempt <= maxRetries; attempt++) {
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src\providers\ai\gemini-ai-provider.ts:26:23 lint/suspicious/noExplicitAny ÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöü
+
+  ! Unexpected any. Specify a different type.
+  
+    24 Ôöé       try {
+    25 Ôöé         return await operation()
+  > 26 Ôöé       } catch (error: any) {
+       Ôöé                       ^^^
+    27 Ôöé         lastError = error
+    28 Ôöé         const status =
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src\providers\ai\gemini-ai-provider.ts:97:21 lint/suspicious/noExplicitAny ÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöü
+
+  ! Unexpected any. Specify a different type.
+  
+    96 Ôöé       return parsed.items ?? []
+  > 97 Ôöé     } catch (error: any) {
+       Ôöé                     ^^^
+    98 Ôöé       const status = error.status || error.response?.status
+    99 Ôöé       if (status === 429 || error.message?.includes('429')) {
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src\tests\integration\webhook.test.ts:39:41 lint/suspicious/noExplicitAny ÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöü
+
+  ! Unexpected any. Specify a different type.
+  
+    38 Ôöé // Payload base que a Evolution API envia
+  > 39 Ôöé function buildWebhookPayload(overrides: any = {}) {
+       Ôöé                                         ^^^
+    40 Ôöé   const baseData = {
+    41 Ôöé     key: {
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src\tests\unit\gemini-ai-provider.test.ts:236:21 lint/suspicious/noExplicitAny ÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöü
+
+  ! Unexpected any. Specify a different type.
+  
+    234 Ôöé       // Primeira falha
+    235 Ôöé       const error503 = new Error('Service Unavailable')
+  > 236 Ôöé       ;(error503 as any).status = 503
+        Ôöé                     ^^^
+    237 Ôöé       mockGenerateContent.mockRejectedValueOnce(error503)
+    238 Ôöé 
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src\use-cases\bot\handle-new-user.spec.ts:69:13 lint/complexity/useDateNow  FIXABLE  ÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöü
+
+  ! Use Date.now() instead of new Date().getTime().
+  
+    67 Ôöé           planType: 'PRO',
+    68 Ôöé           planExpiresAt: new Date(
+  > 69 Ôöé             new Date().getTime() - 1000 * 60
+       Ôöé             ^^^^^^^^^^^^^^^^^^^^
+    70 Ôöé           ).toISOString(), // expired
+    71 Ôöé           countProposalsInMonth: 10,
+  
+  i Date.now() is more readable and also avoids unnecessary instantiation of Date object.
+  
+  i Unsafe fix: Replace with Date.now().
+  
+     66  66 Ôöé             phone: '123456789',
+     67  67 Ôöé             planType: 'PRO',
+     68     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀplanExpiresAt:┬Ànew┬ÀDate(
+     69     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Ànew┬ÀDate().getTime()┬À-┬À1000┬À*┬À60
+         68 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀplanExpiresAt:┬Ànew┬ÀDate(Date.now()-┬À1000┬À*┬À60
+     70  69 Ôöé             ).toISOString(), // expired
+     71  70 Ôöé             countProposalsInMonth: 10,
+  
+
+src\use-cases\bot\handle-new-user.spec.ts:90:13 lint/complexity/useDateNow  FIXABLE  ÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöü
+
+  ! Use Date.now() instead of new Date().getTime().
+  
+    88 Ôöé           planType: 'PRO',
+    89 Ôöé           planExpiresAt: new Date(
+  > 90 Ôöé             new Date().getTime() + 1000 * 60 * 60
+       Ôöé             ^^^^^^^^^^^^^^^^^^^^
+    91 Ôöé           ).toISOString(),
+    92 Ôöé           countProposalsInMonth: 100,
+  
+  i Date.now() is more readable and also avoids unnecessary instantiation of Date object.
+  
+  i Unsafe fix: Replace with Date.now().
+  
+     87  87 Ôöé             phone: '123456789',
+     88  88 Ôöé             planType: 'PRO',
+     89     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀplanExpiresAt:┬Ànew┬ÀDate(
+     90     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Ànew┬ÀDate().getTime()┬À+┬À1000┬À*┬À60┬À*┬À60
+         89 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀplanExpiresAt:┬Ànew┬ÀDate(Date.now()+┬À1000┬À*┬À60┬À*┬À60
+     91  90 Ôöé             ).toISOString(),
+     92  91 Ôöé             countProposalsInMonth: 100,
+  
+
+Checked 32 files in 29ms. No fixes applied.
+Found 7 warnings.

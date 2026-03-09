@@ -30,6 +30,7 @@ model User {
   ProposalDraft      ProposalDraft[]
   Proposal           Proposal[]
   Services           Services[]
+  ProposalLog        ProposalLog[]
 
   @@map("users")
 }
@@ -162,4 +163,16 @@ enum status {
   SENT
   APPROVED
   REJECTED
+}
+
+model ProposalLog {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId    String   @map("user_id") @db.Uuid
+  origin    String // 'BOT' ou 'SITE'
+  type      String // 'PROPOSAL' ou 'BUDGET'
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("proposal_logs")
 }

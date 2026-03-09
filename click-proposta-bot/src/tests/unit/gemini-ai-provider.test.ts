@@ -179,6 +179,7 @@ describe('GeminiAiProvider', () => {
       await service.extractBudgetItems('instalação de pia', 'civil')
 
       const callArg = mockGenerateContent.mock.calls[0][0]
+      expect(callArg.model).toBe('gemini-2.5-flash')
       expect(callArg.contents).toContain('Serviço Civil')
     })
 
@@ -227,6 +228,23 @@ describe('GeminiAiProvider', () => {
       expect(parts[0].text).toContain('Transcreva este áudio exatamente')
       expect(parts[1].inlineData.data).toBe(base64)
       expect(parts[1].inlineData.mimeType).toBe(mimeType)
+    })
+
+    it('deve tentar novamente em caso de erro 503 e ter sucesso na segunda tentativa', async () => {
+      // Primeira falha
+      const error503 = new Error('Service Unavailable')
+      Object.assign(error503, { status: 503 })
+      mockGenerateContent.mockRejectedValueOnce(error503)
+
+      // Segunda sucesso
+      mockGenerateContent.mockResolvedValueOnce({
+        text: 'transcrição após retry',
+      })
+
+      const result = await service.transcribeAudio('base64', 'audio/ogg')
+
+      expect(result).toBe('transcrição após retry')
+      expect(mockGenerateContent).toHaveBeenCalledTimes(2)
     })
 
     it('deve retornar string vazia caso o retorno seja nulo', async () => {

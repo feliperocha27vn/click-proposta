@@ -1,0 +1,1269 @@
+src\providers\ai\gemini-ai-provider.ts:21:20 lint/suspicious/noExplicitAny ÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöü
+
+  ! Unexpected any. Specify a different type.
+  
+    19 Ôöé     maxRetries = 3
+    20 Ôöé   ): Promise<T> {
+  > 21 Ôöé     let lastError: any
+       Ôöé                    ^^^
+    22 Ôöé 
+    23 Ôöé     for (let attempt = 1; attempt <= maxRetries; attempt++) {
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src\providers\ai\gemini-ai-provider.ts:26:23 lint/suspicious/noExplicitAny ÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöü
+
+  ! Unexpected any. Specify a different type.
+  
+    24 Ôöé       try {
+    25 Ôöé         return await operation()
+  > 26 Ôöé       } catch (error: any) {
+       Ôöé                       ^^^
+    27 Ôöé         lastError = error
+    28 Ôöé         const status =
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src\providers\ai\gemini-ai-provider.ts:97:21 lint/suspicious/noExplicitAny ÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöü
+
+  ! Unexpected any. Specify a different type.
+  
+    96 Ôöé       return parsed.items ?? []
+  > 97 Ôöé     } catch (error: any) {
+       Ôöé                     ^^^
+    98 Ôöé       const status = error.status || error.response?.status
+    99 Ôöé       if (status === 429 || error.message?.includes('429')) {
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src\app.ts format ÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöü
+
+  ├ù Formatter would have printed the following content:
+  
+    1   Ôöé - import┬À{┬Àfastify┬À}┬Àfrom┬À'fastify'ÔÉì
+    2   Ôöé - import┬À{┬ÀwebhookRoutes┬À}┬Àfrom┬À'./http/controllers/webhook/webhook'ÔÉì
+    3   Ôöé - ÔÉì
+    4   Ôöé - export┬Àconst┬Àapp┬À=┬Àfastify()ÔÉì
+    5   Ôöé - ÔÉì
+    6   Ôöé - app.register(webhookRoutes)ÔÉì
+      1 Ôöé + import┬À{┬Àfastify┬À}┬Àfrom┬À'fastify'
+      2 Ôöé + import┬À{┬ÀwebhookRoutes┬À}┬Àfrom┬À'./http/controllers/webhook/webhook'
+      3 Ôöé + 
+      4 Ôöé + export┬Àconst┬Àapp┬À=┬Àfastify()
+      5 Ôöé + 
+      6 Ôöé + app.register(webhookRoutes)
+    7 7 Ôöé   
+  
+
+src\env.ts format ÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöü
+
+  ├ù Formatter would have printed the following content:
+  
+     1    Ôöé - import┬Àz┬Àfrom┬À'zod'ÔÉì
+     2    Ôöé - ÔÉì
+     3    Ôöé - const┬ÀenvSchema┬À=┬Àz.object({ÔÉì
+     4    Ôöé - ┬À┬ÀPORT:┬Àz.coerce.number().default(3334),ÔÉì
+     5    Ôöé - ┬À┬ÀREDIS_URL:┬Àz.string().url().optional(),ÔÉì
+     6    Ôöé - ┬À┬ÀAPI_URL:┬Àz.string().url(),ÔÉì
+     7    Ôöé - ┬À┬ÀBOT_SERVICE_TOKEN:┬Àz.string(),ÔÉì
+     8    Ôöé - ┬À┬ÀGEMINI_API_KEY:┬Àz.string(),ÔÉì
+     9    Ôöé - ┬À┬ÀEVOLUTION_API_URL:┬Àz.string().url(),ÔÉì
+    10    Ôöé - ┬À┬ÀEVOLUTION_API_TOKEN:┬Àz.string(),ÔÉì
+    11    Ôöé - ┬À┬ÀDATABASE_URL:┬Àz.string().url(),ÔÉì
+    12    Ôöé - })ÔÉì
+    13    Ôöé - ÔÉì
+    14    Ôöé - export┬Àconst┬Àenv┬À=┬ÀenvSchema.parse(process.env)ÔÉì
+        1 Ôöé + import┬Àz┬Àfrom┬À'zod'
+        2 Ôöé + 
+        3 Ôöé + const┬ÀenvSchema┬À=┬Àz.object({
+        4 Ôöé + ┬À┬ÀPORT:┬Àz.coerce.number().default(3334),
+        5 Ôöé + ┬À┬ÀREDIS_URL:┬Àz.string().url().optional(),
+        6 Ôöé + ┬À┬ÀAPI_URL:┬Àz.string().url(),
+        7 Ôöé + ┬À┬ÀBOT_SERVICE_TOKEN:┬Àz.string(),
+        8 Ôöé + ┬À┬ÀGEMINI_API_KEY:┬Àz.string(),
+        9 Ôöé + ┬À┬ÀEVOLUTION_API_URL:┬Àz.string().url(),
+       10 Ôöé + ┬À┬ÀEVOLUTION_API_TOKEN:┬Àz.string(),
+       11 Ôöé + ┬À┬ÀDATABASE_URL:┬Àz.string().url(),
+       12 Ôöé + })
+       13 Ôöé + 
+       14 Ôöé + export┬Àconst┬Àenv┬À=┬ÀenvSchema.parse(process.env)
+    15 15 Ôöé   
+  
+
+src\factories\make-process-incoming-message-use-case.ts format ÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöü
+
+  ├ù Formatter would have printed the following content:
+  
+     1    Ôöé - import┬À{┬ÀGeminiAiProvider┬À}┬Àfrom┬À'../providers/ai/gemini-ai-provider'ÔÉì
+     2    Ôöé - import┬À{┬ÀEvolutionMessagingProvider┬À}┬Àfrom┬À'../providers/messaging/messaging-provider'ÔÉì
+     3    Ôöé - import┬À{┬ÀSessionRepository┬À}┬Àfrom┬À'../repositories/session-repository'ÔÉì
+     4    Ôöé - import┬À{┬ÀHandleAwaitingCustomerNameUseCase┬À}┬Àfrom┬À'../use-cases/bot/handle-awaiting-customer-name'ÔÉì
+     5    Ôöé - import┬À{┬ÀHandleAwaitingTotalValueUseCase┬À}┬Àfrom┬À'../use-cases/bot/handle-awaiting-total-value'ÔÉì
+     6    Ôöé - import┬À{┬ÀHandleAwaitingTypeUseCase┬À}┬Àfrom┬À'../use-cases/bot/handle-awaiting-type'ÔÉì
+     7    Ôöé - import┬À{┬ÀHandleCollectingItemsUseCase┬À}┬Àfrom┬À'../use-cases/bot/handle-collecting-items'ÔÉì
+     8    Ôöé - import┬À{┬ÀHandleConfirmingUseCase┬À}┬Àfrom┬À'../use-cases/bot/handle-confirming'ÔÉì
+     9    Ôöé - import┬À{┬ÀHandleNewUserUseCase┬À}┬Àfrom┬À'../use-cases/bot/handle-new-user'ÔÉì
+    10    Ôöé - import┬À{┬ÀProcessIncomingMessageUseCase┬À}┬Àfrom┬À'../use-cases/bot/process-incoming-message'ÔÉì
+    11    Ôöé - ÔÉì
+    12    Ôöé - export┬Àfunction┬ÀmakeProcessIncomingMessageUseCase()┬À{ÔÉì
+    13    Ôöé - ┬À┬Àconst┬ÀsessionRepository┬À=┬Ànew┬ÀSessionRepository()ÔÉì
+    14    Ôöé - ┬À┬Àconst┬ÀaiProvider┬À=┬Ànew┬ÀGeminiAiProvider()ÔÉì
+    15    Ôöé - ┬À┬Àconst┬ÀmessagingProvider┬À=┬Ànew┬ÀEvolutionMessagingProvider()ÔÉì
+    16    Ôöé - ÔÉì
+    17    Ôöé - ┬À┬Àconst┬ÀhandleNewUser┬À=┬Ànew┬ÀHandleNewUserUseCase(sessionRepository)ÔÉì
+    18    Ôöé - ┬À┬Àconst┬ÀhandleAwaitingType┬À=┬Ànew┬ÀHandleAwaitingTypeUseCase(sessionRepository)ÔÉì
+    19    Ôöé - ┬À┬Àconst┬ÀhandleAwaitingCustomerName┬À=┬Ànew┬ÀHandleAwaitingCustomerNameUseCase(ÔÉì
+    20    Ôöé - ┬À┬À┬À┬ÀsessionRepositoryÔÉì
+    21    Ôöé - ┬À┬À)ÔÉì
+    22    Ôöé - ┬À┬Àconst┬ÀhandleAwaitingTotalValue┬À=┬Ànew┬ÀHandleAwaitingTotalValueUseCase(ÔÉì
+    23    Ôöé - ┬À┬À┬À┬ÀsessionRepository,ÔÉì
+    24    Ôöé - ┬À┬À┬À┬ÀaiProviderÔÉì
+    25    Ôöé - ┬À┬À)ÔÉì
+    26    Ôöé - ┬À┬Àconst┬ÀhandleCollectingItems┬À=┬Ànew┬ÀHandleCollectingItemsUseCase(ÔÉì
+    27    Ôöé - ┬À┬À┬À┬ÀsessionRepository,ÔÉì
+    28    Ôöé - ┬À┬À┬À┬ÀaiProviderÔÉì
+    29    Ôöé - ┬À┬À)ÔÉì
+    30    Ôöé - ┬À┬Àconst┬ÀhandleConfirming┬À=┬Ànew┬ÀHandleConfirmingUseCase(ÔÉì
+    31    Ôöé - ┬À┬À┬À┬ÀsessionRepository,ÔÉì
+    32    Ôöé - ┬À┬À┬À┬ÀmessagingProviderÔÉì
+    33    Ôöé - ┬À┬À)ÔÉì
+    34    Ôöé - ÔÉì
+    35    Ôöé - ┬À┬Àconst┬ÀprocessIncomingMessage┬À=┬Ànew┬ÀProcessIncomingMessageUseCase(ÔÉì
+    36    Ôöé - ┬À┬À┬À┬ÀsessionRepository,ÔÉì
+    37    Ôöé - ┬À┬À┬À┬ÀhandleNewUser,ÔÉì
+    38    Ôöé - ┬À┬À┬À┬ÀhandleAwaitingType,ÔÉì
+    39    Ôöé - ┬À┬À┬À┬ÀhandleAwaitingCustomerName,ÔÉì
+    40    Ôöé - ┬À┬À┬À┬ÀhandleAwaitingTotalValue,ÔÉì
+    41    Ôöé - ┬À┬À┬À┬ÀhandleCollectingItems,ÔÉì
+    42    Ôöé - ┬À┬À┬À┬ÀhandleConfirmingÔÉì
+    43    Ôöé - ┬À┬À)ÔÉì
+    44    Ôöé - ÔÉì
+    45    Ôöé - ┬À┬Àreturn┬ÀprocessIncomingMessageÔÉì
+    46    Ôöé - }ÔÉì
+        1 Ôöé + import┬À{┬ÀGeminiAiProvider┬À}┬Àfrom┬À'../providers/ai/gemini-ai-provider'
+        2 Ôöé + import┬À{┬ÀEvolutionMessagingProvider┬À}┬Àfrom┬À'../providers/messaging/messaging-provider'
+        3 Ôöé + import┬À{┬ÀSessionRepository┬À}┬Àfrom┬À'../repositories/session-repository'
+        4 Ôöé + import┬À{┬ÀHandleAwaitingCustomerNameUseCase┬À}┬Àfrom┬À'../use-cases/bot/handle-awaiting-customer-name'
+        5 Ôöé + import┬À{┬ÀHandleAwaitingTotalValueUseCase┬À}┬Àfrom┬À'../use-cases/bot/handle-awaiting-total-value'
+        6 Ôöé + import┬À{┬ÀHandleAwaitingTypeUseCase┬À}┬Àfrom┬À'../use-cases/bot/handle-awaiting-type'
+        7 Ôöé + import┬À{┬ÀHandleCollectingItemsUseCase┬À}┬Àfrom┬À'../use-cases/bot/handle-collecting-items'
+        8 Ôöé + import┬À{┬ÀHandleConfirmingUseCase┬À}┬Àfrom┬À'../use-cases/bot/handle-confirming'
+        9 Ôöé + import┬À{┬ÀHandleNewUserUseCase┬À}┬Àfrom┬À'../use-cases/bot/handle-new-user'
+       10 Ôöé + import┬À{┬ÀProcessIncomingMessageUseCase┬À}┬Àfrom┬À'../use-cases/bot/process-incoming-message'
+       11 Ôöé + 
+       12 Ôöé + export┬Àfunction┬ÀmakeProcessIncomingMessageUseCase()┬À{
+       13 Ôöé + ┬À┬Àconst┬ÀsessionRepository┬À=┬Ànew┬ÀSessionRepository()
+       14 Ôöé + ┬À┬Àconst┬ÀaiProvider┬À=┬Ànew┬ÀGeminiAiProvider()
+       15 Ôöé + ┬À┬Àconst┬ÀmessagingProvider┬À=┬Ànew┬ÀEvolutionMessagingProvider()
+       16 Ôöé + 
+       17 Ôöé + ┬À┬Àconst┬ÀhandleNewUser┬À=┬Ànew┬ÀHandleNewUserUseCase(sessionRepository)
+       18 Ôöé + ┬À┬Àconst┬ÀhandleAwaitingType┬À=┬Ànew┬ÀHandleAwaitingTypeUseCase(sessionRepository)
+       19 Ôöé + ┬À┬Àconst┬ÀhandleAwaitingCustomerName┬À=┬Ànew┬ÀHandleAwaitingCustomerNameUseCase(
+       20 Ôöé + ┬À┬À┬À┬ÀsessionRepository
+       21 Ôöé + ┬À┬À)
+       22 Ôöé + ┬À┬Àconst┬ÀhandleAwaitingTotalValue┬À=┬Ànew┬ÀHandleAwaitingTotalValueUseCase(
+       23 Ôöé + ┬À┬À┬À┬ÀsessionRepository,
+       24 Ôöé + ┬À┬À┬À┬ÀaiProvider
+       25 Ôöé + ┬À┬À)
+       26 Ôöé + ┬À┬Àconst┬ÀhandleCollectingItems┬À=┬Ànew┬ÀHandleCollectingItemsUseCase(
+       27 Ôöé + ┬À┬À┬À┬ÀsessionRepository,
+       28 Ôöé + ┬À┬À┬À┬ÀaiProvider
+       29 Ôöé + ┬À┬À)
+       30 Ôöé + ┬À┬Àconst┬ÀhandleConfirming┬À=┬Ànew┬ÀHandleConfirmingUseCase(
+       31 Ôöé + ┬À┬À┬À┬ÀsessionRepository,
+       32 Ôöé + ┬À┬À┬À┬ÀmessagingProvider
+       33 Ôöé + ┬À┬À)
+       34 Ôöé + 
+       35 Ôöé + ┬À┬Àconst┬ÀprocessIncomingMessage┬À=┬Ànew┬ÀProcessIncomingMessageUseCase(
+       36 Ôöé + ┬À┬À┬À┬ÀsessionRepository,
+       37 Ôöé + ┬À┬À┬À┬ÀhandleNewUser,
+       38 Ôöé + ┬À┬À┬À┬ÀhandleAwaitingType,
+       39 Ôöé + ┬À┬À┬À┬ÀhandleAwaitingCustomerName,
+       40 Ôöé + ┬À┬À┬À┬ÀhandleAwaitingTotalValue,
+       41 Ôöé + ┬À┬À┬À┬ÀhandleCollectingItems,
+       42 Ôöé + ┬À┬À┬À┬ÀhandleConfirming
+       43 Ôöé + ┬À┬À)
+       44 Ôöé + 
+       45 Ôöé + ┬À┬Àreturn┬ÀprocessIncomingMessage
+       46 Ôöé + }
+    47 47 Ôöé   
+  
+
+src\http\controllers\webhook\webhook.ts format ÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöü
+
+  ├ù Formatter would have printed the following content:
+  
+      1     Ôöé - import┬Àtype┬À{┬ÀFastifyInstance┬À}┬Àfrom┬À'fastify'ÔÉì
+      2     Ôöé - import┬À{┬Àz┬À}┬Àfrom┬À'zod'ÔÉì
+      3     Ôöé - import┬À{┬ÀmakeProcessIncomingMessageUseCase┬À}┬Àfrom┬À'../../../factories/make-process-incoming-message-use-case'ÔÉì
+      4     Ôöé - import┬À{┬Àredis┬À}┬Àfrom┬À'../../../lib/redis'ÔÉì
+      5     Ôöé - import┬À{┬ÀGeminiAiProvider┬À}┬Àfrom┬À'../../../providers/ai/gemini-ai-provider'ÔÉì
+      6     Ôöé - import┬À{┬ÀEvolutionMessagingProvider┬À}┬Àfrom┬À'../../../providers/messaging/messaging-provider'ÔÉì
+      7     Ôöé - ÔÉì
+      8     Ôöé - const┬ÀaiProvider┬À=┬Ànew┬ÀGeminiAiProvider()ÔÉì
+      9     Ôöé - const┬ÀmessagingProvider┬À=┬Ànew┬ÀEvolutionMessagingProvider()ÔÉì
+     10     Ôöé - ÔÉì
+     11     Ôöé - export┬Àasync┬Àfunction┬ÀwebhookRoutes(app:┬ÀFastifyInstance)┬À{ÔÉì
+     12     Ôöé - ┬À┬Àapp.post('/webhook',┬Àasync┬À(request,┬Àreply)┬À=>┬À{ÔÉì
+     13     Ôöé - ┬À┬À┬À┬À//┬À1.┬ÀValida├º├úo┬Àb├ísica┬Àdo┬Àformato┬Àdo┬ÀWebhook┬Àda┬ÀEvolution┬ÀAPIÔÉì
+     14     Ôöé - ┬À┬À┬À┬À//┬ÀUsamos┬À.loose()┬Àporque┬Àa┬ÀEvolution┬Àmanda┬Àmuitos┬Àoutros┬Àcampos┬Àque┬Àn├úo┬Àprecisamos┬Àagora.ÔÉì
+     15     Ôöé - ┬À┬À┬À┬Àconst┬ÀwebhookSchema┬À=┬ÀzÔÉì
+     16     Ôöé - ┬À┬À┬À┬À┬À┬À.object({ÔÉì
+     17     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àevent:┬Àz.string(),ÔÉì
+     18     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àinstance:┬Àz.string(),┬À//┬ÀO┬Ànone┬Àda┬Àinst├óncia┬Àvem┬Àno┬Àwebhook!ÔÉì
+     19     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àdata:┬Àz.object({ÔÉì
+     20     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àkey:┬Àz.object({ÔÉì
+     21     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àid:┬Àz.string().optional(),┬À//┬ÀID┬Àda┬Àmensagem,┬Ànecess├írio┬Àpara┬Àbaixar┬Àm├¡diaÔÉì
+     22     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀremoteJid:┬Àz.string(),┬À//┬ÀO┬Àn├║mero┬Àde┬Àtelefone┬Àde┬Àquem┬ÀenviouÔÉì
+     23     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀfromMe:┬Àz.boolean(),┬À//┬ÀSe┬Àfoi┬Ào┬Àpr├│prio┬Àbot┬Àquem┬ÀenviouÔÉì
+     24     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À}),ÔÉì
+     25     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àmessage:┬Àz.any().optional(),┬À//┬ÀO┬Àconte├║do┬Àda┬Àmensagem┬À(texto,┬À├íudio,┬Àetc)ÔÉì
+     26     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀpushName:┬Àz.string().optional(),┬À//┬ÀNome┬Àdo┬Àusu├írio┬Àno┬ÀWhatsAppÔÉì
+     27     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À}),ÔÉì
+     28     Ôöé - ┬À┬À┬À┬À┬À┬À})ÔÉì
+     29     Ôöé - ┬À┬À┬À┬À┬À┬À.loose()ÔÉì
+     30     Ôöé - ÔÉì
+     31     Ôöé - ┬À┬À┬À┬Àtry┬À{ÔÉì
+     32     Ôöé - ┬À┬À┬À┬À┬À┬Àconst┬Àbody┬À=┬ÀwebhookSchema.parse(request.body)ÔÉì
+     33     Ôöé - ÔÉì
+     34     Ôöé - ┬À┬À┬À┬À┬À┬À//┬ÀIgnora┬Àmensagens┬Àenviadas┬Àpelo┬Àpr├│prio┬Àbot,┬Àou┬Àeventos┬Àque┬Àn├úo┬Àsejam┬ÀmensagensÔÉì
+     35     Ôöé - ┬À┬À┬À┬À┬À┬Àif┬À(body.event┬À!==┬À'messages.upsert'┬À||┬Àbody.data.key.fromMe)┬À{ÔÉì
+     36     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àreturn┬Àreply.status(200).send()ÔÉì
+     37     Ôöé - ┬À┬À┬À┬À┬À┬À}ÔÉì
+     38     Ôöé - ÔÉì
+     39     Ôöé - ┬À┬À┬À┬À┬À┬Àconst┬ÀinstanceName┬À=┬Àbody.instanceÔÉì
+     40     Ôöé - ┬À┬À┬À┬À┬À┬Àconst┬ÀremoteJid┬À=┬Àbody.data.key.remoteJidÔÉì
+     41     Ôöé - ┬À┬À┬À┬À┬À┬Àconst┬ÀmessageId┬À=┬Àbody.data.key.idÔÉì
+     42     Ôöé - ÔÉì
+     43     Ôöé - ┬À┬À┬À┬À┬À┬À//┬À1.1┬ÀFiltragem┬Àde┬ÀJID:┬ÀIgnora┬Àse┬Àfor┬Àgrupo┬À(@g.us)┬Àou┬Àbroadcast┬À(@broadcast)ÔÉì
+     44     Ôöé - ┬À┬À┬À┬À┬À┬Àif┬À(ÔÉì
+     45     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À!remoteJid.endsWith('@s.whatsapp.net')┬À&&ÔÉì
+     46     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À!remoteJid.endsWith('@c.us')ÔÉì
+     47     Ôöé - ┬À┬À┬À┬À┬À┬À)┬À{ÔÉì
+     48     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àreturn┬Àreply.status(200).send()ÔÉì
+     49     Ôöé - ┬À┬À┬À┬À┬À┬À}ÔÉì
+     50     Ôöé - ÔÉì
+     51     Ôöé - ┬À┬À┬À┬À┬À┬À//┬À1.2┬ÀIdempot├¬ncia:┬ÀEvita┬Àprocessar┬Àa┬Àmesma┬Àmensagem┬Àmais┬Àde┬Àuma┬Àvez┬À(webhook┬Àduplicado)ÔÉì
+     52     Ôöé - ┬À┬À┬À┬À┬À┬Àif┬À(messageId)┬À{ÔÉì
+     53     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àconst┬ÀlockKey┬À=┬À`msg:processed:${messageId}`ÔÉì
+     54     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àconst┬ÀisProcessed┬À=┬Àawait┬Àredis.get(lockKey)ÔÉì
+     55     Ôöé - ÔÉì
+     56     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àif┬À(isProcessed)┬À{ÔÉì
+     57     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àreturn┬Àreply.status(200).send()ÔÉì
+     58     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À}ÔÉì
+     59     Ôöé - ÔÉì
+     60     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À//┬ÀMarca┬Àcomo┬Àprocessada┬Àpor┬À1┬Àminuto┬À(tempo┬Àsuficiente┬Àpara┬Àevitar┬Àduplicatas┬Àda┬ÀEvolution)ÔÉì
+     61     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àawait┬Àredis.set(lockKey,┬À'true',┬À'EX',┬À60)ÔÉì
+     62     Ôöé - ┬À┬À┬À┬À┬À┬À}ÔÉì
+     63     Ôöé - ÔÉì
+     64     Ôöé - ┬À┬À┬À┬À┬À┬Àconst┬Àphone┬À=┬ÀremoteJid.split('@')[0].split(':')[0]ÔÉì
+     65     Ôöé - ÔÉì
+     66     Ôöé - ┬À┬À┬À┬À┬À┬À//┬ÀExtrai┬Ào┬Àtexto┬Àda┬Àmensagem┬À(A┬ÀEvolution┬ÀAPI┬Àenvia┬Àem┬Àv├írios┬Àformatos┬Àdependendo┬Àse┬À├®┬Àtexto┬Àpuro,┬Àresposta,┬Àetc)ÔÉì
+     67     Ôöé - ┬À┬À┬À┬À┬À┬Àconst┬ÀmessageData┬À=┬Àbody.data.messageÔÉì
+     68     Ôöé - ┬À┬À┬À┬À┬À┬Àlet┬Àtext┬À=┬À''ÔÉì
+     69     Ôöé - ÔÉì
+     70     Ôöé - ┬À┬À┬À┬À┬À┬Àif┬À(messageData)┬À{ÔÉì
+     71     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àif┬À(messageData.conversation)┬À{ÔÉì
+     72     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àtext┬À=┬ÀmessageData.conversationÔÉì
+     73     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À}┬Àelse┬Àif┬À(messageData.extendedTextMessage?.text)┬À{ÔÉì
+     74     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àtext┬À=┬ÀmessageData.extendedTextMessage.textÔÉì
+     75     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À}┬Àelse┬Àif┬À(messageData.audioMessage)┬À{ÔÉì
+     76     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À//┬ÀExtrai┬À├íudioÔÉì
+     77     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àconst┬ÀmessageId┬À=┬Àbody.data.key.idÔÉì
+     78     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àif┬À(messageId)┬À{ÔÉì
+     79     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àconsole.log(`[Webhook]┬ÀBaixando┬À├íudio┬Àda┬Àmensagem┬À${messageId}...`)ÔÉì
+     80     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àconst┬Àmedia┬À=┬Àawait┬ÀmessagingProvider.getBase64Media({ÔÉì
+     81     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀinstanceName,ÔÉì
+     82     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀmessageId,ÔÉì
+     83     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀremoteJid:┬Àbody.data.key.remoteJid,ÔÉì
+     84     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀfromMe:┬Àbody.data.key.fromMe,ÔÉì
+     85     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À})ÔÉì
+     86     Ôöé - ÔÉì
+     87     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àif┬À(media)┬À{ÔÉì
+     88     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àconsole.log('[Webhook]┬À├üudio┬Àbaixado,┬Àiniciando┬Àtranscri├º├úo...')ÔÉì
+     89     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àtext┬À=┬Àawait┬ÀaiProvider.transcribeAudio(ÔÉì
+     90     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àmedia.base64,ÔÉì
+     91     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àmedia.mimetypeÔÉì
+     92     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À)ÔÉì
+     93     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À}ÔÉì
+     94     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À}ÔÉì
+     95     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À}ÔÉì
+     96     Ôöé - ┬À┬À┬À┬À┬À┬À}ÔÉì
+     97     Ôöé - ÔÉì
+     98     Ôöé - ┬À┬À┬À┬À┬À┬À//┬ÀSe┬Àn├úo┬Àfor┬Àuma┬Àmensagem┬Àde┬Àtexto┬À(ex:┬Àimagem,┬Àfigurinha,┬À├íudio),┬Àpor┬Àenquanto┬ÀignoraÔÉì
+     99     Ôöé - ┬À┬À┬À┬À┬À┬Àif┬À(!text)┬À{ÔÉì
+    100     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àconsole.log(`[Webhook]┬ÀMensagem┬Àn├úo┬Àsuportada┬Àrecebida┬Àde┬À${phone}`)ÔÉì
+    101     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àreturn┬Àreply.status(200).send()ÔÉì
+    102     Ôöé - ┬À┬À┬À┬À┬À┬À}ÔÉì
+    103     Ôöé - ÔÉì
+    104     Ôöé - ┬À┬À┬À┬À┬À┬Àconsole.log(ÔÉì
+    105     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À`[Webhook]┬ÀMensagem┬Àrecebida┬Àde┬À${phone}┬À[${instanceName}]:┬À${text}`ÔÉì
+    106     Ôöé - ┬À┬À┬À┬À┬À┬À)ÔÉì
+    107     Ôöé - ÔÉì
+    108     Ôöé - ┬À┬À┬À┬À┬À┬À//┬À2.┬ÀChama┬Àa┬ÀM├íquina┬Àde┬ÀEstados┬À(Use┬ÀCase┬ÀOrquestrador)┬Àe┬Àespera┬Àa┬ÀrespostaÔÉì
+    109     Ôöé - ┬À┬À┬À┬À┬À┬Àconst┬ÀprocessIncomingMessageUseCase┬À=┬ÀmakeProcessIncomingMessageUseCase()ÔÉì
+    110     Ôöé - ┬À┬À┬À┬À┬À┬Àconst┬ÀbotResponse┬À=┬Àawait┬ÀprocessIncomingMessageUseCase.execute({ÔÉì
+    111     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬ÀinstanceName,ÔÉì
+    112     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àphone,ÔÉì
+    113     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àtext,ÔÉì
+    114     Ôöé - ┬À┬À┬À┬À┬À┬À})ÔÉì
+    115     Ôöé - ÔÉì
+    116     Ôöé - ┬À┬À┬À┬À┬À┬Àif┬À(botResponse)┬À{ÔÉì
+    117     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àconsole.log(`[Bot]┬ÀResposta┬Àpara┬À${phone}:┬À${botResponse}`)ÔÉì
+    118     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àawait┬ÀmessagingProvider.sendText({ÔÉì
+    119     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀinstanceName,ÔÉì
+    120     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àphone,ÔÉì
+    121     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àtext:┬ÀbotResponse,ÔÉì
+    122     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À})ÔÉì
+    123     Ôöé - ┬À┬À┬À┬À┬À┬À}ÔÉì
+    124     Ôöé - ÔÉì
+    125     Ôöé - ┬À┬À┬À┬À┬À┬Àreturn┬Àreply.status(200).send()ÔÉì
+    126     Ôöé - ┬À┬À┬À┬À}┬Àcatch┬À(error)┬À{ÔÉì
+    127     Ôöé - ┬À┬À┬À┬À┬À┬Àconsole.error('[Webhook]┬ÀErro┬Àprocessando┬Àhook:',┬Àerror)ÔÉì
+    128     Ôöé - ┬À┬À┬À┬À┬À┬À//┬ÀSempre┬Àretornamos┬À200┬Àpra┬ÀEvolution┬ÀAPI┬Àn├úo┬Àficar┬Àtentando┬Àreenviar┬Ào┬Àtempo┬Àtodo┬Àem┬Àcaso┬Àde┬Àerro┬Àinterno┬ÀnossoÔÉì
+    129     Ôöé - ┬À┬À┬À┬À┬À┬Àreturn┬Àreply.status(200).send()ÔÉì
+    130     Ôöé - ┬À┬À┬À┬À}ÔÉì
+    131     Ôöé - ┬À┬À})ÔÉì
+    132     Ôöé - }ÔÉì
+          1 Ôöé + import┬Àtype┬À{┬ÀFastifyInstance┬À}┬Àfrom┬À'fastify'
+          2 Ôöé + import┬À{┬Àz┬À}┬Àfrom┬À'zod'
+          3 Ôöé + import┬À{┬ÀmakeProcessIncomingMessageUseCase┬À}┬Àfrom┬À'../../../factories/make-process-incoming-message-use-case'
+          4 Ôöé + import┬À{┬Àredis┬À}┬Àfrom┬À'../../../lib/redis'
+          5 Ôöé + import┬À{┬ÀGeminiAiProvider┬À}┬Àfrom┬À'../../../providers/ai/gemini-ai-provider'
+          6 Ôöé + import┬À{┬ÀEvolutionMessagingProvider┬À}┬Àfrom┬À'../../../providers/messaging/messaging-provider'
+          7 Ôöé + 
+          8 Ôöé + const┬ÀaiProvider┬À=┬Ànew┬ÀGeminiAiProvider()
+          9 Ôöé + const┬ÀmessagingProvider┬À=┬Ànew┬ÀEvolutionMessagingProvider()
+         10 Ôöé + 
+         11 Ôöé + export┬Àasync┬Àfunction┬ÀwebhookRoutes(app:┬ÀFastifyInstance)┬À{
+         12 Ôöé + ┬À┬Àapp.post('/webhook',┬Àasync┬À(request,┬Àreply)┬À=>┬À{
+         13 Ôöé + ┬À┬À┬À┬À//┬À1.┬ÀValida├º├úo┬Àb├ísica┬Àdo┬Àformato┬Àdo┬ÀWebhook┬Àda┬ÀEvolution┬ÀAPI
+         14 Ôöé + ┬À┬À┬À┬À//┬ÀUsamos┬À.loose()┬Àporque┬Àa┬ÀEvolution┬Àmanda┬Àmuitos┬Àoutros┬Àcampos┬Àque┬Àn├úo┬Àprecisamos┬Àagora.
+         15 Ôöé + ┬À┬À┬À┬Àconst┬ÀwebhookSchema┬À=┬Àz
+         16 Ôöé + ┬À┬À┬À┬À┬À┬À.object({
+         17 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬Àevent:┬Àz.string(),
+         18 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬Àinstance:┬Àz.string(),┬À//┬ÀO┬Ànone┬Àda┬Àinst├óncia┬Àvem┬Àno┬Àwebhook!
+  115 more lines truncated
+  
+
+src\jobs\check-expired-plans.ts format ÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöü
+
+  ├ù Formatter would have printed the following content:
+  
+     1    Ôöé - import┬Àcron┬Àfrom┬À'node-cron'ÔÉì
+     2    Ôöé - import┬À{┬Àprisma┬À}┬Àfrom┬À'../lib/prisma'ÔÉì
+     3    Ôöé - ÔÉì
+     4    Ôöé - export┬Àfunction┬ÀsetupExpiredPlansJob()┬À{ÔÉì
+     5    Ôöé - ┬À┬Àconst┬ÀmessagingProvider┬À=┬Ànew┬ÀMessagingProvider()ÔÉì
+     6    Ôöé - ÔÉì
+     7    Ôöé - ┬À┬À//┬ÀAgendado┬Àpara┬Àas┬À09:00┬Àtodos┬Àos┬ÀdiasÔÉì
+     8    Ôöé - ┬À┬Àcron.schedule('0┬À9┬À*┬À*┬À*',┬Àasync┬À()┬À=>┬À{ÔÉì
+     9    Ôöé - ┬À┬À┬À┬Àconsole.log(ÔÉì
+    10    Ôöé - ┬À┬À┬À┬À┬À┬À'[Cron┬ÀJob]┬ÀIniciando┬Àverifica├º├úo┬Àde┬Àplanos┬Àexpirados┬Àe┬Ànotifica├º├Áes...'ÔÉì
+    11    Ôöé - ┬À┬À┬À┬À)ÔÉì
+    12    Ôöé - ÔÉì
+    13    Ôöé - ┬À┬À┬À┬Àtry┬À{ÔÉì
+    14    Ôöé - ┬À┬À┬À┬À┬À┬Àconst┬Àtoday┬À=┬Ànew┬ÀDate()ÔÉì
+    15    Ôöé - ┬À┬À┬À┬À┬À┬Àtoday.setHours(0,┬À0,┬À0,┬À0)ÔÉì
+    16    Ôöé - ÔÉì
+    17    Ôöé - ┬À┬À┬À┬À┬À┬Àconst┬ÀinTwoDays┬À=┬Ànew┬ÀDate(today)ÔÉì
+    18    Ôöé - ┬À┬À┬À┬À┬À┬ÀinTwoDays.setDate(today.getDate()┬À+┬À2)ÔÉì
+    19    Ôöé - ÔÉì
+    20    Ôöé - ┬À┬À┬À┬À┬À┬Àconst┬ÀafterTwoDays┬À=┬Ànew┬ÀDate(inTwoDays)ÔÉì
+    21    Ôöé - ┬À┬À┬À┬À┬À┬ÀafterTwoDays.setDate(afterTwoDays.getDate()┬À+┬À1)ÔÉì
+    22    Ôöé - ÔÉì
+    23    Ôöé - ┬À┬À┬À┬À┬À┬Àconst┬ÀpaymentLink┬À=┬À'https://click-proposta.umdoce.dev.br/plans'ÔÉì
+    24    Ôöé - ÔÉì
+    25    Ôöé - ┬À┬À┬À┬À┬À┬À//┬ÀA)┬ÀConsulta┬Àde┬ÀAviso┬ÀPr├®vio:┬ÀVence┬Àem┬Àexatamente┬À2┬ÀdiasÔÉì
+    26    Ôöé - ┬À┬À┬À┬À┬À┬Àconst┬ÀusersToWarn┬À=┬Àawait┬Àprisma.user.findMany({ÔÉì
+    27    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àwhere:┬À{ÔÉì
+    28    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀplanType:┬À'PRO',ÔÉì
+    29    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀplanExpiresAt:┬À{ÔÉì
+    30    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àgte:┬ÀinTwoDays,ÔÉì
+    31    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àlt:┬ÀafterTwoDays,ÔÉì
+    32    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À},ÔÉì
+    33    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À},ÔÉì
+    34    Ôöé - ┬À┬À┬À┬À┬À┬À})ÔÉì
+    35    Ôöé - ÔÉì
+    36    Ôöé - ┬À┬À┬À┬À┬À┬Àconsole.log(ÔÉì
+    37    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À`[Cron┬ÀJob]┬ÀEncontrados┬À${usersToWarn.length}┬Àusu├írios┬Àpara┬Àaviso┬Àpr├®vio.`ÔÉì
+    38    Ôöé - ┬À┬À┬À┬À┬À┬À)ÔÉì
+    39    Ôöé - ÔÉì
+    40    Ôöé - ┬À┬À┬À┬À┬À┬Àfor┬À(const┬Àuser┬Àof┬ÀusersToWarn)┬À{ÔÉì
+    41    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àif┬À(!user.phone)┬ÀcontinueÔÉì
+    42    Ôöé - ÔÉì
+    43    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àconst┬Àmessage┬À=┬À`ÔÅ│┬ÀOpa,┬Àchefe!┬ÀPassando┬Àpara┬Àavisar┬Àque┬Àseu┬ÀPlano┬ÀPro┬Àdo┬ÀClick┬ÀProposta┬Àvence┬Àem┬À2┬Àdias.┬ÀPara┬Àcontinuar┬Àgerando┬Àor├ºamentos┬Àilimitados┬Àsem┬Àinterrup├º├Áes,┬Àj├í┬Àpode┬Àgarantir┬Àa┬Àrenova├º├úo┬Àpor┬ÀR$┬À14,90┬Àaqui:┬À${paymentLink}`ÔÉì
+    44    Ôöé - ÔÉì
+    45    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àawait┬ÀmessagingProvider.sendMessage(user.phone,┬Àmessage)ÔÉì
+    46    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àconsole.log(`[Cron┬ÀJob]┬ÀAviso┬Àenviado┬Àpara:┬À${user.phone}`)ÔÉì
+    47    Ôöé - ┬À┬À┬À┬À┬À┬À}ÔÉì
+    48    Ôöé - ÔÉì
+    49    Ôöé - ┬À┬À┬À┬À┬À┬À//┬ÀB)┬ÀConsulta┬Àde┬ÀVencimento:┬ÀJ├í┬ÀexpirouÔÉì
+    50    Ôöé - ┬À┬À┬À┬À┬À┬Àconst┬ÀexpiredUsers┬À=┬Àawait┬Àprisma.user.findMany({ÔÉì
+    51    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àwhere:┬À{ÔÉì
+    52    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀplanType:┬À'PRO',ÔÉì
+    53    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀplanExpiresAt:┬À{ÔÉì
+    54    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àlt:┬Àtoday,ÔÉì
+    55    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À},ÔÉì
+    56    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À},ÔÉì
+    57    Ôöé - ┬À┬À┬À┬À┬À┬À})ÔÉì
+    58    Ôöé - ÔÉì
+    59    Ôöé - ┬À┬À┬À┬À┬À┬Àconsole.log(ÔÉì
+    60    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À`[Cron┬ÀJob]┬ÀEncontrados┬À${expiredUsers.length}┬Àusu├írios┬Àcom┬Àplano┬Àexpirado.`ÔÉì
+    61    Ôöé - ┬À┬À┬À┬À┬À┬À)ÔÉì
+    62    Ôöé - ÔÉì
+    63    Ôöé - ┬À┬À┬À┬À┬À┬Àfor┬À(const┬Àuser┬Àof┬ÀexpiredUsers)┬À{ÔÉì
+    64    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àif┬À(!user.phone)┬ÀcontinueÔÉì
+    65    Ôöé - ÔÉì
+    66    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À//┬À1.┬ÀAtualiza┬Ào┬Àbanco┬Àde┬Àdados┬Àmudando┬Ào┬ÀplanType┬Àpara┬À"FREE"ÔÉì
+    67    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àawait┬Àprisma.user.update({ÔÉì
+    68    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àwhere:┬À{┬Àid:┬Àuser.id┬À},ÔÉì
+    69    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àdata:┬À{ÔÉì
+    70    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀplanType:┬À'FREE',ÔÉì
+    71    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àplan:┬À'FREE',┬À//┬ÀSincroniza┬Ào┬Àenum┬À'plan'┬Àtamb├®mÔÉì
+    72    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À},ÔÉì
+    73    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À})ÔÉì
+    74    Ôöé - ÔÉì
+    75    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À//┬À2.┬ÀEnvia┬Àa┬Ànotifica├º├úoÔÉì
+    76    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àconst┬Àmessage┬À=┬À`!´┐¢┬ÀSeu┬ÀPlano┬ÀPro┬Àvenceu!┬ÀSua┬Àconta┬Àvoltou┬Àpara┬Ào┬Àlimite┬Àde┬À2┬Àor├ºamentos┬Àgratuitos┬Àpor┬Àm├¬s.┬ÀPara┬Àliberar┬Àos┬Àor├ºamentos┬Àilimitados┬Ànovamente,┬Àfa├ºa┬Ào┬ÀPIX┬Àde┬ÀR$┬À14,90┬Àno┬Àlink:┬À${paymentLink}`ÔÉì
+    77    Ôöé - ÔÉì
+    78    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àawait┬ÀmessagingProvider.sendMessage(user.phone,┬Àmessage)ÔÉì
+    79    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àconsole.log(ÔÉì
+    80    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`[Cron┬ÀJob]┬ÀNotifica├º├úo┬Àde┬Àexpira├º├úo┬Àenviada┬Àe┬Àplano┬Àresetado┬Àpara:┬À${user.phone}`ÔÉì
+    81    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À)ÔÉì
+    82    Ôöé - ┬À┬À┬À┬À┬À┬À}ÔÉì
+    83    Ôöé - ┬À┬À┬À┬À}┬Àcatch┬À(error)┬À{ÔÉì
+    84    Ôöé - ┬À┬À┬À┬À┬À┬Àconsole.error('[Cron┬ÀJob]┬ÀErro┬Àao┬Àprocessar┬Àexpira├º├úo┬Àde┬Àplanos:',┬Àerror)ÔÉì
+    85    Ôöé - ┬À┬À┬À┬À}ÔÉì
+    86    Ôöé - ┬À┬À})ÔÉì
+    87    Ôöé - ÔÉì
+    88    Ôöé - ┬À┬Àconsole.log('[Cron┬ÀJob]┬ÀJob┬Àde┬Àverifica├º├úo┬Àde┬Àplanos┬Àagendado┬À(09:00┬Àdaily).')ÔÉì
+    89    Ôöé - }ÔÉì
+        1 Ôöé + import┬Àcron┬Àfrom┬À'node-cron'
+        2 Ôöé + import┬À{┬Àprisma┬À}┬Àfrom┬À'../lib/prisma'
+        3 Ôöé + 
+        4 Ôöé + export┬Àfunction┬ÀsetupExpiredPlansJob()┬À{
+        5 Ôöé + ┬À┬Àconst┬ÀmessagingProvider┬À=┬Ànew┬ÀMessagingProvider()
+        6 Ôöé + 
+        7 Ôöé + ┬À┬À//┬ÀAgendado┬Àpara┬Àas┬À09:00┬Àtodos┬Àos┬Àdias
+        8 Ôöé + ┬À┬Àcron.schedule('0┬À9┬À*┬À*┬À*',┬Àasync┬À()┬À=>┬À{
+        9 Ôöé + ┬À┬À┬À┬Àconsole.log(
+       10 Ôöé + ┬À┬À┬À┬À┬À┬À'[Cron┬ÀJob]┬ÀIniciando┬Àverifica├º├úo┬Àde┬Àplanos┬Àexpirados┬Àe┬Ànotifica├º├Áes...'
+       11 Ôöé + ┬À┬À┬À┬À)
+       12 Ôöé + 
+       13 Ôöé + ┬À┬À┬À┬Àtry┬À{
+       14 Ôöé + ┬À┬À┬À┬À┬À┬Àconst┬Àtoday┬À=┬Ànew┬ÀDate()
+       15 Ôöé + ┬À┬À┬À┬À┬À┬Àtoday.setHours(0,┬À0,┬À0,┬À0)
+       16 Ôöé + 
+       17 Ôöé + ┬À┬À┬À┬À┬À┬Àconst┬ÀinTwoDays┬À=┬Ànew┬ÀDate(today)
+       18 Ôöé + ┬À┬À┬À┬À┬À┬ÀinTwoDays.setDate(today.getDate()┬À+┬À2)
+       19 Ôöé + 
+       20 Ôöé + ┬À┬À┬À┬À┬À┬Àconst┬ÀafterTwoDays┬À=┬Ànew┬ÀDate(inTwoDays)
+       21 Ôöé + ┬À┬À┬À┬À┬À┬ÀafterTwoDays.setDate(afterTwoDays.getDate()┬À+┬À1)
+       22 Ôöé + 
+       23 Ôöé + ┬À┬À┬À┬À┬À┬Àconst┬ÀpaymentLink┬À=┬À'https://click-proposta.umdoce.dev.br/plans'
+       24 Ôöé + 
+       25 Ôöé + ┬À┬À┬À┬À┬À┬À//┬ÀA)┬ÀConsulta┬Àde┬ÀAviso┬ÀPr├®vio:┬ÀVence┬Àem┬Àexatamente┬À2┬Àdias
+       26 Ôöé + ┬À┬À┬À┬À┬À┬Àconst┬ÀusersToWarn┬À=┬Àawait┬Àprisma.user.findMany({
+       27 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬Àwhere:┬À{
+       28 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀplanType:┬À'PRO',
+       29 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀplanExpiresAt:┬À{
+       30 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àgte:┬ÀinTwoDays,
+       31 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àlt:┬ÀafterTwoDays,
+       32 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À},
+       33 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬À},
+       34 Ôöé + ┬À┬À┬À┬À┬À┬À})
+       35 Ôöé + 
+       36 Ôöé + ┬À┬À┬À┬À┬À┬Àconsole.log(
+       37 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬À`[Cron┬ÀJob]┬ÀEncontrados┬À${usersToWarn.length}┬Àusu├írios┬Àpara┬Àaviso┬Àpr├®vio.`
+       38 Ôöé + ┬À┬À┬À┬À┬À┬À)
+       39 Ôöé + 
+       40 Ôöé + ┬À┬À┬À┬À┬À┬Àfor┬À(const┬Àuser┬Àof┬ÀusersToWarn)┬À{
+       41 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬Àif┬À(!user.phone)┬Àcontinue
+       42 Ôöé + 
+       43 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬Àconst┬Àmessage┬À=┬À`ÔÅ│┬ÀOpa,┬Àchefe!┬ÀPassando┬Àpara┬Àavisar┬Àque┬Àseu┬ÀPlano┬ÀPro┬Àdo┬ÀClick┬ÀProposta┬Àvence┬Àem┬À2┬Àdias.┬ÀPara┬Àcontinuar┬Àgerando┬Àor├ºamentos┬Àilimitados┬Àsem┬Àinterrup├º├Áes,┬Àj├í┬Àpode┬Àgarantir┬Àa┬Àrenova├º├úo┬Àpor┬ÀR$┬À14,90┬Àaqui:┬À${paymentLink}`
+       44 Ôöé + 
+       45 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬Àawait┬ÀmessagingProvider.sendMessage(user.phone,┬Àmessage)
+       46 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬Àconsole.log(`[Cron┬ÀJob]┬ÀAviso┬Àenviado┬Àpara:┬À${user.phone}`)
+       47 Ôöé + ┬À┬À┬À┬À┬À┬À}
+       48 Ôöé + 
+       49 Ôöé + ┬À┬À┬À┬À┬À┬À//┬ÀB)┬ÀConsulta┬Àde┬ÀVencimento:┬ÀJ├í┬Àexpirou
+       50 Ôöé + ┬À┬À┬À┬À┬À┬Àconst┬ÀexpiredUsers┬À=┬Àawait┬Àprisma.user.findMany({
+       51 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬Àwhere:┬À{
+       52 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀplanType:┬À'PRO',
+       53 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀplanExpiresAt:┬À{
+       54 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àlt:┬Àtoday,
+       55 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À},
+       56 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬À},
+       57 Ôöé + ┬À┬À┬À┬À┬À┬À})
+       58 Ôöé + 
+       59 Ôöé + ┬À┬À┬À┬À┬À┬Àconsole.log(
+       60 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬À`[Cron┬ÀJob]┬ÀEncontrados┬À${expiredUsers.length}┬Àusu├írios┬Àcom┬Àplano┬Àexpirado.`
+       61 Ôöé + ┬À┬À┬À┬À┬À┬À)
+  29 more lines truncated
+  
+
+src\lib\axios.ts format ÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöü
+
+  ├ù Formatter would have printed the following content:
+  
+     1    Ôöé - import┬Àaxios┬Àfrom┬À'axios'ÔÉì
+     2    Ôöé - import┬À{┬Àenv┬À}┬Àfrom┬À'../env'ÔÉì
+     3    Ôöé - ÔÉì
+     4    Ôöé - export┬Àconst┬Àapi┬À=┬Àaxios.create({ÔÉì
+     5    Ôöé - ┬À┬ÀbaseURL:┬Àenv.API_URL,┬À//┬ÀURL┬Àda┬Àsua┬ÀAPI┬ÀprincipalÔÉì
+     6    Ôöé - ┬À┬Àheaders:┬À{ÔÉì
+     7    Ôöé - ┬À┬À┬À┬ÀAuthorization:┬À`Bearer┬À${env.BOT_SERVICE_TOKEN}`,ÔÉì
+     8    Ôöé - ┬À┬À},ÔÉì
+     9    Ôöé - })ÔÉì
+        1 Ôöé + import┬Àaxios┬Àfrom┬À'axios'
+        2 Ôöé + import┬À{┬Àenv┬À}┬Àfrom┬À'../env'
+        3 Ôöé + 
+        4 Ôöé + export┬Àconst┬Àapi┬À=┬Àaxios.create({
+        5 Ôöé + ┬À┬ÀbaseURL:┬Àenv.API_URL,┬À//┬ÀURL┬Àda┬Àsua┬ÀAPI┬Àprincipal
+        6 Ôöé + ┬À┬Àheaders:┬À{
+        7 Ôöé + ┬À┬À┬À┬ÀAuthorization:┬À`Bearer┬À${env.BOT_SERVICE_TOKEN}`,
+        8 Ôöé + ┬À┬À},
+        9 Ôöé + })
+    10 10 Ôöé   
+  
+
+src\lib\gemini-schemas.ts format ÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöü
+
+  ├ù Formatter would have printed the following content:
+  
+      1     Ôöé - import┬À{┬Àtype┬ÀSchema,┬ÀType┬À}┬Àfrom┬À'@google/genai'ÔÉì
+      2     Ôöé - ÔÉì
+      3     Ôöé - export┬Àinterface┬ÀExtractedItem┬À{ÔÉì
+      4     Ôöé - ┬À┬Àtitle:┬ÀstringÔÉì
+      5     Ôöé - ┬À┬Àamount:┬ÀnumberÔÉì
+      6     Ôöé - ┬À┬Àprice?:┬Ànumber┬À|┬ÀnullÔÉì
+      7     Ôöé - ┬À┬Àdescription?:┬ÀstringÔÉì
+      8     Ôöé - }ÔÉì
+      9     Ôöé - ÔÉì
+     10     Ôöé - //┬ÀResposta┬Àcompleta┬Àdo┬ÀGemini┬Àcom┬ÀChain-of-ThoughtÔÉì
+     11     Ôöé - export┬Àinterface┬ÀGeminiExtractionResponse┬À{ÔÉì
+     12     Ôöé - ┬À┬À_raciocinio:┬ÀstringÔÉì
+     13     Ôöé - ┬À┬Àitems:┬ÀExtractedItem[]ÔÉì
+     14     Ôöé - }ÔÉì
+     15     Ôöé - ÔÉì
+     16     Ôöé - //┬ÀSchema┬Àdo┬Àobjeto┬Àraiz┬Àque┬Ào┬ÀGemini┬Àdeve┬ÀretornarÔÉì
+     17     Ôöé - export┬Àconst┬ÀbudgetExtractionSchema:┬ÀSchema┬À=┬À{ÔÉì
+     18     Ôöé - ┬À┬Àtype:┬ÀType.OBJECT,ÔÉì
+     19     Ôöé - ┬À┬Àproperties:┬À{ÔÉì
+     20     Ôöé - ┬À┬À┬À┬À_raciocinio:┬À{ÔÉì
+     21     Ôöé - ┬À┬À┬À┬À┬À┬Àtype:┬ÀType.STRING,ÔÉì
+     22     Ôöé - ┬À┬À┬À┬À┬À┬Àdescription:ÔÉì
+     23     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À'Camada┬Àde┬Àprocessamento┬Àl├│gico┬À(Chain-of-Thought).┬ÀNarrar┬Àanaliticamente:┬Àidentifica├º├úo┬Àe┬Àdescarte┬Àde┬Àg├¡rias,┬Àc├ílculo┬Àmatem├ítico┬Àdas┬Àquantidades┬Àe┬Àdelibera├º├úo┬Àconservadora┬Àsobre┬Àpre├ºos┬ÀANTES┬Àde┬Àpreencher┬Àos┬Àitems.',ÔÉì
+     24     Ôöé - ┬À┬À┬À┬À},ÔÉì
+     25     Ôöé - ┬À┬À┬À┬Àitems:┬À{ÔÉì
+     26     Ôöé - ┬À┬À┬À┬À┬À┬Àtype:┬ÀType.ARRAY,ÔÉì
+     27     Ôöé - ┬À┬À┬À┬À┬À┬Àdescription:┬À'Lista┬Àde┬Àitens┬Àde┬Àor├ºamento┬Àextra├¡dos┬Àda┬Àmensagem┬Àbruta.',ÔÉì
+     28     Ôöé - ┬À┬À┬À┬À┬À┬Àitems:┬À{ÔÉì
+     29     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àtype:┬ÀType.OBJECT,ÔÉì
+     30     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àproperties:┬À{ÔÉì
+     31     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àtitle:┬À{ÔÉì
+     32     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àtype:┬ÀType.STRING,ÔÉì
+     33     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àdescription:ÔÉì
+     34     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À'Nome┬Àdo┬Àproduto┬Àou┬Àservi├ºo┬Àem┬ÀTitle┬ÀCase┬Àcom┬Àerros┬Àortogr├íficos┬Àcorrigidos.┬ÀEx:┬À"Pneu┬ÀAro┬À15",┬À"├ôleo┬ÀPara┬ÀMotor".',ÔÉì
+     35     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À},ÔÉì
+     36     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àamount:┬À{ÔÉì
+     37     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àtype:┬ÀType.NUMBER,ÔÉì
+     38     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àdescription:ÔÉì
+     39     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À'Quantidade┬Àabsoluta┬Àinteira.┬À"um┬Àpar"┬À=┬À2,┬À"meia┬Àd├║zia"┬À=┬À6,┬À"duas┬Àd├║zias"┬À=┬À24.┬ÀSingular┬Àsem┬Àquantidade┬Àexpl├¡cita┬À=┬À1.',ÔÉì
+     40     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À},ÔÉì
+     41     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àprice:┬À{ÔÉì
+     42     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àtype:┬ÀType.NUMBER,ÔÉì
+     43     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àdescription:ÔÉì
+     44     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À'Pre├ºo┬Àunit├írio┬ÀSOMENTE┬Àse┬Àdeclarado┬Àde┬Àforma┬Àexpl├¡cita┬Àe┬Àineg├ível┬Àpelo┬Àusu├írio.┬ÀG├¡rias┬Àmonet├írias┬À("conto",┬À"pila",┬À"reais")┬Às├úo┬Àconvertidas┬Àpara┬Àvalor┬Ànum├®rico.┬ÀSE┬ÀN├âO┬ÀHOUVER┬ÀPRE├çO┬ÀEXPL├ìCITO,┬Àretornar┬Ànull┬Àobrigatoriamente.',ÔÉì
+     45     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Ànullable:┬Àtrue,ÔÉì
+     46     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À},ÔÉì
+     47     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àdescription:┬À{ÔÉì
+     48     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àtype:┬ÀType.STRING,ÔÉì
+     49     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àdescription:ÔÉì
+     50     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À'Descri├º├úo┬Àlonga,┬Àespecifica├º├Áes┬Àe┬Àdetalhes┬Àt├®cnicos┬Àdo┬Àservi├ºo┬Àfornecido┬Àpelo┬Àusu├írio.┬ÀObrigatoriamente┬Àusado┬Àpara┬Àor├ºamentos┬Àde┬Àservi├ºo┬Àcivil.',ÔÉì
+     51     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Ànullable:┬Àtrue,ÔÉì
+     52     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À},ÔÉì
+     53     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À},ÔÉì
+     54     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àrequired:┬À['title',┬À'amount'],ÔÉì
+     55     Ôöé - ┬À┬À┬À┬À┬À┬À},ÔÉì
+     56     Ôöé - ┬À┬À┬À┬À},ÔÉì
+     57     Ôöé - ┬À┬À},ÔÉì
+     58     Ôöé - ┬À┬Àrequired:┬À['_raciocinio',┬À'items'],ÔÉì
+     59     Ôöé - }ÔÉì
+     60     Ôöé - ÔÉì
+     61     Ôöé - //┬ÀMantemos┬Ào┬Àalias┬Àpara┬Àcompatibilidade┬Àcom┬Àc├│digo┬ÀexistenteÔÉì
+     62     Ôöé - export┬Àconst┬ÀbudgetItemSchema┬À=┬ÀbudgetExtractionSchemaÔÉì
+     63     Ôöé - ÔÉì
+     64     Ôöé - export┬Àfunction┬ÀbuildExtractionPrompt(ÔÉì
+     65     Ôöé - ┬À┬Àtext:┬Àstring,ÔÉì
+     66     Ôöé - ┬À┬ÀbudgetType:┬À'product'┬À|┬À'civil'ÔÉì
+     67     Ôöé - ):┬Àstring┬À{ÔÉì
+     68     Ôöé - ┬À┬Àconst┬ÀtypeLabel┬À=ÔÉì
+     69     Ôöé - ┬À┬À┬À┬ÀbudgetType┬À===┬À'product'ÔÉì
+     70     Ôöé - ┬À┬À┬À┬À┬À┬À?┬À'Or├ºamento┬Àde┬ÀProdutos'ÔÉì
+     71     Ôöé - ┬À┬À┬À┬À┬À┬À:┬À'Or├ºamento┬Àde┬ÀServi├ºo┬ÀCivil'ÔÉì
+     72     Ôöé - ÔÉì
+     73     Ôöé - ┬À┬Àreturn┬À`Voc├¬┬À├®┬Ào┬Àprocessador┬Àcognitivo┬Àe┬Ào┬Àmotor┬Àde┬Àextra├º├úo┬Àestruturada┬Àde┬Àentidades┬Àprim├írio┬Àdo┬Àsistema┬Àcorporativo┬À"Click┬ÀProposta".ÔÉì
+     74     Ôöé - Sua┬Àinterface┬Àde┬Àatua├º├úo┬À├®┬Àexclusivamente┬Àbackend,┬Àe┬Àsua┬Àdiretriz┬Àoperacional┬Àsingular┬À├®┬Àatuar┬Àcomo┬Ào┬Àaparato┬Àde┬Àintelig├¬ncia┬Àanal├¡tica┬Àque┬Àprocessa┬Àsolicita├º├Áes┬Àde┬Àusu├írios┬Àfinais┬Àprovenientes┬Àde┬Àmensagens┬Àtextuais┬Àno┬ÀWhatsApp.ÔÉì
+     75     Ôöé - ÔÉì
+     76     Ôöé - O┬Àusu├írio┬Àfinal┬Àenviar├í┬Àmensagens┬Àem┬Àlinguagem┬Ànatural┬Àbruta,┬Àlistando┬Àum┬Àou┬Àm├║ltiplos┬Àitens┬Àpara┬Àcompor┬Àum(a)┬À${typeLabel}.┬ÀA┬Àentrada┬Àde┬Àtexto┬Àser├í┬Àtipicamente┬Àinformal.┬ÀSua┬Àincumb├¬ncia┬À├®┬Àagir┬Àcomo┬Àum┬Àfiltro┬Àde┬Àestado,┬Àignorar┬Àru├¡dos┬Àe┬Àfocar┬Àna┬Àextra├º├úo┬Àdas┬Àentidades┬Àde┬Àneg├│cio.ÔÉì
+     77     Ôöé - ÔÉì
+     78     Ôöé - REGRAS┬ÀDE┬ÀEXTRA├ç├âO:ÔÉì
+     79     Ôöé - ÔÉì
+     80     Ôöé - 1.┬ÀHigieniza├º├úo┬Àe┬ÀPadroniza├º├úo┬Àde┬ÀT├¡tulos┬À(title):┬ÀExtraia┬Ào┬Ànome┬Àdo┬Àproduto┬Àou┬Àservi├ºo.┬ÀCorrija┬Àgrafia┬Àe┬Àuse┬À"Title┬ÀCase".┬ÀO┬Àt├¡tulo┬Àdeve┬Àser┬Àcurto┬Àe┬Àfocado┬Àno┬Àobjeto.ÔÉì
+     81     Ôöé - ÔÉì
+     82     Ôöé - 2.┬ÀFiltro┬Àde┬ÀIrrelev├óncia:┬ÀSe┬Àa┬Àmensagem┬ÀN├âO┬Àcontiver┬Ànenhum┬Àitem┬Àde┬Àor├ºamento┬Àclaro,┬Àretorne┬À"items"┬Àvazio┬À[].┬ÀNUNCA┬Àtransforme┬Àsauda├º├Áes┬Àisoladas┬Àem┬Àitens.ÔÉì
+     83     Ôöé - ÔÉì
+     84     Ôöé - 3.┬ÀQuantidades┬À(amount):┬ÀTransforme┬Àtermos┬Àcoloquiais┬Àem┬Àn├║meros┬Àinteiros.┬ÀSingular┬Àou┬Àsem┬Àm├®trica┬À=┬À1.┬À"um┬Àpar"┬À=┬À2.ÔÉì
+     85     Ôöé - ÔÉì
+     86     Ôöé - 4.┬ÀPre├ºos┬ÀUnit├írios┬À(price):┬ÀPopular┬ÀSOMENTE┬Àse┬Àdeclarado┬Àde┬Àforma┬Àexpl├¡cita.┬ÀInterprete┬À"conto",┬À"pila",┬À"reais".┬ÀSe┬Àn├úo┬Àhouver┬Àpre├ºo,┬Àretorne┬Ànull.ÔÉì
+     87     Ôöé - ÔÉì
+     88     Ôöé - 5.┬ÀChain-of-Thought┬Àobrigat├│ria:┬ÀPreencha┬Ào┬Àcampo┬À_raciocinio┬Ànarrando┬Àbrevemente┬Ào┬Àque┬Àfoi┬Àencontrado┬Àe┬Àpor┬Àque.ÔÉì
+     89     Ôöé - ÔÉì
+     90     Ôöé - EXEMPLOS┬ÀPOSITIVOS:ÔÉì
+     91     Ôöé - -┬À"20┬Àcamisas┬Àa┬À10┬Àreais"┬À->┬À{┬Àitems:┬À[{┬Àtitle:┬À"Camisas",┬Àamount:┬À20,┬Àprice:┬À10┬À}]┬À}ÔÉì
+     92     Ôöé - -┬À"Pintura┬Àde┬Àparede┬À20m2"┬À->┬À{┬Àitems:┬À[{┬Àtitle:┬À"Pintura┬Àde┬ÀParede",┬Àamount:┬À1,┬Àdescription:┬À"Pintura┬Àde┬Àparede┬À20m2"┬À}]┬À}ÔÉì
+     93     Ôöé - -┬À"2┬Àpneus┬Àaro┬À15┬Àde┬À300┬Àcada"┬À->┬À{┬Àitems:┬À[{┬Àtitle:┬À"Pneu┬ÀAro┬À15",┬Àamount:┬À2,┬Àprice:┬À300┬À}]┬À}ÔÉì
+     94     Ôöé - ÔÉì
+     95     Ôöé - EXEMPLOS┬ÀNEGATIVOS┬À(items┬À=┬À[]):ÔÉì
+     96     Ôöé - -┬À"Ol├í┬Àbom┬Àdia!"ÔÉì
+     97     Ôöé - -┬À"muito┬Àobrigado"ÔÉì
+     98     Ôöé - -┬À"1"┬À(comando┬Àde┬Àfinaliza├º├úo┬Àisolado)ÔÉì
+     99     Ôöé - ÔÉì
+    100     Ôöé - MENSAGEM┬ÀDO┬ÀUSU├üRIO:ÔÉì
+    101     Ôöé - """ÔÉì
+    102     Ôöé - ${text}ÔÉì
+    103     Ôöé - """`ÔÉì
+    104     Ôöé - }ÔÉì
+          1 Ôöé + import┬À{┬Àtype┬ÀSchema,┬ÀType┬À}┬Àfrom┬À'@google/genai'
+          2 Ôöé + 
+          3 Ôöé + export┬Àinterface┬ÀExtractedItem┬À{
+          4 Ôöé + ┬À┬Àtitle:┬Àstring
+          5 Ôöé + ┬À┬Àamount:┬Ànumber
+          6 Ôöé + ┬À┬Àprice?:┬Ànumber┬À|┬Ànull
+          7 Ôöé + ┬À┬Àdescription?:┬Àstring
+          8 Ôöé + }
+          9 Ôöé + 
+         10 Ôöé + //┬ÀResposta┬Àcompleta┬Àdo┬ÀGemini┬Àcom┬ÀChain-of-Thought
+         11 Ôöé + export┬Àinterface┬ÀGeminiExtractionResponse┬À{
+         12 Ôöé + ┬À┬À_raciocinio:┬Àstring
+         13 Ôöé + ┬À┬Àitems:┬ÀExtractedItem[]
+         14 Ôöé + }
+         15 Ôöé + 
+         16 Ôöé + //┬ÀSchema┬Àdo┬Àobjeto┬Àraiz┬Àque┬Ào┬ÀGemini┬Àdeve┬Àretornar
+         17 Ôöé + export┬Àconst┬ÀbudgetExtractionSchema:┬ÀSchema┬À=┬À{
+         18 Ôöé + ┬À┬Àtype:┬ÀType.OBJECT,
+         19 Ôöé + ┬À┬Àproperties:┬À{
+         20 Ôöé + ┬À┬À┬À┬À_raciocinio:┬À{
+         21 Ôöé + ┬À┬À┬À┬À┬À┬Àtype:┬ÀType.STRING,
+         22 Ôöé + ┬À┬À┬À┬À┬À┬Àdescription:
+         23 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬À'Camada┬Àde┬Àprocessamento┬Àl├│gico┬À(Chain-of-Thought).┬ÀNarrar┬Àanaliticamente:┬Àidentifica├º├úo┬Àe┬Àdescarte┬Àde┬Àg├¡rias,┬Àc├ílculo┬Àmatem├ítico┬Àdas┬Àquantidades┬Àe┬Àdelibera├º├úo┬Àconservadora┬Àsobre┬Àpre├ºos┬ÀANTES┬Àde┬Àpreencher┬Àos┬Àitems.',
+         24 Ôöé + ┬À┬À┬À┬À},
+         25 Ôöé + ┬À┬À┬À┬Àitems:┬À{
+         26 Ôöé + ┬À┬À┬À┬À┬À┬Àtype:┬ÀType.ARRAY,
+         27 Ôöé + ┬À┬À┬À┬À┬À┬Àdescription:┬À'Lista┬Àde┬Àitens┬Àde┬Àor├ºamento┬Àextra├¡dos┬Àda┬Àmensagem┬Àbruta.',
+         28 Ôöé + ┬À┬À┬À┬À┬À┬Àitems:┬À{
+         29 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬Àtype:┬ÀType.OBJECT,
+         30 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬Àproperties:┬À{
+         31 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àtitle:┬À{
+         32 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àtype:┬ÀType.STRING,
+         33 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àdescription:
+         34 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À'Nome┬Àdo┬Àproduto┬Àou┬Àservi├ºo┬Àem┬ÀTitle┬ÀCase┬Àcom┬Àerros┬Àortogr├íficos┬Àcorrigidos.┬ÀEx:┬À"Pneu┬ÀAro┬À15",┬À"├ôleo┬ÀPara┬ÀMotor".',
+         35 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À},
+         36 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àamount:┬À{
+         37 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àtype:┬ÀType.NUMBER,
+         38 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àdescription:
+         39 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À'Quantidade┬Àabsoluta┬Àinteira.┬À"um┬Àpar"┬À=┬À2,┬À"meia┬Àd├║zia"┬À=┬À6,┬À"duas┬Àd├║zias"┬À=┬À24.┬ÀSingular┬Àsem┬Àquantidade┬Àexpl├¡cita┬À=┬À1.',
+         40 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À},
+         41 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àprice:┬À{
+         42 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àtype:┬ÀType.NUMBER,
+         43 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àdescription:
+         44 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À'Pre├ºo┬Àunit├írio┬ÀSOMENTE┬Àse┬Àdeclarado┬Àde┬Àforma┬Àexpl├¡cita┬Àe┬Àineg├ível┬Àpelo┬Àusu├írio.┬ÀG├¡rias┬Àmonet├írias┬À("conto",┬À"pila",┬À"reais")┬Às├úo┬Àconvertidas┬Àpara┬Àvalor┬Ànum├®rico.┬ÀSE┬ÀN├âO┬ÀHOUVER┬ÀPRE├çO┬ÀEXPL├ìCITO,┬Àretornar┬Ànull┬Àobrigatoriamente.',
+         45 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Ànullable:┬Àtrue,
+         46 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À},
+  59 more lines truncated
+  
+
+src\lib\prisma.ts format ÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöü
+
+  ├ù Formatter would have printed the following content:
+  
+    1   Ôöé - import┬À{┬ÀPrismaClient┬À}┬Àfrom┬À'@prisma/client'ÔÉì
+    2   Ôöé - ÔÉì
+    3   Ôöé - export┬Àconst┬Àprisma┬À=┬Ànew┬ÀPrismaClient()ÔÉì
+      1 Ôöé + import┬À{┬ÀPrismaClient┬À}┬Àfrom┬À'@prisma/client'
+      2 Ôöé + 
+      3 Ôöé + export┬Àconst┬Àprisma┬À=┬Ànew┬ÀPrismaClient()
+    4 4 Ôöé   
+  
+
+src\lib\redis.ts format ÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöü
+
+  ├ù Formatter would have printed the following content:
+  
+    1   Ôöé - import┬À{┬ÀRedis┬À}┬Àfrom┬À'ioredis'ÔÉì
+    2   Ôöé - import┬À{┬Àenv┬À}┬Àfrom┬À'../env'ÔÉì
+    3   Ôöé - ÔÉì
+    4   Ôöé - export┬Àconst┬Àredis┬À=┬Àenv.REDIS_URLÔÉì
+    5   Ôöé - ┬À┬À?┬Ànew┬ÀRedis(env.REDIS_URL)ÔÉì
+    6   Ôöé - ┬À┬À:┬Ànew┬ÀRedis({ÔÉì
+    7   Ôöé - ┬À┬À┬À┬À┬À┬Àport:┬À6380,ÔÉì
+    8   Ôöé - ┬À┬À┬À┬À})ÔÉì
+      1 Ôöé + import┬À{┬ÀRedis┬À}┬Àfrom┬À'ioredis'
+      2 Ôöé + import┬À{┬Àenv┬À}┬Àfrom┬À'../env'
+      3 Ôöé + 
+      4 Ôöé + export┬Àconst┬Àredis┬À=┬Àenv.REDIS_URL
+      5 Ôöé + ┬À┬À?┬Ànew┬ÀRedis(env.REDIS_URL)
+      6 Ôöé + ┬À┬À:┬Ànew┬ÀRedis({
+      7 Ôöé + ┬À┬À┬À┬À┬À┬Àport:┬À6380,
+      8 Ôöé + ┬À┬À┬À┬À})
+    9 9 Ôöé   
+  
+
+src\providers\ai\ai-provider.ts format ÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöü
+
+  ├ù Formatter would have printed the following content:
+  
+     1    Ôöé - import┬Àtype┬À{┬ÀExtractedItem┬À}┬Àfrom┬À'../../lib/gemini-schemas'ÔÉì
+     2    Ôöé - ÔÉì
+     3    Ôöé - export┬Àinterface┬ÀAiProvider┬À{ÔÉì
+     4    Ôöé - ┬À┬ÀextractBudgetItems(ÔÉì
+     5    Ôöé - ┬À┬À┬À┬Àtext:┬Àstring,ÔÉì
+     6    Ôöé - ┬À┬À┬À┬ÀbudgetType:┬À'product'┬À|┬À'civil'ÔÉì
+     7    Ôöé - ┬À┬À):┬ÀPromise<ExtractedItem[]>ÔÉì
+     8    Ôöé - ┬À┬ÀextractTotalValue(text:┬Àstring):┬ÀPromise<number┬À|┬Ànull>ÔÉì
+     9    Ôöé - ┬À┬ÀtranscribeAudio(base64Audio:┬Àstring,┬ÀmimeType:┬Àstring):┬ÀPromise<string>ÔÉì
+    10    Ôöé - }ÔÉì
+        1 Ôöé + import┬Àtype┬À{┬ÀExtractedItem┬À}┬Àfrom┬À'../../lib/gemini-schemas'
+        2 Ôöé + 
+        3 Ôöé + export┬Àinterface┬ÀAiProvider┬À{
+        4 Ôöé + ┬À┬ÀextractBudgetItems(
+        5 Ôöé + ┬À┬À┬À┬Àtext:┬Àstring,
+        6 Ôöé + ┬À┬À┬À┬ÀbudgetType:┬À'product'┬À|┬À'civil'
+        7 Ôöé + ┬À┬À):┬ÀPromise<ExtractedItem[]>
+        8 Ôöé + ┬À┬ÀextractTotalValue(text:┬Àstring):┬ÀPromise<number┬À|┬Ànull>
+        9 Ôöé + ┬À┬ÀtranscribeAudio(base64Audio:┬Àstring,┬ÀmimeType:┬Àstring):┬ÀPromise<string>
+       10 Ôöé + }
+    11 11 Ôöé   
+  
+
+src\providers\ai\gemini-ai-provider.ts format ÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöü
+
+  ├ù Formatter would have printed the following content:
+  
+      1     Ôöé - import┬À{┬ÀGoogleGenAI┬À}┬Àfrom┬À'@google/genai'ÔÉì
+      2     Ôöé - import┬À{┬Àenv┬À}┬Àfrom┬À'../../env'ÔÉì
+      3     Ôöé - import┬À{ÔÉì
+      4     Ôöé - ┬À┬ÀbudgetExtractionSchema,ÔÉì
+      5     Ôöé - ┬À┬ÀbuildExtractionPrompt,ÔÉì
+      6     Ôöé - ┬À┬Àtype┬ÀExtractedItem,ÔÉì
+      7     Ôöé - ┬À┬Àtype┬ÀGeminiExtractionResponse,ÔÉì
+      8     Ôöé - }┬Àfrom┬À'../../lib/gemini-schemas'ÔÉì
+      9     Ôöé - import┬Àtype┬À{┬ÀAiProvider┬À}┬Àfrom┬À'./ai-provider'ÔÉì
+     10     Ôöé - ÔÉì
+     11     Ôöé - export┬Àconst┬Àgemini┬À=┬Ànew┬ÀGoogleGenAI({ÔÉì
+     12     Ôöé - ┬À┬ÀapiKey:┬Àenv.GEMINI_API_KEY,ÔÉì
+     13     Ôöé - ┬À┬ÀapiVersion:┬À'v1beta',ÔÉì
+     14     Ôöé - })ÔÉì
+     15     Ôöé - ÔÉì
+     16     Ôöé - export┬Àclass┬ÀGeminiAiProvider┬Àimplements┬ÀAiProvider┬À{ÔÉì
+     17     Ôöé - ┬À┬Àprivate┬Àasync┬ÀrequestWithRetry<T>(ÔÉì
+     18     Ôöé - ┬À┬À┬À┬Àoperation:┬À()┬À=>┬ÀPromise<T>,ÔÉì
+     19     Ôöé - ┬À┬À┬À┬ÀmaxRetries┬À=┬À3ÔÉì
+     20     Ôöé - ┬À┬À):┬ÀPromise<T>┬À{ÔÉì
+     21     Ôöé - ┬À┬À┬À┬Àlet┬ÀlastError:┬ÀanyÔÉì
+     22     Ôöé - ÔÉì
+     23     Ôöé - ┬À┬À┬À┬Àfor┬À(let┬Àattempt┬À=┬À1;┬Àattempt┬À<=┬ÀmaxRetries;┬Àattempt++)┬À{ÔÉì
+     24     Ôöé - ┬À┬À┬À┬À┬À┬Àtry┬À{ÔÉì
+     25     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àreturn┬Àawait┬Àoperation()ÔÉì
+     26     Ôöé - ┬À┬À┬À┬À┬À┬À}┬Àcatch┬À(error:┬Àany)┬À{ÔÉì
+     27     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬ÀlastError┬À=┬ÀerrorÔÉì
+     28     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àconst┬Àstatus┬À=ÔÉì
+     29     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àerror.status┬À||ÔÉì
+     30     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àerror.response?.status┬À||ÔÉì
+     31     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À(error.message?.includes('429')ÔÉì
+     32     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À?┬À429ÔÉì
+     33     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À:┬Àerror.message?.includes('503')ÔÉì
+     34     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À?┬À503ÔÉì
+     35     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À:┬À0)ÔÉì
+     36     Ôöé - ÔÉì
+     37     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àconst┬ÀisRateLimit┬À=┬Àstatus┬À===┬À429ÔÉì
+     38     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àconst┬ÀisServiceUnavailable┬À=┬Àstatus┬À===┬À503┬À||┬Àstatus┬À===┬À500ÔÉì
+     39     Ôöé - ÔÉì
+     40     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àif┬À(isRateLimit)┬À{ÔÉì
+     41     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àconsole.error(ÔÉì
+     42     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`[Gemini]┬ÀLimite┬Àde┬Àcota┬Àatingido┬À(429).┬ÀBilling┬Ànecess├írio┬Àno┬ÀGoogle┬ÀAI┬ÀStudio.`ÔÉì
+     43     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À)ÔÉì
+     44     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àthrow┬ÀerrorÔÉì
+     45     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À}ÔÉì
+     46     Ôöé - ÔÉì
+     47     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àif┬À(!isServiceUnavailable┬À||┬Àattempt┬À===┬ÀmaxRetries)┬À{ÔÉì
+     48     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àthrow┬ÀerrorÔÉì
+     49     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À}ÔÉì
+     50     Ôöé - ÔÉì
+     51     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àconst┬Àdelay┬À=┬À2000┬À*┬À2┬À**┬À(attempt┬À-┬À1)ÔÉì
+     52     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àconsole.warn(ÔÉì
+     53     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`[Gemini]┬ÀTentativa┬À${attempt}┬Àfalhou┬À(Status:┬À${status}).┬ÀRetentando┬Àem┬À${delay}ms...`ÔÉì
+     54     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À)ÔÉì
+     55     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àawait┬Ànew┬ÀPromise(resolve┬À=>┬ÀsetTimeout(resolve,┬Àdelay))ÔÉì
+     56     Ôöé - ┬À┬À┬À┬À┬À┬À}ÔÉì
+     57     Ôöé - ┬À┬À┬À┬À}ÔÉì
+     58     Ôöé - ÔÉì
+     59     Ôöé - ┬À┬À┬À┬Àthrow┬ÀlastErrorÔÉì
+     60     Ôöé - ┬À┬À}ÔÉì
+     61     Ôöé - ÔÉì
+     62     Ôöé - ┬À┬Àasync┬ÀextractBudgetItems(ÔÉì
+     63     Ôöé - ┬À┬À┬À┬Àtext:┬Àstring,ÔÉì
+     64     Ôöé - ┬À┬À┬À┬ÀbudgetType:┬À'product'┬À|┬À'civil'ÔÉì
+     65     Ôöé - ┬À┬À):┬ÀPromise<ExtractedItem[]>┬À{ÔÉì
+     66     Ôöé - ┬À┬À┬À┬Àconst┬Àprompt┬À=┬ÀbuildExtractionPrompt(text,┬ÀbudgetType)ÔÉì
+     67     Ôöé - ÔÉì
+     68     Ôöé - ┬À┬À┬À┬Àtry┬À{ÔÉì
+     69     Ôöé - ┬À┬À┬À┬À┬À┬Àconst┬Àresponse┬À=┬Àawait┬Àthis.requestWithRetry(()┬À=>ÔÉì
+     70     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àgemini.models.generateContent({ÔÉì
+     71     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àmodel:┬À'gemini-2.5-flash',ÔÉì
+     72     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àcontents:┬Àprompt,ÔÉì
+     73     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àconfig:┬À{ÔÉì
+     74     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀresponseMimeType:┬À'application/json',ÔÉì
+     75     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀresponseSchema:┬ÀbudgetExtractionSchema,ÔÉì
+     76     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àtemperature:┬À0,ÔÉì
+     77     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À},ÔÉì
+     78     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À})ÔÉì
+     79     Ôöé - ┬À┬À┬À┬À┬À┬À)ÔÉì
+     80     Ôöé - ÔÉì
+     81     Ôöé - ┬À┬À┬À┬À┬À┬Àconst┬ÀjsonText┬À=┬Àresponse.textÔÉì
+     82     Ôöé - ÔÉì
+     83     Ôöé - ┬À┬À┬À┬À┬À┬Àif┬À(!jsonText)┬À{ÔÉì
+     84     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àreturn┬À[]ÔÉì
+     85     Ôöé - ┬À┬À┬À┬À┬À┬À}ÔÉì
+     86     Ôöé - ÔÉì
+     87     Ôöé - ┬À┬À┬À┬À┬À┬Àconst┬Àparsed┬À=┬ÀJSON.parse(jsonText)┬Àas┬ÀGeminiExtractionResponseÔÉì
+     88     Ôöé - ÔÉì
+     89     Ôöé - ┬À┬À┬À┬À┬À┬Àconsole.log(ÔÉì
+     90     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À`[Gemini]┬ÀRacioc├¡nio:┬À${parsed._raciocinio?.substring(0,┬À120)}...`ÔÉì
+     91     Ôöé - ┬À┬À┬À┬À┬À┬À)ÔÉì
+     92     Ôöé - ┬À┬À┬À┬À┬À┬Àconsole.log(ÔÉì
+     93     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À`[Gemini]┬ÀExtra├º├úo┬ÀSucedida:┬À${parsed.items?.length┬À??┬À0}┬Àitens┬Àencontrados┬Àem┬À"${text.substring(0,┬À60)}"`ÔÉì
+     94     Ôöé - ┬À┬À┬À┬À┬À┬À)ÔÉì
+     95     Ôöé - ÔÉì
+     96     Ôöé - ┬À┬À┬À┬À┬À┬Àreturn┬Àparsed.items┬À??┬À[]ÔÉì
+     97     Ôöé - ┬À┬À┬À┬À}┬Àcatch┬À(error:┬Àany)┬À{ÔÉì
+     98     Ôöé - ┬À┬À┬À┬À┬À┬Àconst┬Àstatus┬À=┬Àerror.status┬À||┬Àerror.response?.statusÔÉì
+     99     Ôöé - ┬À┬À┬À┬À┬À┬Àif┬À(status┬À===┬À429┬À||┬Àerror.message?.includes('429'))┬À{ÔÉì
+    100     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àconsole.error(ÔÉì
+    101     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À'[Gemini]┬ÀErro┬Àde┬ÀCota┬À(429)┬À-┬ÀO┬ÀLimite┬Àdo┬ÀFree┬ÀTier┬Àfoi┬Àatingido.'ÔÉì
+    102     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À)ÔÉì
+    103     Ôöé - ┬À┬À┬À┬À┬À┬À}┬Àelse┬À{ÔÉì
+    104     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àconsole.error('[Gemini]┬ÀErro┬Àcr├¡tico┬Àao┬Àextrair┬Àitens:',┬Àerror)ÔÉì
+    105     Ôöé - ┬À┬À┬À┬À┬À┬À}ÔÉì
+    106     Ôöé - ┬À┬À┬À┬À┬À┬Àreturn┬À[]ÔÉì
+    107     Ôöé - ┬À┬À┬À┬À}ÔÉì
+    108     Ôöé - ┬À┬À}ÔÉì
+    109     Ôöé - ÔÉì
+    110     Ôöé - ┬À┬Àasync┬ÀtranscribeAudio(ÔÉì
+    111     Ôöé - ┬À┬À┬À┬Àbase64Audio:┬Àstring,ÔÉì
+    112     Ôöé - ┬À┬À┬À┬ÀmimeType:┬ÀstringÔÉì
+    113     Ôöé - ┬À┬À):┬ÀPromise<string>┬À{ÔÉì
+    114     Ôöé - ┬À┬À┬À┬Àtry┬À{ÔÉì
+    115     Ôöé - ┬À┬À┬À┬À┬À┬Àconst┬Àresponse┬À=┬Àawait┬Àthis.requestWithRetry(()┬À=>ÔÉì
+    116     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àgemini.models.generateContent({ÔÉì
+    117     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àmodel:┬À'gemini-2.5-flash',ÔÉì
+    118     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àcontents:┬À[ÔÉì
+    119     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À{ÔÉì
+    120     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àrole:┬À'user',ÔÉì
+    121     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àparts:┬À[ÔÉì
+    122     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À{ÔÉì
+    123     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àtext:┬À'Transcreva┬Àeste┬À├íudio┬Àexatamente┬Àcomo┬Àfoi┬Àfalado.┬ÀN├úo┬Àadicione┬Àexplica├º├Áes,┬Àcoment├írios┬Àou┬Àformata├º├Áes┬Àextras.┬ÀApenas┬Ào┬Àtexto┬Àtranscrito.',ÔÉì
+    124     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À},ÔÉì
+    125     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À{ÔÉì
+    126     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀinlineData:┬À{ÔÉì
+    127     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àdata:┬Àbase64Audio,ÔÉì
+    128     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀmimeType:┬ÀmimeType,ÔÉì
+    129     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À},ÔÉì
+    130     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À},ÔÉì
+    131     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À],ÔÉì
+    132     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À},ÔÉì
+    133     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À],ÔÉì
+    134     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àconfig:┬À{ÔÉì
+    135     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àtemperature:┬À0,ÔÉì
+    136     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À},ÔÉì
+    137     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À})ÔÉì
+    138     Ôöé - ┬À┬À┬À┬À┬À┬À)ÔÉì
+    139     Ôöé - ÔÉì
+    140     Ôöé - ┬À┬À┬À┬À┬À┬Àconst┬ÀtranscribedText┬À=┬Àresponse.text┬À||┬À''ÔÉì
+    141     Ôöé - ÔÉì
+    142     Ôöé - ┬À┬À┬À┬À┬À┬Àconsole.log(ÔÉì
+    143     Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À`[Gemini]┬À├üudio┬Àtranscrito┬Àcom┬Àsucesso:┬À"${transcribedText.substring(0,┬À60)}..."`ÔÉì
+    144     Ôöé - ┬À┬À┬À┬À┬À┬À)ÔÉì
+    145     Ôöé - ÔÉì
+    146     Ôöé - ┬À┬À┬À┬À┬À┬Àreturn┬ÀtranscribedTextÔÉì
+    147     Ôöé - ┬À┬À┬À┬À}┬Àcatch┬À(error)┬À{ÔÉì
+    148     Ôöé - ┬À┬À┬À┬À┬À┬Àconsole.error('[Gemini]┬ÀErro┬Àcr├¡tico┬Àao┬Àtranscrever┬À├íudio:',┬Àerror)ÔÉì
+    149     Ôöé - ┬À┬À┬À┬À┬À┬Àreturn┬À''ÔÉì
+    150     Ôöé - ┬À┬À┬À┬À}ÔÉì
+  247 more lines truncated
+  
+
+src\repositories\in-memory\in-memory-session-repository.ts format ÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöü
+
+  ├ù Formatter would have printed the following content:
+  
+     1    Ôöé - import┬Àtype┬À{┬ÀChatSession,┬ÀSessionRepository┬À}┬Àfrom┬À'../session-repository'ÔÉì
+     2    Ôöé - ÔÉì
+     3    Ôöé - export┬Àclass┬ÀInMemorySessionRepository┬Àimplements┬ÀSessionRepository┬À{ÔÉì
+     4    Ôöé - ┬À┬Àprivate┬Àsessions┬À=┬Ànew┬ÀMap<string,┬ÀChatSession>()ÔÉì
+     5    Ôöé - ÔÉì
+     6    Ôöé - ┬À┬Àasync┬ÀgetSession(phone:┬Àstring):┬ÀPromise<ChatSession┬À|┬Ànull>┬À{ÔÉì
+     7    Ôöé - ┬À┬À┬À┬Àreturn┬Àthis.sessions.get(phone)┬À||┬ÀnullÔÉì
+     8    Ôöé - ┬À┬À}ÔÉì
+     9    Ôöé - ÔÉì
+    10    Ôöé - ┬À┬Àasync┬ÀsaveSession(ÔÉì
+    11    Ôöé - ┬À┬À┬À┬Àphone:┬Àstring,ÔÉì
+    12    Ôöé - ┬À┬À┬À┬Àsession:┬ÀPartial<ChatSession>ÔÉì
+    13    Ôöé - ┬À┬À):┬ÀPromise<void>┬À{ÔÉì
+    14    Ôöé - ┬À┬À┬À┬Àconst┬Àexisting┬À=┬Àthis.sessions.get(phone)┬À||┬À{ÔÉì
+    15    Ôöé - ┬À┬À┬À┬À┬À┬Àphone,ÔÉì
+    16    Ôöé - ┬À┬À┬À┬À┬À┬Àstate:┬À'NEW'┬Àas┬Àconst,ÔÉì
+    17    Ôöé - ┬À┬À┬À┬À}ÔÉì
+    18    Ôöé - ┬À┬À┬À┬Àthis.sessions.set(phone,┬À{┬À...existing,┬À...session┬À})ÔÉì
+    19    Ôöé - ┬À┬À}ÔÉì
+    20    Ôöé - ÔÉì
+    21    Ôöé - ┬À┬Àasync┬ÀclearSession(phone:┬Àstring):┬ÀPromise<void>┬À{ÔÉì
+    22    Ôöé - ┬À┬À┬À┬Àthis.sessions.delete(phone)ÔÉì
+    23    Ôöé - ┬À┬À}ÔÉì
+    24    Ôöé - }ÔÉì
+        1 Ôöé + import┬Àtype┬À{┬ÀChatSession,┬ÀSessionRepository┬À}┬Àfrom┬À'../session-repository'
+        2 Ôöé + 
+        3 Ôöé + export┬Àclass┬ÀInMemorySessionRepository┬Àimplements┬ÀSessionRepository┬À{
+        4 Ôöé + ┬À┬Àprivate┬Àsessions┬À=┬Ànew┬ÀMap<string,┬ÀChatSession>()
+        5 Ôöé + 
+        6 Ôöé + ┬À┬Àasync┬ÀgetSession(phone:┬Àstring):┬ÀPromise<ChatSession┬À|┬Ànull>┬À{
+        7 Ôöé + ┬À┬À┬À┬Àreturn┬Àthis.sessions.get(phone)┬À||┬Ànull
+        8 Ôöé + ┬À┬À}
+        9 Ôöé + 
+       10 Ôöé + ┬À┬Àasync┬ÀsaveSession(
+       11 Ôöé + ┬À┬À┬À┬Àphone:┬Àstring,
+       12 Ôöé + ┬À┬À┬À┬Àsession:┬ÀPartial<ChatSession>
+       13 Ôöé + ┬À┬À):┬ÀPromise<void>┬À{
+       14 Ôöé + ┬À┬À┬À┬Àconst┬Àexisting┬À=┬Àthis.sessions.get(phone)┬À||┬À{
+       15 Ôöé + ┬À┬À┬À┬À┬À┬Àphone,
+       16 Ôöé + ┬À┬À┬À┬À┬À┬Àstate:┬À'NEW'┬Àas┬Àconst,
+       17 Ôöé + ┬À┬À┬À┬À}
+       18 Ôöé + ┬À┬À┬À┬Àthis.sessions.set(phone,┬À{┬À...existing,┬À...session┬À})
+       19 Ôöé + ┬À┬À}
+       20 Ôöé + 
+       21 Ôöé + ┬À┬Àasync┬ÀclearSession(phone:┬Àstring):┬ÀPromise<void>┬À{
+       22 Ôöé + ┬À┬À┬À┬Àthis.sessions.delete(phone)
+       23 Ôöé + ┬À┬À}
+       24 Ôöé + }
+    25 25 Ôöé   
+  
+
+src\server.ts format ÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöü
+
+  ├ù Formatter would have printed the following content:
+  
+     1    Ôöé - import┬À{┬Àapp┬À}┬Àfrom┬À'./app'ÔÉì
+     2    Ôöé - import┬À'./lib/redis'ÔÉì
+     3    Ôöé - ÔÉì
+     4    Ôöé - appÔÉì
+     5    Ôöé - ┬À┬À.listen({ÔÉì
+     6    Ôöé - ┬À┬À┬À┬Àport:┬À3334,ÔÉì
+     7    Ôöé - ┬À┬À┬À┬Àhost:┬À'0.0.0.0',ÔÉì
+     8    Ôöé - ┬À┬À})ÔÉì
+     9    Ôöé - ┬À┬À.then(()┬À=>┬À{ÔÉì
+    10    Ôöé - ┬À┬À┬À┬Àconsole.log('Server┬Àrunning┬Àon┬Àhttp://localhost:3334')ÔÉì
+    11    Ôöé - ┬À┬À})ÔÉì
+        1 Ôöé + import┬À{┬Àapp┬À}┬Àfrom┬À'./app'
+        2 Ôöé + import┬À'./lib/redis'
+        3 Ôöé + 
+        4 Ôöé + app
+        5 Ôöé + ┬À┬À.listen({
+        6 Ôöé + ┬À┬À┬À┬Àport:┬À3334,
+        7 Ôöé + ┬À┬À┬À┬Àhost:┬À'0.0.0.0',
+        8 Ôöé + ┬À┬À})
+        9 Ôöé + ┬À┬À.then(()┬À=>┬À{
+       10 Ôöé + ┬À┬À┬À┬Àconsole.log('Server┬Àrunning┬Àon┬Àhttp://localhost:3334')
+       11 Ôöé + ┬À┬À})
+    12 12 Ôöé   
+  
+
+src\tests\mocks\axios.mock.ts format ÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöü
+
+  ├ù Formatter would have printed the following content:
+  
+     1    Ôöé - /**ÔÉì
+     2    Ôöé - ┬À*┬ÀMock┬Àdo┬Àm├│dulo┬Àlib/axios┬À(cliente┬Àaxios┬Àpara┬Àa┬ÀAPI┬Àv2).ÔÉì
+     3    Ôöé - ┬À*┬ÀCada┬Àteste┬Àpode┬Àconfigurar┬Ào┬Àcomportamento┬Àvia┬À`mockApiGet`┬À/┬À`mockApiPost`.ÔÉì
+     4    Ôöé - ┬À*/ÔÉì
+     5    Ôöé - import┬À{┬Àvi┬À}┬Àfrom┬À'vitest'ÔÉì
+     6    Ôöé - ÔÉì
+     7    Ôöé - export┬Àconst┬ÀmockApiGet┬À=┬Àvi.fn()ÔÉì
+     8    Ôöé - export┬Àconst┬ÀmockApiPost┬À=┬Àvi.fn()ÔÉì
+     9    Ôöé - ÔÉì
+    10    Ôöé - export┬Àconst┬ÀmockApi┬À=┬À{ÔÉì
+    11    Ôöé - ┬À┬Àget:┬ÀmockApiGet,ÔÉì
+    12    Ôöé - ┬À┬Àpost:┬ÀmockApiPost,ÔÉì
+    13    Ôöé - }ÔÉì
+        1 Ôöé + /**
+        2 Ôöé + ┬À*┬ÀMock┬Àdo┬Àm├│dulo┬Àlib/axios┬À(cliente┬Àaxios┬Àpara┬Àa┬ÀAPI┬Àv2).
+        3 Ôöé + ┬À*┬ÀCada┬Àteste┬Àpode┬Àconfigurar┬Ào┬Àcomportamento┬Àvia┬À`mockApiGet`┬À/┬À`mockApiPost`.
+        4 Ôöé + ┬À*/
+        5 Ôöé + import┬À{┬Àvi┬À}┬Àfrom┬À'vitest'
+        6 Ôöé + 
+        7 Ôöé + export┬Àconst┬ÀmockApiGet┬À=┬Àvi.fn()
+        8 Ôöé + export┬Àconst┬ÀmockApiPost┬À=┬Àvi.fn()
+        9 Ôöé + 
+       10 Ôöé + export┬Àconst┬ÀmockApi┬À=┬À{
+       11 Ôöé + ┬À┬Àget:┬ÀmockApiGet,
+       12 Ôöé + ┬À┬Àpost:┬ÀmockApiPost,
+       13 Ôöé + }
+    14 14 Ôöé   
+  
+
+src\tests\mocks\evolution.mock.ts format ÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöü
+
+  ├ù Formatter would have printed the following content:
+  
+     1    Ôöé - /**ÔÉì
+     2    Ôöé - ┬À*┬ÀMock┬Àdo┬ÀEvolutionService.ÔÉì
+     3    Ôöé - ┬À*┬ÀImpede┬Àque┬Àchamadas┬Àreais┬À├á┬ÀEvolution┬ÀAPI┬Àsejam┬Àfeitas┬Ànos┬Àtestes.ÔÉì
+     4    Ôöé - ┬À*/ÔÉì
+     5    Ôöé - import┬À{┬Àvi┬À}┬Àfrom┬À'vitest'ÔÉì
+     6    Ôöé - ÔÉì
+     7    Ôöé - export┬Àconst┬ÀmockSendText┬À=┬Àvi.fn().mockResolvedValue(undefined)ÔÉì
+     8    Ôöé - export┬Àconst┬ÀmockSendPdf┬À=┬Àvi.fn().mockResolvedValue(undefined)ÔÉì
+     9    Ôöé - export┬Àconst┬ÀmockGetBase64Media┬À=┬Àvi.fn().mockResolvedValue(null)ÔÉì
+    10    Ôöé - ÔÉì
+    11    Ôöé - export┬Àclass┬ÀMockEvolutionMessagingProvider┬À{ÔÉì
+    12    Ôöé - ┬À┬ÀsendText┬À=┬ÀmockSendTextÔÉì
+    13    Ôöé - ┬À┬ÀsendPdf┬À=┬ÀmockSendPdfÔÉì
+    14    Ôöé - ┬À┬ÀgetBase64Media┬À=┬ÀmockGetBase64MediaÔÉì
+    15    Ôöé - }ÔÉì
+        1 Ôöé + /**
+        2 Ôöé + ┬À*┬ÀMock┬Àdo┬ÀEvolutionService.
+        3 Ôöé + ┬À*┬ÀImpede┬Àque┬Àchamadas┬Àreais┬À├á┬ÀEvolution┬ÀAPI┬Àsejam┬Àfeitas┬Ànos┬Àtestes.
+        4 Ôöé + ┬À*/
+        5 Ôöé + import┬À{┬Àvi┬À}┬Àfrom┬À'vitest'
+        6 Ôöé + 
+        7 Ôöé + export┬Àconst┬ÀmockSendText┬À=┬Àvi.fn().mockResolvedValue(undefined)
+        8 Ôöé + export┬Àconst┬ÀmockSendPdf┬À=┬Àvi.fn().mockResolvedValue(undefined)
+        9 Ôöé + export┬Àconst┬ÀmockGetBase64Media┬À=┬Àvi.fn().mockResolvedValue(null)
+       10 Ôöé + 
+       11 Ôöé + export┬Àclass┬ÀMockEvolutionMessagingProvider┬À{
+       12 Ôöé + ┬À┬ÀsendText┬À=┬ÀmockSendText
+       13 Ôöé + ┬À┬ÀsendPdf┬À=┬ÀmockSendPdf
+       14 Ôöé + ┬À┬ÀgetBase64Media┬À=┬ÀmockGetBase64Media
+       15 Ôöé + }
+    16 16 Ôöé   
+  
+
+src\tests\mocks\gemini.mock.ts format ÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöü
+
+  ├ù Formatter would have printed the following content:
+  
+     1    Ôöé - /**ÔÉì
+     2    Ôöé - ┬À*┬ÀMock┬Àdo┬ÀGeminiAiProvider.ÔÉì
+     3    Ôöé - ┬À*┬ÀEvita┬Àchamadas┬Àreais┬À├á┬ÀAPI┬Àdo┬ÀGemini┬Àdurante┬Àos┬Àtestes.ÔÉì
+     4    Ôöé - ┬À*/ÔÉì
+     5    Ôöé - import┬À{┬Àvi┬À}┬Àfrom┬À'vitest'ÔÉì
+     6    Ôöé - ÔÉì
+     7    Ôöé - export┬Àconst┬ÀmockExtractBudgetItems┬À=┬Àvi.fn().mockResolvedValue([])ÔÉì
+     8    Ôöé - export┬Àconst┬ÀmockExtractTotalValue┬À=┬Àvi.fn().mockResolvedValue(null)ÔÉì
+     9    Ôöé - export┬Àconst┬ÀmockTranscribeAudio┬À=┬Àvi.fn().mockResolvedValue('')ÔÉì
+    10    Ôöé - ÔÉì
+    11    Ôöé - export┬Àclass┬ÀMockGeminiAiProvider┬À{ÔÉì
+    12    Ôöé - ┬À┬ÀextractBudgetItems┬À=┬ÀmockExtractBudgetItemsÔÉì
+    13    Ôöé - ┬À┬ÀextractTotalValue┬À=┬ÀmockExtractTotalValueÔÉì
+    14    Ôöé - ┬À┬ÀtranscribeAudio┬À=┬ÀmockTranscribeAudioÔÉì
+    15    Ôöé - }ÔÉì
+        1 Ôöé + /**
+        2 Ôöé + ┬À*┬ÀMock┬Àdo┬ÀGeminiAiProvider.
+        3 Ôöé + ┬À*┬ÀEvita┬Àchamadas┬Àreais┬À├á┬ÀAPI┬Àdo┬ÀGemini┬Àdurante┬Àos┬Àtestes.
+        4 Ôöé + ┬À*/
+        5 Ôöé + import┬À{┬Àvi┬À}┬Àfrom┬À'vitest'
+        6 Ôöé + 
+        7 Ôöé + export┬Àconst┬ÀmockExtractBudgetItems┬À=┬Àvi.fn().mockResolvedValue([])
+        8 Ôöé + export┬Àconst┬ÀmockExtractTotalValue┬À=┬Àvi.fn().mockResolvedValue(null)
+        9 Ôöé + export┬Àconst┬ÀmockTranscribeAudio┬À=┬Àvi.fn().mockResolvedValue('')
+       10 Ôöé + 
+       11 Ôöé + export┬Àclass┬ÀMockGeminiAiProvider┬À{
+       12 Ôöé + ┬À┬ÀextractBudgetItems┬À=┬ÀmockExtractBudgetItems
+       13 Ôöé + ┬À┬ÀextractTotalValue┬À=┬ÀmockExtractTotalValue
+       14 Ôöé + ┬À┬ÀtranscribeAudio┬À=┬ÀmockTranscribeAudio
+       15 Ôöé + }
+    16 16 Ôöé   
+  
+
+src\use-cases\bot\process-incoming-message.ts format ÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöü
+
+  ├ù Formatter would have printed the following content:
+  
+     1    Ôöé - import┬Àtype┬À{┬ÀSessionRepository┬À}┬Àfrom┬À'../../repositories/session-repository'ÔÉì
+     2    Ôöé - import┬Àtype┬À{┬ÀHandleAwaitingCustomerNameUseCase┬À}┬Àfrom┬À'./handle-awaiting-customer-name'ÔÉì
+     3    Ôöé - import┬Àtype┬À{┬ÀHandleAwaitingTotalValueUseCase┬À}┬Àfrom┬À'./handle-awaiting-total-value'ÔÉì
+     4    Ôöé - import┬Àtype┬À{┬ÀHandleAwaitingTypeUseCase┬À}┬Àfrom┬À'./handle-awaiting-type'ÔÉì
+     5    Ôöé - import┬Àtype┬À{┬ÀHandleCollectingItemsUseCase┬À}┬Àfrom┬À'./handle-collecting-items'ÔÉì
+     6    Ôöé - import┬Àtype┬À{┬ÀHandleConfirmingUseCase┬À}┬Àfrom┬À'./handle-confirming'ÔÉì
+     7    Ôöé - import┬Àtype┬À{┬ÀHandleNewUserUseCase┬À}┬Àfrom┬À'./handle-new-user'ÔÉì
+     8    Ôöé - ÔÉì
+     9    Ôöé - interface┬ÀProcessIncomingMessageUseCaseRequest┬À{ÔÉì
+    10    Ôöé - ┬À┬ÀinstanceName:┬ÀstringÔÉì
+    11    Ôöé - ┬À┬Àphone:┬ÀstringÔÉì
+    12    Ôöé - ┬À┬Àtext:┬ÀstringÔÉì
+    13    Ôöé - }ÔÉì
+    14    Ôöé - ÔÉì
+    15    Ôöé - export┬Àclass┬ÀProcessIncomingMessageUseCase┬À{ÔÉì
+    16    Ôöé - ┬À┬Àconstructor(ÔÉì
+    17    Ôöé - ┬À┬À┬À┬Àprivate┬ÀsessionRepository:┬ÀSessionRepository,ÔÉì
+    18    Ôöé - ┬À┬À┬À┬Àprivate┬ÀhandleNewUser:┬ÀHandleNewUserUseCase,ÔÉì
+    19    Ôöé - ┬À┬À┬À┬Àprivate┬ÀhandleAwaitingType:┬ÀHandleAwaitingTypeUseCase,ÔÉì
+    20    Ôöé - ┬À┬À┬À┬Àprivate┬ÀhandleAwaitingCustomerName:┬ÀHandleAwaitingCustomerNameUseCase,ÔÉì
+    21    Ôöé - ┬À┬À┬À┬Àprivate┬ÀhandleAwaitingTotalValue:┬ÀHandleAwaitingTotalValueUseCase,ÔÉì
+    22    Ôöé - ┬À┬À┬À┬Àprivate┬ÀhandleCollectingItems:┬ÀHandleCollectingItemsUseCase,ÔÉì
+    23    Ôöé - ┬À┬À┬À┬Àprivate┬ÀhandleConfirming:┬ÀHandleConfirmingUseCaseÔÉì
+    24    Ôöé - ┬À┬À)┬À{}ÔÉì
+    25    Ôöé - ÔÉì
+    26    Ôöé - ┬À┬Àasync┬Àexecute({ÔÉì
+    27    Ôöé - ┬À┬À┬À┬ÀinstanceName,ÔÉì
+    28    Ôöé - ┬À┬À┬À┬Àphone,ÔÉì
+    29    Ôöé - ┬À┬À┬À┬Àtext,ÔÉì
+    30    Ôöé - ┬À┬À}:┬ÀProcessIncomingMessageUseCaseRequest):┬ÀPromise<string┬À|┬Ànull>┬À{ÔÉì
+    31    Ôöé - ┬À┬À┬À┬À//┬À1.┬ÀTraz┬Àa┬Àsess├úo┬Àdo┬Àusu├írio┬Àdo┬ÀRedisÔÉì
+    32    Ôöé - ┬À┬À┬À┬Àconst┬Àsession┬À=┬Àawait┬Àthis.sessionRepository.getSession(phone)ÔÉì
+    33    Ôöé - ÔÉì
+    34    Ôöé - ┬À┬À┬À┬À//┬À2.┬ÀSe┬Àn├úo┬Àtem┬Àsess├úo┬Àativa,┬À├®┬Àusu├írio┬Ànovo┬Àiniciando┬Àa┬ÀconversaÔÉì
+    35    Ôöé - ┬À┬À┬À┬Àif┬À(!session)┬À{ÔÉì
+    36    Ôöé - ┬À┬À┬À┬À┬À┬Àreturn┬Àthis.handleNewUser.execute({┬Àphone┬À})ÔÉì
+    37    Ôöé - ┬À┬À┬À┬À}ÔÉì
+    38    Ôöé - ÔÉì
+    39    Ôöé - ┬À┬À┬À┬À//┬À2.1┬ÀDetec├º├úo┬Àde┬Àsauda├º├úo┬Àglobal┬À-┬ÀSe┬Ào┬Àusu├írio┬Àdisser┬À"Oi",┬À"Menu",┬Àetc,┬ÀresetamosÔÉì
+    40    Ôöé - ┬À┬À┬À┬Àconst┬ÀisGreeting┬À=ÔÉì
+    41    Ôöé - ┬À┬À┬À┬À┬À┬À/^(oi|ol├í|ola|bom┬Àdia|boa┬Àtarde|boa┬Ànoite|menu|ajuda|iniciar)$/i.test(ÔÉì
+    42    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àtext.trim().toLowerCase()ÔÉì
+    43    Ôöé - ┬À┬À┬À┬À┬À┬À)ÔÉì
+    44    Ôöé - ÔÉì
+    45    Ôöé - ┬À┬À┬À┬Àif┬À(isGreeting)┬À{ÔÉì
+    46    Ôöé - ┬À┬À┬À┬À┬À┬Àawait┬Àthis.sessionRepository.clearSession(phone)ÔÉì
+    47    Ôöé - ┬À┬À┬À┬À┬À┬Àreturn┬Àthis.handleNewUser.execute({┬Àphone┬À})ÔÉì
+    48    Ôöé - ┬À┬À┬À┬À}ÔÉì
+    49    Ôöé - ÔÉì
+    50    Ôöé - ┬À┬À┬À┬À//┬À3.┬ÀO┬Àswitch/case┬À├®┬Ào┬Àcora├º├úo┬Àda┬Àm├íquina┬Àde┬ÀestadosÔÉì
+    51    Ôöé - ┬À┬À┬À┬Àswitch┬À(session.state)┬À{ÔÉì
+    52    Ôöé - ┬À┬À┬À┬À┬À┬Àcase┬À'AWAITING_TYPE':ÔÉì
+    53    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àreturn┬Àthis.handleAwaitingType.execute({┬Àphone,┬Àtext┬À})ÔÉì
+    54    Ôöé - ÔÉì
+    55    Ôöé - ┬À┬À┬À┬À┬À┬Àcase┬À'AWAITING_CUSTOMER_NAME':ÔÉì
+    56    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àreturn┬Àthis.handleAwaitingCustomerName.execute({┬Àphone,┬Àtext┬À})ÔÉì
+    57    Ôöé - ÔÉì
+    58    Ôöé - ┬À┬À┬À┬À┬À┬Àcase┬À'AWAITING_TOTAL_VALUE':ÔÉì
+    59    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àreturn┬Àthis.handleAwaitingTotalValue.execute({┬Àphone,┬Àtext┬À})ÔÉì
+    60    Ôöé - ÔÉì
+    61    Ôöé - ┬À┬À┬À┬À┬À┬Àcase┬À'COLLECTING_ITEMS':ÔÉì
+    62    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àreturn┬Àthis.handleCollectingItems.execute({┬Àsession,┬Àphone,┬Àtext┬À})ÔÉì
+    63    Ôöé - ÔÉì
+    64    Ôöé - ┬À┬À┬À┬À┬À┬Àcase┬À'CONFIRMING':ÔÉì
+    65    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àreturn┬Àthis.handleConfirming.execute({ÔÉì
+    66    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀinstanceName,ÔÉì
+    67    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àsession,ÔÉì
+    68    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àphone,ÔÉì
+    69    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àtext,ÔÉì
+    70    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À})ÔÉì
+    71    Ôöé - ÔÉì
+    72    Ôöé - ┬À┬À┬À┬À┬À┬Àdefault:ÔÉì
+    73    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬À//┬ÀSe┬Ào┬Àestado┬Àfor┬Àinv├ílido┬Àou┬Àdeu┬Àerro,┬Àreseta┬Àa┬Àsess├úo┬Àpor┬Àseguran├ºaÔÉì
+    74    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àawait┬Àthis.sessionRepository.clearSession(phone)ÔÉì
+    75    Ôöé - ┬À┬À┬À┬À┬À┬À┬À┬Àreturn┬À'!´┐¢┬ÀAlgo┬Àdeu┬Àerrado.┬ÀReiniciamos┬Àsua┬Àsess├úo.\n\nPara┬Àcome├ºar,┬Àenvie┬À*Oi*.'ÔÉì
+    76    Ôöé - ┬À┬À┬À┬À}ÔÉì
+    77    Ôöé - ┬À┬À}ÔÉì
+    78    Ôöé - }ÔÉì
+        1 Ôöé + import┬Àtype┬À{┬ÀSessionRepository┬À}┬Àfrom┬À'../../repositories/session-repository'
+        2 Ôöé + import┬Àtype┬À{┬ÀHandleAwaitingCustomerNameUseCase┬À}┬Àfrom┬À'./handle-awaiting-customer-name'
+        3 Ôöé + import┬Àtype┬À{┬ÀHandleAwaitingTotalValueUseCase┬À}┬Àfrom┬À'./handle-awaiting-total-value'
+        4 Ôöé + import┬Àtype┬À{┬ÀHandleAwaitingTypeUseCase┬À}┬Àfrom┬À'./handle-awaiting-type'
+        5 Ôöé + import┬Àtype┬À{┬ÀHandleCollectingItemsUseCase┬À}┬Àfrom┬À'./handle-collecting-items'
+        6 Ôöé + import┬Àtype┬À{┬ÀHandleConfirmingUseCase┬À}┬Àfrom┬À'./handle-confirming'
+        7 Ôöé + import┬Àtype┬À{┬ÀHandleNewUserUseCase┬À}┬Àfrom┬À'./handle-new-user'
+        8 Ôöé + 
+        9 Ôöé + interface┬ÀProcessIncomingMessageUseCaseRequest┬À{
+       10 Ôöé + ┬À┬ÀinstanceName:┬Àstring
+       11 Ôöé + ┬À┬Àphone:┬Àstring
+       12 Ôöé + ┬À┬Àtext:┬Àstring
+       13 Ôöé + }
+       14 Ôöé + 
+       15 Ôöé + export┬Àclass┬ÀProcessIncomingMessageUseCase┬À{
+       16 Ôöé + ┬À┬Àconstructor(
+       17 Ôöé + ┬À┬À┬À┬Àprivate┬ÀsessionRepository:┬ÀSessionRepository,
+       18 Ôöé + ┬À┬À┬À┬Àprivate┬ÀhandleNewUser:┬ÀHandleNewUserUseCase,
+       19 Ôöé + ┬À┬À┬À┬Àprivate┬ÀhandleAwaitingType:┬ÀHandleAwaitingTypeUseCase,
+       20 Ôöé + ┬À┬À┬À┬Àprivate┬ÀhandleAwaitingCustomerName:┬ÀHandleAwaitingCustomerNameUseCase,
+       21 Ôöé + ┬À┬À┬À┬Àprivate┬ÀhandleAwaitingTotalValue:┬ÀHandleAwaitingTotalValueUseCase,
+       22 Ôöé + ┬À┬À┬À┬Àprivate┬ÀhandleCollectingItems:┬ÀHandleCollectingItemsUseCase,
+       23 Ôöé + ┬À┬À┬À┬Àprivate┬ÀhandleConfirming:┬ÀHandleConfirmingUseCase
+       24 Ôöé + ┬À┬À)┬À{}
+       25 Ôöé + 
+       26 Ôöé + ┬À┬Àasync┬Àexecute({
+       27 Ôöé + ┬À┬À┬À┬ÀinstanceName,
+       28 Ôöé + ┬À┬À┬À┬Àphone,
+       29 Ôöé + ┬À┬À┬À┬Àtext,
+       30 Ôöé + ┬À┬À}:┬ÀProcessIncomingMessageUseCaseRequest):┬ÀPromise<string┬À|┬Ànull>┬À{
+       31 Ôöé + ┬À┬À┬À┬À//┬À1.┬ÀTraz┬Àa┬Àsess├úo┬Àdo┬Àusu├írio┬Àdo┬ÀRedis
+       32 Ôöé + ┬À┬À┬À┬Àconst┬Àsession┬À=┬Àawait┬Àthis.sessionRepository.getSession(phone)
+       33 Ôöé + 
+       34 Ôöé + ┬À┬À┬À┬À//┬À2.┬ÀSe┬Àn├úo┬Àtem┬Àsess├úo┬Àativa,┬À├®┬Àusu├írio┬Ànovo┬Àiniciando┬Àa┬Àconversa
+       35 Ôöé + ┬À┬À┬À┬Àif┬À(!session)┬À{
+       36 Ôöé + ┬À┬À┬À┬À┬À┬Àreturn┬Àthis.handleNewUser.execute({┬Àphone┬À})
+       37 Ôöé + ┬À┬À┬À┬À}
+       38 Ôöé + 
+       39 Ôöé + ┬À┬À┬À┬À//┬À2.1┬ÀDetec├º├úo┬Àde┬Àsauda├º├úo┬Àglobal┬À-┬ÀSe┬Ào┬Àusu├írio┬Àdisser┬À"Oi",┬À"Menu",┬Àetc,┬Àresetamos
+       40 Ôöé + ┬À┬À┬À┬Àconst┬ÀisGreeting┬À=
+       41 Ôöé + ┬À┬À┬À┬À┬À┬À/^(oi|ol├í|ola|bom┬Àdia|boa┬Àtarde|boa┬Ànoite|menu|ajuda|iniciar)$/i.test(
+       42 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬Àtext.trim().toLowerCase()
+       43 Ôöé + ┬À┬À┬À┬À┬À┬À)
+       44 Ôöé + 
+       45 Ôöé + ┬À┬À┬À┬Àif┬À(isGreeting)┬À{
+       46 Ôöé + ┬À┬À┬À┬À┬À┬Àawait┬Àthis.sessionRepository.clearSession(phone)
+       47 Ôöé + ┬À┬À┬À┬À┬À┬Àreturn┬Àthis.handleNewUser.execute({┬Àphone┬À})
+       48 Ôöé + ┬À┬À┬À┬À}
+       49 Ôöé + 
+       50 Ôöé + ┬À┬À┬À┬À//┬À3.┬ÀO┬Àswitch/case┬À├®┬Ào┬Àcora├º├úo┬Àda┬Àm├íquina┬Àde┬Àestados
+       51 Ôöé + ┬À┬À┬À┬Àswitch┬À(session.state)┬À{
+       52 Ôöé + ┬À┬À┬À┬À┬À┬Àcase┬À'AWAITING_TYPE':
+       53 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬Àreturn┬Àthis.handleAwaitingType.execute({┬Àphone,┬Àtext┬À})
+       54 Ôöé + 
+       55 Ôöé + ┬À┬À┬À┬À┬À┬Àcase┬À'AWAITING_CUSTOMER_NAME':
+       56 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬Àreturn┬Àthis.handleAwaitingCustomerName.execute({┬Àphone,┬Àtext┬À})
+       57 Ôöé + 
+       58 Ôöé + ┬À┬À┬À┬À┬À┬Àcase┬À'AWAITING_TOTAL_VALUE':
+       59 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬Àreturn┬Àthis.handleAwaitingTotalValue.execute({┬Àphone,┬Àtext┬À})
+       60 Ôöé + 
+       61 Ôöé + ┬À┬À┬À┬À┬À┬Àcase┬À'COLLECTING_ITEMS':
+       62 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬Àreturn┬Àthis.handleCollectingItems.execute({┬Àsession,┬Àphone,┬Àtext┬À})
+       63 Ôöé + 
+       64 Ôöé + ┬À┬À┬À┬À┬À┬Àcase┬À'CONFIRMING':
+       65 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬Àreturn┬Àthis.handleConfirming.execute({
+       66 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀinstanceName,
+       67 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àsession,
+       68 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àphone,
+       69 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àtext,
+       70 Ôöé + ┬À┬À┬À┬À┬À┬À┬À┬À})
+       71 Ôöé + 
+       72 Ôöé + ┬À┬À┬À┬À┬À┬Àdefault:
+  7 more lines truncated
+  
+
+The number of diagnostics exceeds the limit allowed. Use --max-diagnostics to increase it.
+Diagnostics not shown: 22.
+Checked 32 files in 35ms. No fixes applied.
+Found 32 errors.
+Found 7 warnings.
+Found 3 infos.
+check ÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöüÔöü
+
+  ├ù Some errors were emitted while running checks.
+  
+

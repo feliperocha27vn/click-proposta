@@ -33,7 +33,48 @@ export class HandleConfirmingUseCase {
           text: '⏳ Gerando seu orçamento em PDF... Aguarde só um instante!',
         })
 
-        if (!session.extractedItems || !session.userId) {
+        if (!session.userId) {
+          await this.sessionRepository.clearSession(phone)
+          return '❌ Ops! Os dados do seu orçamento foram perdidos.\n\nPor favor, envie *Oi* para começar novamente.'
+        }
+
+        // Verifica o plano do usuário antes de gerar o PDF
+        let apiPhone = phone
+        if (apiPhone.startsWith('55') && apiPhone.length === 13) {
+          apiPhone = apiPhone.substring(2)
+        }
+
+        const userResponse = await api.get('/verify-phone', {
+          headers: { Authorization: `Bearer ${env.BOT_SERVICE_TOKEN}` },
+          params: { phone: apiPhone },
+        })
+
+        const user = userResponse.data.user
+        const paymentLink = 'https://click-proposta.umdoce.dev.br/plans'
+
+        if (user.planType === 'FREE' && user.countProposalsInMonth >= 2) {
+          await this.sessionRepository.clearSession(phone)
+          return `Chefe, seus orçamentos gratuitos deste mês acabaram! 🚧\n\nPara continuar gerando orçamentos ilimitados, ative o *Plano Pro* por apenas *R$ 14,90/mês*.\n\nPague no PIX aqui:\n👉 ${paymentLink}`
+        }
+
+        if (user.planType === 'PRO') {
+          const now = new Date()
+          const planExpiresAt = user.planExpiresAt
+            ? new Date(user.planExpiresAt)
+            : null
+
+          if (planExpiresAt && now > planExpiresAt) {
+            await this.sessionRepository.clearSession(phone)
+            return `Seu *Plano Pro* expirou! 😱\n\nRenove agora por apenas *R$ 14,90* para continuar com orçamentos ilimitados:\n👉 ${paymentLink}`
+          }
+
+          if (user.countProposalsInMonth >= 100) {
+            await this.sessionRepository.clearSession(phone)
+            return 'Você atingiu o limite de Fair Use (100 orçamentos) do seu Plano Pro este mês. 🛑\n\nCaso precise de mais, entre em contato com nosso suporte.'
+          }
+        }
+
+        if (!session.extractedItems) {
           await this.sessionRepository.clearSession(phone)
           return '❌ Ops! Os dados do seu orçamento foram perdidos.\n\nPor favor, envie *Oi* para começar novamente.'
         }

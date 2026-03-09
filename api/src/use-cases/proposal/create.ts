@@ -90,6 +90,8 @@ export class CreateProposalUseCase {
       services
     )
 
+    await this.usersRepository.createProposalLog(userId, 'SITE', 'PROPOSAL')
+
     return { proposal }
   }
 }
