@@ -1,10 +1,10 @@
+import { useQuery } from '@tanstack/react-query'
+import { createFileRoute, Link } from '@tanstack/react-router'
+import { CreditCard, FileText, MessageCircleMore } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { useAuth } from '@/contexts/auth-context'
 import { getCompleteRegister } from '@/http/api'
-import { useQuery } from '@tanstack/react-query'
-import { createFileRoute, Link } from '@tanstack/react-router'
-import { CreditCard, FileText } from 'lucide-react'
-import { useEffect, useState } from 'react'
 import FormCompleteCustomer from './-components/form-complete-customer'
 import { LoadingValidationModal } from './-components/loading-validation-modal'
 import { MenuMobileAuth } from './-components/menu-mobile'
@@ -86,6 +86,14 @@ function RouteComponent() {
     },
   ]
 
+  function sendMessageToBot() {
+    const message = 'Olá gostaria de criar um novo orçamento'
+
+    const urlWpp = `https://wa.me/5518988269708?text=${encodeURIComponent(message)}`
+
+    window.open(urlWpp, '_blank')
+  }
+
   return (
     <div className="space-y-6  pt-6 min-h-screen font-inter">
       <div className="flex items-center justify-between">
@@ -113,12 +121,19 @@ function RouteComponent() {
                 Crie propostas profissionais em segundos.
               </p>
             </div>
-            <div className="z-10">
+            <div className="z-10 flex flex-col gap-4 xl:flex-row">
               <Link to="/select-type-proposal">
-                <Button className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl px-6 py-6 shadow-indigo-200 shadow-lg transition-all hover:scale-105">
+                <Button className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl px-6 py-6 shadow-indigo-200 shadow-lg transition-all hover:scale-105 w-full">
                   Criar Nova Proposta
                 </Button>
               </Link>
+              <Button
+                onClick={sendMessageToBot}
+                className="bg-green-500 hover:bg-green-300 text-zinc-50 hover:text-zinc-600 font-semibold rounded-xl px-6 py-6 shadow-indigo-200 shadow-lg transition-all hover:scale-105 w-full xl:w-auto"
+              >
+                <MessageCircleMore />
+                Criar orçamento pelo WhatsApp
+              </Button>
             </div>
             {/* Decorative glow */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-purple-200/40 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none" />
