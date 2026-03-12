@@ -38,7 +38,7 @@ app.register(fastifyCors, {
   origin: [
     'http://localhost:5173',
     'https://click-proposta.umdoce.dev.br',
-    'https://click-proposta-v2.vercel.app/',
+    'https://click-proposta-v2.vercel.app'
   ],
   methods: ['GET', 'POST', 'DELETE', 'PUT', 'PATCH', 'OPTIONS'],
   credentials: true,
