@@ -3,10 +3,8 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { CreditCard, FileText, MessageCircleMore } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { useAuth } from '@/contexts/auth-context'
 import { getCompleteRegister } from '@/http/api'
 import FormCompleteCustomer from './-components/form-complete-customer'
-import { LoadingValidationModal } from './-components/loading-validation-modal'
 import { MenuMobileAuth } from './-components/menu-mobile'
 import { MobileRecentProposals } from './-components/mobile-recent-proposals'
 import {
@@ -19,11 +17,9 @@ export const Route = createFileRoute('/_authenticated/dashboard')({
 })
 
 function RouteComponent() {
-  const { session } = useAuth()
-  const user = session?.user ?? null
   const [completeModal, setCompleteModal] = useState(false)
 
-  const { data: registerStatus, isLoading: loadingValidation } = useQuery({
+  const { data: registerStatus } = useQuery({
     queryKey: ['complete-register'],
     queryFn: getCompleteRegister,
     staleTime: Infinity,
@@ -107,15 +103,10 @@ function RouteComponent() {
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-7">
         <div className="col-span-4 lg:col-span-4">
-          <div className="h-full rounded-3xl bg-linear-to-br from-indigo-100 via-purple-100 to-indigo-50 p-8 flex flex-col justify-center gap-6 relative overflow-hidden border border-indigo-100/50 shadow-sm">
+          <div className="h-full rounded-3xl bg-linear-to-br from-indigo-100 via-purple-100 to-indigo-50 p-8 flex flex-col justify-center gap-6 relative overflow-hidden  shadow-sm">
             <div className="z-10 space-y-2">
               <h2 className="text-3xl font-bold text-slate-900">
-                Bem vindo de volta,{' '}
-                {user?.user_metadata?.full_name?.split(' ')[0] || 'Usuário'}!
-                <span className="xl:hidden">
-                  {' '}
-                  Você possui 10 créditos para criar propostas.
-                </span>
+                Bem vindo de volta
               </h2>
               <p className="text-slate-600 max-w-md">
                 Crie propostas profissionais em segundos.
@@ -129,14 +120,14 @@ function RouteComponent() {
               </Link>
               <Button
                 onClick={sendMessageToBot}
-                className="bg-green-500 hover:bg-green-300 text-zinc-50 hover:text-zinc-600 font-semibold rounded-xl px-6 py-6 shadow-indigo-200 shadow-lg transition-all hover:scale-105 w-full xl:w-auto"
+                className="bg-green-500 hover:bg-teal-700 text-zinc-50  font-semibold rounded-xl px-6 py-6 shadow-green-200 shadow-lg transition-all hover:scale-105 w-full xl:w-auto border border-gren-500"
               >
                 <MessageCircleMore />
                 Criar orçamento pelo WhatsApp
               </Button>
             </div>
             {/* Decorative glow */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-purple-200/40 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none" />
+            <div className="absolute top-0 right-0 w-64 h-64 bg-purple-300/40 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-indigo-200/40 rounded-full blur-3xl -ml-16 -mb-16 pointer-events-none" />
           </div>
         </div>
@@ -182,7 +173,6 @@ function RouteComponent() {
         isOpen={completeModal}
         onClose={() => setCompleteModal(false)}
       />
-      <LoadingValidationModal isOpen={loadingValidation} />
     </div>
   )
 }

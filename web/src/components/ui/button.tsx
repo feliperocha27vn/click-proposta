@@ -1,7 +1,7 @@
+import { Slot } from '@radix-ui/react-slot'
 import type { ComponentProps } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { tv, type VariantProps } from 'tailwind-variants'
-import { Slot } from '@radix-ui/react-slot'
 
 export const buttonVariants = tv({
   base: [
@@ -21,8 +21,7 @@ export const buttonVariants = tv({
         'border-destructive bg-destructive text-destructive-foreground hover:bg-destructive/90',
       outline:
         'border-border bg-transparent hover:bg-muted hover:text-foreground',
-      link:
-        'border-transparent bg-transparent text-primary underline-offset-4 hover:underline',
+      link: 'border-transparent bg-transparent text-primary underline-offset-4 hover:underline',
     },
     size: {
       sm: 'h-8 px-3 gap-1.5 text-xs [&_svg]:size-3',
