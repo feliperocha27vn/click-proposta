@@ -7,7 +7,7 @@ import {
 } from '@/components/ui/chart'
 import { useGetProposalAndBudgetStats } from '@/gen/hooks/ProposalsHooks/useGetProposalAndBudgetStats'
 import { Loader2 } from 'lucide-react'
-import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from 'recharts'
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts'
 
 const chartConfig = {
   count: {
@@ -42,7 +42,7 @@ export function RecentProposalsChart() {
           </div>
         ) : (
           <ChartContainer config={chartConfig} className="h-75 w-full">
-            <AreaChart
+            <BarChart
               accessibilityLayer
               data={chartData}
               margin={{
@@ -73,29 +73,12 @@ export function RecentProposalsChart() {
                 cursor={false}
                 content={<ChartTooltipContent indicator="dot" />}
               />
-              <defs>
-                <linearGradient id="fillCount" x1="0" y1="0" x2="0" y2="1">
-                  <stop
-                    offset="5%"
-                    stopColor="var(--color-count)"
-                    stopOpacity={0.8}
-                  />
-                  <stop
-                    offset="95%"
-                    stopColor="var(--color-count)"
-                    stopOpacity={0.1}
-                  />
-                </linearGradient>
-              </defs>
-              <Area
+              <Bar
                 dataKey="count"
-                type="natural"
-                fill="url(#fillCount)"
-                fillOpacity={0.4}
-                stroke="var(--color-count)"
-                strokeWidth={2}
+                fill="var(--color-count)"
+                radius={[4, 4, 0, 0]}
               />
-            </AreaChart>
+            </BarChart>
           </ChartContainer>
         )}
       </CardContent>
