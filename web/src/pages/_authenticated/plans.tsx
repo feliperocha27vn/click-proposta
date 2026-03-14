@@ -9,6 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { Skeleton } from '@/components/ui/skeleton'
 import { useAuth } from '@/contexts/auth-context'
 import { useCreateNewPayment } from '@/gen/hooks/PaymentsHooks/useCreateNewPayment'
 import { useGetCompleteRegister } from '@/gen/hooks/UsersHooks/useGetCompleteRegister'
@@ -28,8 +29,8 @@ function RouteComponent() {
   const [errorModal, setErrorModal] = useState(false)
   const [loadingValidation, setLoadingValidation] = useState(false)
 
-  const { data: isRegisterComplete } = useGetCompleteRegister()
-  const { data: userDataResponse } = useGetMe()
+  const { data: isRegisterComplete, isLoading: isLoadingRegister } = useGetCompleteRegister()
+  const { data: userDataResponse, isLoading: isLoadingUser } = useGetMe()
   const userData = userDataResponse?.user
 
   const { mutateAsync: createNewPaymentMutate } = useCreateNewPayment()
@@ -166,16 +167,14 @@ function RouteComponent() {
                 <CardFooter className="flex flex-col gap-2">
                   <Button
                     className={`w-full mt-5 cursor-pointer bg-blue-600 hover:bg-blue-700 transition-all ${
-                      userData?.plan === 'PRO'
+                      (isLoadingUser || userData?.plan === 'PRO')
                         ? 'opacity-40 cursor-not-allowed grayscale'
                         : ''
                     }`}
                     onClick={handleOpenProModal}
-                    disabled={userData?.plan === 'PRO'}
+                    disabled={isLoadingUser || userData?.plan === 'PRO'}
                   >
-                    {userData?.plan === 'PRO'
-                      ? 'Plano Ativo'
-                      : 'Ativar Plano Pro'}
+                    {isLoadingUser ? 'Carregando...' : userData?.plan === 'PRO' ? 'Plano Ativo' : 'Ativar Plano Pro'}
                   </Button>
                   <p className="text-center text-[10px] text-zinc-400">
                     Sua assinatura não renova sozinha.

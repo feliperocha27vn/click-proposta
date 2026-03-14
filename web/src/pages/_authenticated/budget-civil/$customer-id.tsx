@@ -3,6 +3,7 @@ import { BackButton } from '@/components/back-button'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
+import { Skeleton } from '@/components/ui/skeleton'
 import { useFetchManyServices } from '@/gen/hooks/ServicesHooks/useFetchManyServices'
 import { useGetCustomerById } from '@/gen/hooks/CustomersHooks/useGetCustomerById'
 import { useGetMe } from '@/gen/hooks/UsersHooks/useGetMe'
@@ -37,15 +38,15 @@ function RouteComponent() {
   const [closeDialog, setCloseDialog] = useState(false)
   const navigate = useNavigate()
 
-  const { data: userDataResponse } = useGetMe()
+  const { data: userDataResponse, isLoading: isLoadingUser } = useGetMe()
   const user = userDataResponse
 
-  const { data: customerDataResponse } = useGetCustomerById(
+  const { data: customerDataResponse, isLoading: isLoadingCustomer } = useGetCustomerById(
     customerId as string
   )
   const customer = customerDataResponse
 
-  const { data: servicesDataResponse } = useFetchManyServices({
+  const { data: servicesDataResponse, isLoading: isLoadingServices } = useFetchManyServices({
     query: {
       staleTime: 1000 * 60 * 10,
       refetchOnWindowFocus: false,
@@ -129,21 +130,34 @@ function RouteComponent() {
       </div>
       <div className="mt-4 flex flex-col gap-x-2 max-w-2xl mx-auto">
         <form className="space-y-2" onSubmit={handleSubmit(handleSubmitForm)}>
-          <div className="flex items-center gap-x-2">
-            <img
-              className="size-24 rounded-2xl"
-              src={user?.user?.avatarUrl || ''}
-              alt={`Logo da empresa ${user?.user?.name || ''}`}
-            />
-            <div className="space-y-2">
-              <h1 className="font-semibold">{user?.user?.name}</h1>
+          {isLoadingUser ? (
+            <div className="flex items-center gap-x-2">
+              <Skeleton className="h-24 w-24 rounded-2xl" />
+              <div className="space-y-2">
+                <Skeleton className="h-6 w-40" />
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className="flex items-center gap-x-2">
+              <img
+                className="size-24 rounded-2xl"
+                src={user?.user?.avatarUrl || ''}
+                alt={`Logo da empresa ${user?.user?.name || ''}`}
+              />
+              <div className="space-y-2">
+                <h1 className="font-semibold">{user?.user?.name}</h1>
+              </div>
+            </div>
+          )}
           <div className="flex flex-col items-center text-center gap-y-4">
             <span className="h-px bg-zinc-200 w-full" />
-            <h1 className="text-lg w-11/12 font-medium text-zinc-700">
-              {customer?.customer.name}
-            </h1>
+            {isLoadingCustomer ? (
+              <Skeleton className="h-6 w-48" />
+            ) : (
+              <h1 className="text-lg w-11/12 font-medium text-zinc-700">
+                {customer?.customer.name}
+              </h1>
+            )}
             {fields.map((field, index) => (
               <div key={field.id} className="w-11/12 space-y-4">
                 <h1 className="font-semibold font-lg text-start">
@@ -165,12 +179,20 @@ function RouteComponent() {
               className="w-11/12"
               type="number"
             />
-            <DialogServicesDetail
-              closeDialog={closeDialog}
-              setCloseDialog={setCloseDialog}
-              servicesData={servicesData || []}
-              handleSelectService={handleSelectService}
-            />
+            {isLoadingServices ? (
+              <div className="w-11/12">
+                <Skeleton className="mt-6 h-24 w-full bg-zinc-300 rounded-lg" />
+                <Skeleton className="mt-6 h-24 w-full bg-zinc-300 rounded-lg opacity-80" />
+                <Skeleton className="mt-6 h-24 w-full bg-zinc-300 rounded-lg opacity-60" />
+              </div>
+            ) : (
+              <DialogServicesDetail
+                closeDialog={closeDialog}
+                setCloseDialog={setCloseDialog}
+                servicesData={servicesData || []}
+                handleSelectService={handleSelectService}
+              />
+            )}
           </div>
           <Button
             type="button"

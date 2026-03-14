@@ -1,10 +1,11 @@
-import { createFileRoute, Link } from '@tanstack/react-router'
-import { DollarSign, FileText, MessageCircleMore } from 'lucide-react'
-import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
+import { Skeleton } from '@/components/ui/skeleton'
 import { useCountTotalAndAcceptedProposals } from '@/gen/hooks/ProposalsHooks/useCountTotalAndAcceptedProposals'
 import { useGetProposalAndBudgetTotalValue } from '@/gen/hooks/ProposalsHooks/useGetProposalAndBudgetTotalValue'
 import { useGetCompleteRegister } from '@/gen/hooks/UsersHooks/useGetCompleteRegister'
+import { createFileRoute, Link } from '@tanstack/react-router'
+import { DollarSign, FileText, MessageCircleMore } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import FormCompleteCustomer from './-components/form-complete-customer'
 import { MenuMobileAuth } from './-components/menu-mobile'
 import { RecentProposalsChart } from './-components/recent-proposals-chart'
@@ -23,17 +24,19 @@ function RouteComponent() {
       },
     })
 
-  const { data: proposalsCount } = useCountTotalAndAcceptedProposals({
-    query: {
-      staleTime: 1000 * 60 * 5,
-    },
-  })
+  const { data: proposalsCount, isLoading: isLoadingProposals } =
+    useCountTotalAndAcceptedProposals({
+      query: {
+        staleTime: 1000 * 60 * 5,
+      },
+    })
 
-  const { data: totalValueData } = useGetProposalAndBudgetTotalValue({
-    query: {
-      staleTime: 1000 * 60 * 5,
-    },
-  })
+  const { data: totalValueData, isLoading: isLoadingTotalValue } =
+    useGetProposalAndBudgetTotalValue({
+      query: {
+        staleTime: 1000 * 60 * 5,
+      },
+    })
 
   useEffect(() => {
     if (
@@ -49,6 +52,7 @@ function RouteComponent() {
     {
       title: 'Total de Propostas',
       value: proposalsCount?.total?.toString() || '0',
+      isLoading: isLoadingProposals,
       icon: FileText,
     },
     {
@@ -57,6 +61,7 @@ function RouteComponent() {
         style: 'currency',
         currency: 'BRL',
       }),
+      isLoading: isLoadingTotalValue,
       icon: DollarSign,
     },
   ]
@@ -133,7 +138,11 @@ function RouteComponent() {
                   {stat.title}
                 </p>
                 <h3 className="text-lg md:text-xl font-bold text-slate-900">
-                  {stat.value}
+                  {stat.isLoading ? (
+                    <Skeleton className="h-6 w-24" />
+                  ) : (
+                    stat.value
+                  )}
                 </h3>
               </div>
             </div>
