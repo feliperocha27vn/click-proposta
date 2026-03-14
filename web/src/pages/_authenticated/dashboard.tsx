@@ -3,7 +3,10 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { CreditCard, FileText, MessageCircleMore } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { getCompleteRegister } from '@/http/api'
+import {
+  countTotalAndAcceptedProposals,
+  getCompleteRegister,
+} from '@/http/api'
 import FormCompleteCustomer from './-components/form-complete-customer'
 import { MenuMobileAuth } from './-components/menu-mobile'
 import { MobileRecentProposals } from './-components/mobile-recent-proposals'
@@ -25,6 +28,12 @@ function RouteComponent() {
     staleTime: Infinity,
   })
 
+  const { data: proposalsCount } = useQuery({
+    queryKey: ['proposals-count'],
+    queryFn: countTotalAndAcceptedProposals,
+    staleTime: 1000 * 60 * 5,
+  })
+
   useEffect(() => {
     if (registerStatus && !registerStatus.isRegisterComplete) {
       setCompleteModal(true)
@@ -34,12 +43,12 @@ function RouteComponent() {
   const stats = [
     {
       title: 'Total de Propostas',
-      value: '12',
+      value: proposalsCount?.total?.toString() || '0',
       icon: FileText,
     },
     {
       title: 'Propostas Aceitas',
-      value: '4',
+      value: proposalsCount?.accepted?.toString() || '0',
       icon: CreditCard,
     },
   ]

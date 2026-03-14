@@ -141,6 +141,22 @@ export class PrismaProposalRepository implements ProposalRepository {
       },
     })
 
-    return { accepted: acceptedProposals, total: totalProposals }
+    const totalBudgets = await prisma.budgets.count({
+      where: {
+        usersId: userId,
+      },
+    })
+
+    const acceptedBudgets = await prisma.budgets.count({
+      where: {
+        usersId: userId,
+        status: 'APPROVED',
+      },
+    })
+
+    return { 
+      accepted: acceptedProposals + acceptedBudgets, 
+      total: totalProposals + totalBudgets 
+    }
   }
 }

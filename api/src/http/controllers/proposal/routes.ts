@@ -1,6 +1,7 @@
 import type { FastifyInstance } from 'fastify'
 import { approveProposal } from './approve-proposal'
 import { confirmSending } from './confirm-sending'
+import { countTotalAndAcceptedProposalsController } from './count-total-and-accepted-proposals'
 import { create } from './create'
 import { fetchMinimalDetailsProposal } from './fetch-minimal-details-propsal'
 import { getById } from './get-by-id'
@@ -15,4 +16,5 @@ export function routesProposal(app: FastifyInstance) {
   app.register(confirmSending)
   app.register(approveProposal)
   app.register(recuseProposal)
+  app.register(countTotalAndAcceptedProposalsController)
 }
