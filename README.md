@@ -1,7 +1,5 @@
 # Click Proposta
 
-> Projeto construído durante o evento **NLW da Rocketseat**.
-
 Plataforma para criação de propostas e orçamentos comerciais profissionais com auxílio de Inteligência Artificial. Em vez de gastar horas formatando documentos no Word ou no Google Docs, você preenche um formulário simples e a IA cuida do resto — gerando uma proposta clara, organizada e pronta para impressionar qualquer cliente.
 
 ---
@@ -44,12 +42,6 @@ Sem renovação automática — você paga quando quiser usar.
 1. **Preencha o formulário** — informe cliente, escopo, itens e valores.
 2. **Gere a proposta** — a IA organiza tudo em um documento profissional.
 3. **Envie e feche o negócio** — compartilhe o link ou baixe o PDF.
-
----
-
-## Evento NLW — Rocketseat
-
-Este projeto é desenvolvido ao vivo durante as aulas do **NLW (Next Level Week)** da [Rocketseat](https://rocketseat.com.br), um evento gratuito e intensivo voltado para devs que querem evoluir na prática construindo aplicações reais do zero.
 
 ---
 
